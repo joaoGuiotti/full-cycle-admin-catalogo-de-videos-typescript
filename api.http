@@ -1,0 +1,13 @@
+## valid uuid = 6cdd799c-c886-47b7-8010-3adb97d73b83
+POST http://localhost:3000/categories 
+Content-Type: application/json
+
+{ 
+  "name": "raifajoowtokeotiubuocodit udewkovguvihdiepgifomabufdogemisipwacodakizingoleihenemaktohmutlaznostadubbucuctadezejubguvamufurretamvebtangiwnavimaposfatabzumuturnoriralizafeptelmogaretiagahiktiemofalurakugulabuirrajmukibwiffijecasaimdoegujisesmanenimjowuzobepa"
+}
+###
+GET http://localhost:3000/categories 
+
+
+### Get category by id
+GET http://localhost:3000/categories/6cdd799c-c886-47b7-8010-3adb97d73b83
