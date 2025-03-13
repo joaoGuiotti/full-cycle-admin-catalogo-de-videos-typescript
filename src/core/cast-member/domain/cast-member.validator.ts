@@ -1,5 +1,5 @@
 import { IsEnum, MaxLength } from "class-validator";
-import { CastMember, CastMemberTypes } from "./cast-member.aggregate";
+import { CastMember } from "./cast-member.aggregate";
 import { ClassValidatorFields } from "@core/shared/domain/validators/class-validator-fields";
 import { Notification } from "@core/shared/domain/validators/notification";
 
