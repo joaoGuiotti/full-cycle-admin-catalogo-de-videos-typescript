@@ -1,5 +1,6 @@
 import { Uuid } from "@core/shared/domain/value-objects/uuid.vo";
-import { CastMember, CastMemberTypes } from "../cast-member.aggregate"
+import { CastMember } from "../cast-member.aggregate"
+import { CastMemberTypes } from "../cast-member-type.vo";
 describe('CastMember Without Validador Unit Tests', () => {
   beforeEach(() => {
     CastMember.prototype.validate = jest.fn()

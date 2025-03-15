@@ -1,5 +1,4 @@
 import { CreateCastMemberOutput } from "@core/cast-member/application/use-cases/create-cast-member/create-cast-member.use-case";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
 import { CreateCastMemberDto } from "../dto/create-cast-member.dto";
 import { CastMemberCollectionPresenter, CastMemberPresenter } from "../cast-member.presenter";
 import { CastMembersController } from "../cast-members.controller";
@@ -8,6 +7,7 @@ import { UpdateCastMemberDto } from "../dto/update-cast-memeber.dto";
 import { GetCastMemberOutput } from "@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case";
 import { ListCastMembersOutput } from "@core/cast-member/application/use-cases/list-cast-members/list-cast-members.use-case";
 import { SortDirection } from "@core/shared/domain/repository/search-params";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('CastMembersController Unit Tests', () => {
   let controller: CastMembersController;
@@ -119,7 +119,7 @@ describe('CastMembersController Unit Tests', () => {
       per_page: 2,
       sort: 'name',
       sort_dir: 'desc' as SortDirection,
-      filter: 'actor test',
+      filter: { name: 'actor test'},
     };
     const presenter = await controller.search(searchParams);
     expect(presenter).toBeInstanceOf(CastMemberCollectionPresenter);

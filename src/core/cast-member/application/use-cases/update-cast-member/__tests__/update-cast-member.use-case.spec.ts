@@ -2,7 +2,8 @@ import { CastMemberInMemoryRepository } from "@core/cast-member/infra/db/im-memo
 import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
 import { InvalidUuidError, Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { UpdateCastMemberUseCase } from "../update-cast-member.use-case";
-import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('UpdateCastMemberUseCase Unit Test', () => {
   let useCase!: UpdateCastMemberUseCase;

@@ -1,12 +1,12 @@
-import { Sequelize } from "sequelize-typescript";
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { CastMemberModel } from "../cast-member.model";
 import { CastMemberSequelizeRepository } from "../cast-member-sequelize.repository";
-import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberModelMapper } from "../cast-member-mapper";
 import { CastMemberSearchParams, CastMemberSearchResult } from "@core/cast-member/domain/cast-member.repository";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('CastMemberSequelizeRepository Integration it', () => {
   let repository!: CastMemberSequelizeRepository;
@@ -100,7 +100,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
 
       const spyToEntity = jest.spyOn(CastMemberModelMapper, 'toEntity');
 
-      const searchOutput = await repository.search(new CastMemberSearchParams());
+      const searchOutput = await repository.search(CastMemberSearchParams.create());
       expect(searchOutput).toBeInstanceOf(CastMemberSearchResult);
       expect(spyToEntity).toHaveBeenCalledTimes(15);
       expect(searchOutput.toJSON()).toMatchObject({
@@ -136,7 +136,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
         .build();
       await repository.bulkInsert(categories);
 
-      const searchOutput = await repository.search(new CastMemberSearchParams());
+      const searchOutput = await repository.search(CastMemberSearchParams.create());
       const items = searchOutput.items;
       [...items].reverse().forEach((item, index) => {
         expect(`${item.name}`).toBe(`${categories[index + 1].name}`);
@@ -164,10 +164,10 @@ describe('CastMemberSequelizeRepository Integration it', () => {
       ];
       await repository.bulkInsert(categories);
       let searchOutput = await repository.search(
-        new CastMemberSearchParams({
+        CastMemberSearchParams.create({
           page: 1,
           per_page: 2,
-          filter: 'TEST'
+          filter: { name:'TEST'} 
         })
       );
 
@@ -181,10 +181,10 @@ describe('CastMemberSequelizeRepository Integration it', () => {
       );
 
       searchOutput = await repository.search(
-        new CastMemberSearchParams({
+        CastMemberSearchParams.create({
           page: 2,
           per_page: 2,
-          filter: 'TEST'
+          filter: { name:'TEST'} 
         })
       );
 
@@ -213,7 +213,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
 
       const arrange = [
         {
-          params: new CastMemberSearchParams({
+          params: CastMemberSearchParams.create({
             page: 1,
             per_page: 2,
             sort: 'name'
@@ -226,7 +226,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
           })
         },
         {
-          params: new CastMemberSearchParams({
+          params: CastMemberSearchParams.create({
             page: 2,
             per_page: 2,
             sort: 'name'
@@ -239,7 +239,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
           })
         },
         {
-          params: new CastMemberSearchParams({
+          params: CastMemberSearchParams.create({
             page: 3,
             per_page: 2,
             sort: 'name'
@@ -270,11 +270,11 @@ describe('CastMemberSequelizeRepository Integration it', () => {
 
       const arrange = [
         {
-          search_params: new CastMemberSearchParams({
+          search_params: CastMemberSearchParams.create({
             page: 1,
             per_page: 2,
             sort: 'name',
-            filter: 'TEST',
+            filter: { name:'TEST'} ,
           }),
           search_result: new CastMemberSearchResult({
             items: [categories[2], categories[4]],
@@ -284,11 +284,11 @@ describe('CastMemberSequelizeRepository Integration it', () => {
           }),
         },
         {
-          search_params: new CastMemberSearchParams({
+          search_params: CastMemberSearchParams.create({
             page: 2,
             per_page: 2,
             sort: 'name',
-            filter: 'TEST',
+            filter: { name:'TEST'} ,
           }),
           search_result: new CastMemberSearchResult({
             items: [categories[0]],

@@ -23,7 +23,7 @@ describe('CastMemberInMemoryRepository', () => {
     ];
     const filterSpy = jest.spyOn(items, 'filter');
 
-    const itemsFiltered = await repo['applyFilter'](items, 'TEST');
+    const itemsFiltered = await repo['applyFilter'](items, { name: 'TEST'});
     expect(filterSpy).toHaveBeenCalledTimes(1);
     expect(itemsFiltered).toStrictEqual([
       items[0],

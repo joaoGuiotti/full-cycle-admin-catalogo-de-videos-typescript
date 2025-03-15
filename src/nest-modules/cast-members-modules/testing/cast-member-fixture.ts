@@ -1,4 +1,5 @@
-import { CastMember, CastMemberTypes } from '../../../core/cast-member/domain/cast-member.aggregate';
+import { CastMemberTypes } from '@core/cast-member/domain/cast-member-type.vo';
+import { CastMember } from '../../../core/cast-member/domain/cast-member.aggregate';
 import { SortDirection } from '../../../core/shared/domain/repository/search-params';
 
 const _keysInResponse = ['id', 'name', 'type', 'created_at'];

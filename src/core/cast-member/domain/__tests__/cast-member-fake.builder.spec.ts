@@ -1,7 +1,7 @@
 import { Chance } from "chance";
 import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
 import { CastMemberFakeBuilder } from "../cast-member-fake.builder";
-import { CastMemberTypes } from "../cast-member.aggregate";
+import { CastMemberTypes } from "../cast-member-type.vo";
 
 describe('CastMemberFakeBuilder Unit Testes', () => {
 

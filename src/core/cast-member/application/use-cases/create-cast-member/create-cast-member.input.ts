@@ -1,4 +1,4 @@
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, validateSync } from "class-validator";
 
 export type CreateCastMemberInputConstructorProps = {

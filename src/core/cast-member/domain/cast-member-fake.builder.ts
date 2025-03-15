@@ -1,5 +1,6 @@
 import { Chance } from 'chance';
-import { CastMember, CastMemberId, CastMemberTypes } from './cast-member.aggregate';
+import { CastMember, CastMemberId } from './cast-member.aggregate';
+import { CastMemberTypes } from './cast-member-type.vo';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
@@ -93,7 +94,7 @@ export class CastMemberFakeBuilder<TBuild = any> {
         castMember.validate();
         return castMember;
       });
-    return this.countObjs === 1 ? (castMembers[0] as any) : castMembers;
+    return this.countObjs === 1 ? (castMembers[0] as any) : castMembers as any;
   }
 
   get cast_member_id() {

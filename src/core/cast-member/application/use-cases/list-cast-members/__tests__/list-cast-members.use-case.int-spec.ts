@@ -2,8 +2,9 @@ import { CastMemberSequelizeRepository } from "@core/cast-member/infra/db/sequel
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { ListCastMembersUseCase } from "../list-cast-members.use-case";
 import { CastMemberModel } from "@core/cast-member/infra/db/sequelize/cast-member.model";
-import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberOutputMapper } from "../../common/cast-member-output";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('ListCastMemberUseCase Integration Test', () => {
   let useCase: ListCastMembersUseCase;
@@ -46,7 +47,7 @@ describe('ListCastMemberUseCase Integration Test', () => {
       page: 1,
       per_page: 2,
       sort: 'name',
-      filter: 'a'
+      filter: { name: 'a' }
     });
 
     expect(output).toEqual({
@@ -63,7 +64,7 @@ describe('ListCastMemberUseCase Integration Test', () => {
       per_page: 2,
       sort: 'name',
       sort_dir: 'desc',
-      filter: 'a'
+      filter: { name: 'a' }
     });
 
     expect(output).toEqual({

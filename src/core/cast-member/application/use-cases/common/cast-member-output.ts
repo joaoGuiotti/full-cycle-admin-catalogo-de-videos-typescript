@@ -1,4 +1,5 @@
-import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
+import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
 
 
 export type CastMemberOutput = {

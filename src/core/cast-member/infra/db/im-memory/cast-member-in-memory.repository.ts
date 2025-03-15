@@ -1,19 +1,19 @@
 import { CastMember, CastMemberId } from "@core/cast-member/domain/cast-member.aggregate";
-import { ICastMemberRepository } from "@core/cast-member/domain/cast-member.repository";
+import { CastMemberFilter, ICastMemberRepository } from "@core/cast-member/domain/cast-member.repository";
 import { SortDirection } from "@core/shared/domain/repository/search-params";
 import { InMemorySearchableRepository } from "@core/shared/infra/db/in-memory/in-memory.repository";
 
 export class CastMemberInMemoryRepository
-  extends InMemorySearchableRepository<CastMember, CastMemberId>
+  extends InMemorySearchableRepository<CastMember, CastMemberId, CastMemberFilter>
   implements ICastMemberRepository {
 
   sortableFields: string[] = ['name', 'created_at'];
 
-  protected async applyFilter(items: CastMember[], filter: string | null): Promise<CastMember[]> {
+  protected async applyFilter(items: CastMember[], filter: CastMemberFilter): Promise<CastMember[]> {
     if (!filter) return items;
     return items.filter((i) => {
       return (
-        i.name.toLowerCase().includes(filter.toLowerCase())
+        i.name.toLowerCase().includes(filter.name?.toLowerCase()!)
       )
     });
   }

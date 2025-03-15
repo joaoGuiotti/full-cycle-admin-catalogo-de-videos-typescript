@@ -3,7 +3,7 @@ import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { CreateCastMemberUseCase } from "../create-cast-member.use-case";
 import { CastMemberModel } from "@core/cast-member/infra/db/sequelize/cast-member.model";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('CreateCastMemberUseCase Integration Test', () => {
   let useCase!: CreateCastMemberUseCase;

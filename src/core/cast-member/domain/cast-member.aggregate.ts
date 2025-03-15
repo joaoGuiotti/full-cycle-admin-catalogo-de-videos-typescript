@@ -3,18 +3,22 @@ import { Uuid } from "@core/shared/domain/value-objects/uuid.vo";
 import { CastMemberValidatorFactory } from "./cast-member.validator";
 import { CastMemberFakeBuilder } from "./cast-member-fake.builder";
 import { AggreagateRoot } from "@core/shared/domain/aggregate-root";
-import { CastMemberType, CastMemberTypes } from "./cast-member-type.vo";
+
+export enum CastMemberTypes {
+  DIRECTOR = 1,
+  ACTOR = 2,
+}
 
 export type CastMemberConstructorProps = {
   cast_member_id?: Uuid;
   name: string;
-  type: CastMemberType;
+  type: CastMemberTypes;
   created_at?: Date;
 }
 
 export type CastMemberCreateCommand = { 
   name: string;
-  type: CastMemberType;
+  type: CastMemberTypes;
   created_at?: Date;
 }
 
@@ -23,7 +27,7 @@ export class CastMemberId extends Uuid {}
 export class CastMember extends AggreagateRoot {
   cast_member_id: CastMemberId;
   name: string;
-  type: CastMemberType;
+  type: CastMemberTypes;
   created_at: Date;
 
   constructor(props: CastMemberConstructorProps) {
@@ -49,7 +53,7 @@ export class CastMember extends AggreagateRoot {
     this.validate(['name']);
   }
 
-  changeType(type: CastMemberType) {
+  changeType(type: CastMemberTypes) {
     this.type = type;
   }
 

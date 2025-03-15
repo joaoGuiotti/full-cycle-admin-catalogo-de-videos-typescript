@@ -1,4 +1,5 @@
 import { ListCastMembersInput } from "@core/cast-member/application/use-cases/list-cast-members/list-cast-members.use-case";
+import { CastMemberFilter } from "@core/cast-member/domain/cast-member.repository";
 import { SortDirection } from "@core/shared/domain/repository/search-params";
 
 export class SearchCastMembersDto implements ListCastMembersInput {
@@ -6,5 +7,5 @@ export class SearchCastMembersDto implements ListCastMembersInput {
   per_page?: number;
   sort?: string | null;
   sort_dir?: SortDirection | null;
-  filter?: string;
+  filter?: CastMemberFilter;
 }

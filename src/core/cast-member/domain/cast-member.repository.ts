@@ -2,13 +2,13 @@ import { SearchParams, SearchParamsConstructorProps } from "@core/shared/domain/
 import { SearchResult } from "@core/shared/domain/repository/search-result";
 import { CastMember, CastMemberId } from "./cast-member.aggregate";
 import { ISearchableRepository } from "@core/shared/domain/repository/repository-interface";
-import { CastMemberType, CastMemberTypes, InvalidCastMemberTypeError } from "./cast-member-type.vo";
+import { CastMemberTypes, InvalidCastMemberTypeError } from "./cast-member-type.vo";
 import { Either } from "@core/shared/domain/either";
 import { SearchValidationError } from "@core/shared/domain/validators/validation.error";
 
 export type CastMemberFilter = {
   name?: string;
-  type?: CastMemberType;
+  type?: CastMemberTypes;
 };
 
 export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
@@ -26,25 +26,11 @@ export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
       };
     } = {},
   ) {
-    const [type, errorCastMemberType] = Either.of(props.filter?.type)
-      .map((type) => type || null)
-      .chain<CastMemberType | null, InvalidCastMemberTypeError>((type) =>
-        type ? CastMemberType.create(type) : Either.of(null),
-      )
-      .asArray();
-
-    if (errorCastMemberType) {
-      const error = new SearchValidationError([
-        { type: [errorCastMemberType.message] },
-      ]);
-      throw error;
-    }
-
     return new CastMemberSearchParams({
       ...props,
       filter: {
         name: props.filter?.name!,
-        type: type!,
+        type: props.filter?.type!,
       },
     });
   }
