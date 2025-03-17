@@ -10,7 +10,7 @@ export enum CastMemberTypes {
 }
 
 export type CastMemberConstructorProps = {
-  cast_member_id?: Uuid;
+  cast_member_id?: CastMemberId;
   name: string;
   type: CastMemberTypes;
   created_at?: Date;

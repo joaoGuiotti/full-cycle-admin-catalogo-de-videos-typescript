@@ -21,26 +21,61 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
   async search(props: CastMemberSearchParams): Promise<CastMemberSearchResult> {
     const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
-    const { rows, count } = await this.castMemberModel.findAndCountAll({
+
+    const where = {};
+
+    if (props.filter && (props.filter.name || props.filter.type)) {
+      if (props.filter.name) {
+        where['name'] = { [Op.like]: `%${props.filter.name}%` };
+      }
+
+      if (props.filter.type) {
+        where['type'] = props.filter.type;
+      }
+    }
+
+    const { rows: models, count } = await this.castMemberModel.findAndCountAll({
       ...(props.filter && {
-        where: {
-          name: { [Op.like]: `%${props.filter}%` },
-        },
+        where,
       }),
       ...(props.sort && this.sortableFields.includes(props.sort)
         ? { order: this.formatSort(props.sort, props.sort_dir!) }
-        : { order: [['created_at', 'desc']] }
-      ),
+        : { order: [['created_at', 'DESC']] }),
       offset,
-      limit
+      limit,
     });
     return new CastMemberSearchResult({
-      items: rows.map((row) => CastMemberModelMapper.toEntity(row)),
+      items: models.map((m) => CastMemberModelMapper.toEntity(m)),
       current_page: props.page,
       per_page: props.per_page,
       total: count,
     });
   }
+
+
+  // async search(props: CastMemberSearchParams): Promise<CastMemberSearchResult> {
+  //   const offset = (props.page - 1) * props.per_page;
+  //   const limit = props.per_page;
+  //   const { rows, count } = await this.castMemberModel.findAndCountAll({
+  //     ...(props.filter && {
+  //       where: {
+  //         name: { [Op.like]: `%${props.filter.name}%` },
+  //       },
+  //     }),
+  //     ...(props.sort && this.sortableFields.includes(props.sort)
+  //       ? { order: this.formatSort(props.sort, props.sort_dir!) }
+  //       : { order: [['created_at', 'desc']] }
+  //     ),
+  //     offset,
+  //     limit
+  //   });
+  //   return new CastMemberSearchResult({
+  //     items: rows.map((row) => CastMemberModelMapper.toEntity(row)),
+  //     current_page: props.page,
+  //     per_page: props.per_page,
+  //     total: count,
+  //   });
+  // }
 
   private formatSort(sort: string, sort_dir: SortDirection) {
     const dialect = this.castMemberModel.sequelize!.getDialect() as 'mysql';

@@ -1,10 +1,8 @@
 import { SearchParams, SearchParamsConstructorProps } from "@core/shared/domain/repository/search-params";
-import { SearchResult } from "@core/shared/domain/repository/search-result";
-import { CastMember, CastMemberId } from "./cast-member.aggregate";
+import { CastMemberTypes } from "./cast-member-type.vo";
 import { ISearchableRepository } from "@core/shared/domain/repository/repository-interface";
-import { CastMemberTypes, InvalidCastMemberTypeError } from "./cast-member-type.vo";
-import { Either } from "@core/shared/domain/either";
-import { SearchValidationError } from "@core/shared/domain/validators/validation.error";
+import { CastMember, CastMemberId } from "./cast-member.aggregate";
+import { SearchResult } from "@core/shared/domain/repository/search-result";
 
 export type CastMemberFilter = {
   name?: string;

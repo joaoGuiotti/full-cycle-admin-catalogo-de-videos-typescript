@@ -358,7 +358,7 @@ export class ListCastMembersFixture {
           page: 1,
           per_page: 2,
           sort: 'name',
-          filter: 'a',
+          filter: { name: 'a' },
         },
         expected: {
           entities: [entitiesMap.actor_AAA, entitiesMap.actor_AaA],
@@ -375,7 +375,7 @@ export class ListCastMembersFixture {
           page: 2,
           per_page: 2,
           sort: 'name',
-          filter: 'a',
+          filter: { name: 'a' },
         },
         expected: {
           entities: [entitiesMap.actor_a],

@@ -150,7 +150,7 @@ describe('CastMembersController Integration Tests', () => {
       test.each(arrange)(
         'when send_data is {"filter": $send_data.filter, "page": $send_data.page, "per_page": $send_data.per_page, "sort": $send_data.sort, "sort_dir": $send_data.sort_dir}',
         async ({ send_data, expected }) => {
-          const presenter = await controller.search(send_data as any);
+          const presenter = await controller.search(send_data);
           const { entities, ...paginationProps } = expected;
           expect(presenter).toEqual(
             new CastMemberCollectionPresenter({

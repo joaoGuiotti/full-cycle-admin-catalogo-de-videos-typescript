@@ -167,7 +167,7 @@ describe('CastMemberSequelizeRepository Integration it', () => {
         CastMemberSearchParams.create({
           page: 1,
           per_page: 2,
-          filter: { name:'TEST'} 
+          filter: { name: 'TEST' } 
         })
       );
 

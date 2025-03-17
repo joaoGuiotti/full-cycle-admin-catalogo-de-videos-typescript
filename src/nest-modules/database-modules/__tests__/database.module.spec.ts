@@ -1,17 +1,16 @@
 import { Test } from "@nestjs/testing";
 import { DatabaseModule } from "../database.module";
-import { ConfigModule, DB_SCHEMA_TYPE } from "src/nest-modules/config-modules/config.module";
+import { ConfigModule } from "src/nest-modules/config-modules/config.module";
 import { getConnectionToken } from "@nestjs/sequelize";
 import { Sequelize } from "sequelize-typescript";
 
 describe('DatabaseModule Unit Tests', () => {
-
-  describe('Sqlite connection', () => {
-    const connOptions: Partial<DB_SCHEMA_TYPE> = {
+  describe('sqlite connection', () => {
+    const connOptions = {
       DB_VENDOR: 'sqlite',
       DB_HOST: ':memory:',
       DB_LOGGING: false,
-      DB_AUTO_LOAD_MODELS: true
+      DB_AUTO_LOAD_MODELS: true,
     };
 
     it('should be a sqlite connection', async () => {
@@ -23,14 +22,13 @@ describe('DatabaseModule Unit Tests', () => {
             ignoreEnvFile: true,
             ignoreEnvVars: true,
             validationSchema: null,
-            load: [() => connOptions]
-          })
-        ]
+            load: [() => connOptions],
+          }),
+        ],
       }).compile();
 
       const app = module.createNestApplication();
       const conn = app.get<Sequelize>(getConnectionToken());
-
       expect(conn).toBeDefined();
       expect(conn.options.dialect).toBe('sqlite');
       expect(conn.options.host).toBe(':memory:');
@@ -38,9 +36,8 @@ describe('DatabaseModule Unit Tests', () => {
     });
   });
 
-  describe('Mysql connection', () => {
-
-    const connOptions: DB_SCHEMA_TYPE = {
+  describe('mysql connection', () => {
+    const connOptions = {
       DB_VENDOR: 'mysql',
       DB_HOST: 'db',
       DB_DATABASE: 'micro_videos',
@@ -48,7 +45,7 @@ describe('DatabaseModule Unit Tests', () => {
       DB_PASSWORD: 'root',
       DB_PORT: 3306,
       DB_LOGGING: false,
-      DB_AUTO_LOAD_MODELS: true
+      DB_AUTO_LOAD_MODELS: true,
     };
 
     it('should be a mysql connection', async () => {
@@ -60,7 +57,7 @@ describe('DatabaseModule Unit Tests', () => {
             ignoreEnvFile: true,
             ignoreEnvVars: true,
             validationSchema: null,
-            load: [() => connOptions]
+            load: [() => connOptions],
           }),
         ],
       }).compile();
@@ -68,8 +65,12 @@ describe('DatabaseModule Unit Tests', () => {
       const app = module.createNestApplication();
       const conn = app.get<Sequelize>(getConnectionToken());
       expect(conn).toBeDefined();
-      expect(conn.options.dialect).toBe('mysql');
-      expect(conn.options.host).toBe('db');
+      expect(conn.options.dialect).toBe(connOptions.DB_VENDOR);
+      expect(conn.options.host).toBe(connOptions.DB_HOST);
+      expect(conn.options.database).toBe(connOptions.DB_DATABASE);
+      expect(conn.options.username).toBe(connOptions.DB_USERNAME);
+      expect(conn.options.password).toBe(connOptions.DB_PASSWORD);
+      expect(conn.options.port).toBe(connOptions.DB_PORT);
       await conn.close();
     });
   });

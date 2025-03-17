@@ -15,6 +15,6 @@ services:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./.docker/dbdata:/var/lib/mysql:delegated
+      - ./.docker/mysql:/docker-entrypoint-initdb.d
     security_opt:
       - seccomp:unconfined
