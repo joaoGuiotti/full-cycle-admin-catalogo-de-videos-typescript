@@ -42,7 +42,7 @@ export const USE_CASES = {
     },
     inject: [REPOSITORIES.CAST_MEMBER_REPOSITORY.provide],
   },
-  LIST_CATEGORIES_USE_CASE: {
+  LIST_CAST_MEMBER_USE_CASE: {
     provide: ListCastMembersUseCase,
     useFactory: (castMemberRepo: ICastMemberRepository) => {
       return new ListCastMembersUseCase(castMemberRepo);

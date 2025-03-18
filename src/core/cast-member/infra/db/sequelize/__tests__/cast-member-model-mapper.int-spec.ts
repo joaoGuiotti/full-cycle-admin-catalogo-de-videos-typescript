@@ -1,5 +1,5 @@
 import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
-import { EntityValidationError } from "../../../../../shared/domain/validators/validation.error";
+import { EntityValidationError, LoadEntityError } from "../../../../../shared/domain/validators/validation.error";
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { CastMemberModel } from "../cast-member.model";
@@ -20,10 +20,10 @@ describe('CastMemberModelMapper Integration Test', () => {
     });
     try {
       CastMemberModelMapper.toEntity(model)
-      fail('The Category is valid, but it needs throw a EntityValidationError');
+      fail('The Category is valid, but it needs throw a LoadEntityError');
     } catch (e) {
-      expect(e).toBeInstanceOf(EntityValidationError);
-      expect((e as EntityValidationError).error).toMatchObject([
+      expect(e).toBeInstanceOf(LoadEntityError);
+      expect((e as LoadEntityError).error).toMatchObject([
         {
           'name': ['name must be shorter than or equal to 255 characters'],
         }

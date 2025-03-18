@@ -10,7 +10,7 @@ services:
       - .:/home/node/app
 
   db:
-    image: mysql:8.0.30-debian
+    image: mysql:8.3.0
     environment:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root

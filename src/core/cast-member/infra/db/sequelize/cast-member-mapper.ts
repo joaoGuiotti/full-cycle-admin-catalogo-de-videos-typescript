@@ -1,6 +1,6 @@
 import { CastMember, CastMemberId } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberModel } from "./cast-member.model";
-import { EntityValidationError } from "@core/shared/domain/validators/validation.error";
+import { LoadEntityError } from "@core/shared/domain/validators/validation.error";
 
 export class CastMemberModelMapper {
   static toModel(entity: CastMember): CastMemberModel {
@@ -21,7 +21,7 @@ export class CastMemberModelMapper {
     });
     entity.validate();
     if(entity.notification.hasErrors())  {
-      throw new EntityValidationError(entity.notification.toJSON())
+      throw new LoadEntityError(entity.notification.toJSON())
     }
     return entity;
   }

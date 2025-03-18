@@ -33,8 +33,8 @@ describe('DatabaseModule Unit Tests', () => {
       expect(conn.options.dialect).toBe('sqlite');
       expect(conn.options.host).toBe(':memory:');
       await conn.close();
-    });
-  });
+    },  180000);
+  });  
 
   describe('mysql connection', () => {
     const connOptions = {

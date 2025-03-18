@@ -26,9 +26,9 @@ export class ListCastMembersUseCase
 }
 
 export type ListCastMembersInput = Omit<SearchParamsConstructorProps<CastMemberFilter>, 'filter'> & {
-      filter?: {
-        name?: string | null;
-        type?: CastMemberTypes | null;
-      };
-    };
+  filter?: {
+    name?: string | null;
+    type?: CastMemberTypes | null;
+  };
+};
 export type ListCastMembersOutput = PaginationOutput<CastMemberOutput>;

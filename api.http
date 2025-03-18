@@ -3,7 +3,8 @@ POST http://localhost:3000/categories
 Content-Type: application/json
 
 { 
-  "name": "raifajoowtokeotiubuocodit udewkovguvihdiepgifomabufdogemisipwacodakizingoleihenemaktohmutlaznostadubbucuctadezejubguvamufurretamvebtangiwnavimaposfatabzumuturnoriralizafeptelmogaretiagahiktiemofalurakugulabuirrajmukibwiffijecasaimdoegujisesmanenimjowuzobepa"
+  "name": "Category 2",
+  "description": "Category 2 description"
 }
 ###
 GET http://localhost:3000/categories 
@@ -11,3 +12,17 @@ GET http://localhost:3000/categories
 
 ### Get category by id
 GET http://localhost:3000/categories/6cdd799c-c886-47b7-8010-3adb97d73b83
+
+
+
+### Post Cast Memebers
+POST http://localhost:3000/cast-members
+Content-Type: application/json
+
+{
+  "name": "Cast Member 1",
+  "type": 1
+}
+
+### Get Cast Memebers
+GET http://localhost:3000/cast-members
