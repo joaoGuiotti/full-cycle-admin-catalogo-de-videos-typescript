@@ -1,12 +1,14 @@
-import { SearchParams, SearchParamsConstructorProps } from "@core/shared/domain/repository/search-params";
-import { CastMemberTypes } from "./cast-member-type.vo";
+import {  SearchParams, SearchParamsConstructorProps } from "@core/shared/domain/repository/search-params";
+import { CastMemberType, CastMemberTypes, InvalidCastMemberTypeError } from "./cast-member-type.vo";
 import { ISearchableRepository } from "@core/shared/domain/repository/repository-interface";
 import { CastMember, CastMemberId } from "./cast-member.aggregate";
+import { Either } from "@core/shared/domain/either";
+import { SearchValidationError } from "@core/shared/domain/validators/validation.error";
 import { SearchResult } from "@core/shared/domain/repository/search-result";
 
 export type CastMemberFilter = {
-  name?: string;
-  type?: CastMemberTypes;
+  name?: string | null;
+  type?: CastMemberType | null;
 };
 
 export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
@@ -24,11 +26,25 @@ export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
       };
     } = {},
   ) {
+    const [type, errorCastMemberType] = Either.of(props.filter?.type)
+      .map((type) => type || null)
+      .chain<CastMemberType | null, InvalidCastMemberTypeError>((type) =>
+        type ? CastMemberType.create(type) : Either.of(null),
+      )
+      .asArray();
+
+    if (errorCastMemberType) {
+      const error = new SearchValidationError([
+        { type: [errorCastMemberType.message] },
+      ]);
+      throw error;
+    }
+
     return new CastMemberSearchParams({
       ...props,
       filter: {
-        name: props.filter?.name!,
-        type: props.filter?.type!,
+        name: props.filter?.name,
+        type: type,
       },
     });
   }
@@ -52,7 +68,7 @@ export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
   }
 }
 
-export class CastMemberSearchResult extends SearchResult<CastMember> { };
+export class CastMemberSearchResult extends SearchResult<CastMember> {}
 
 export interface ICastMemberRepository
   extends ISearchableRepository<
@@ -61,4 +77,4 @@ export interface ICastMemberRepository
     CastMemberFilter,
     CastMemberSearchParams,
     CastMemberSearchResult
-  > { }
+  > {}

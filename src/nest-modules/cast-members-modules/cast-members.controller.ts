@@ -36,8 +36,8 @@ export class CastMembersController {
   }
 
   @Get()
-  async search(@Query() searchParamsDto: SearchCastMembersDto) {
-    const output = await this.listUseCase.execute(searchParamsDto);
+  async search(@Query() searchParams: SearchCastMembersDto) {
+    const output = await this.listUseCase.execute(searchParams);
     return new CastMemberCollectionPresenter(output);
   }
 

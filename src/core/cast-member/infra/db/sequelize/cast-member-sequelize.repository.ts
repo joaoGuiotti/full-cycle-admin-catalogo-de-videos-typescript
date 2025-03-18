@@ -115,9 +115,10 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
       }
 
       if (props.filter.type) {
-        where['type'] = props.filter.type;
+        where['type'] = props.filter.type.type;
       }
     }
+
     const { rows: models, count } = await this.castMemberModel.findAndCountAll({
       ...(props.filter && {
         where,

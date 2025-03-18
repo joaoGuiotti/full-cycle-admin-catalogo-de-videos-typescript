@@ -8,9 +8,10 @@ export class CastMemberPresenter {
   id: string;
   name: string;
   type: CastMemberTypes;
-
-  @Transform(({ value }: { value: Date }) => value.toISOString())
-  created_at?: Date;
+  @Transform(({ value }: { value: Date }) => {
+    return value.toISOString();
+  })
+  created_at: Date;
 
   constructor(output: CastMemberOutput) {
     this.id = output.id;
@@ -22,10 +23,14 @@ export class CastMemberPresenter {
 
 export class CastMemberCollectionPresenter extends CollectionPresenter {
   data: CastMemberPresenter[];
+  //sugestão de reuso
+  // constructor(output: CastMemberOutput[], paginationProps){
 
-  constructor(outut: ListCastMembersOutput) {
-    const { items, ...paginationProps } = outut;
+  // }
+
+  constructor(output: ListCastMembersOutput) {
+    const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items.map((i) => new CastMemberPresenter(i));
+    this.data = items.map((item) => new CastMemberPresenter(item));
   }
 }

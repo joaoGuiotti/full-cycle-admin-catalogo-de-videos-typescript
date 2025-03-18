@@ -10,7 +10,8 @@ export class ListCastMembersFilter {
 }
 
 export class ListCastMembersInput
-  implements SearchInput<ListCastMembersFilter> {
+  implements SearchInput<ListCastMembersFilter>
+{
   page?: number;
   per_page?: number;
   sort?: string;

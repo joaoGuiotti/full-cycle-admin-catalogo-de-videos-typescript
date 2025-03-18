@@ -1,11 +1,3 @@
-import { ListCastMembersInput } from "@core/cast-member/application/use-cases/list-cast-members/list-cast-members.use-case";
-import { CastMemberFilter } from "@core/cast-member/domain/cast-member.repository";
-import { SortDirection } from "@core/shared/domain/repository/search-params";
-
-export class SearchCastMembersDto implements ListCastMembersInput {
-  page?: number;
-  per_page?: number;
-  sort?: string | null;
-  sort_dir?: SortDirection | null;
-  filter?: CastMemberFilter;
-}
+import { ListCastMembersInput } from "@core/cast-member/application/use-cases/list-cast-members/list-cast-members.input";
+ 
+export class SearchCastMembersDto implements ListCastMembersInput { }
