@@ -8,7 +8,7 @@ export async function applyGlobalConfigApp(app: INestApplication) {
   app.useGlobalPipes(
     new ValidationPipe({
       errorHttpStatusCode: 422,
-      transform: true
+      transform: true, // Forçar o tipo do valor recebido para o tipo do DTO
     })
   );
 

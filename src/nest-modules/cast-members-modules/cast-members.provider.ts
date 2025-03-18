@@ -65,7 +65,7 @@ export const USE_CASES = {
   },
 };
 
-export const CAST_MEMBER_PROVIDERS = {
+export const CAST_MEMBERS_PROVIDERS = {
   REPOSITORIES,
   USE_CASES
 };
