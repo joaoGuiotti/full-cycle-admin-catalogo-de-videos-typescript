@@ -9,12 +9,12 @@ import { GetCastMemberUseCase } from '../../../core/cast-member/application/use-
 import { DeleteCastMemberUseCase } from '../../../core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
 import { CastMember } from '../../../core/cast-member/domain/cast-member.aggregate';
 import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
-import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
-import { DatabaseModule } from 'src/nest-modules/database-modules/database.module';
+import { CastMemberOutputMapper } from '../../../core/cast-member/application/use-cases/common/cast-member-output';
 import { CAST_MEMBER_PROVIDERS } from '../cast-members.provider';
+import { DatabaseModule } from 'src/nest-modules/database-modules/database.module';
 import { CreateCastMemberFixture, ListCastMembersFixture, UpdateCastMemberFixture } from '../testing/cast-member-fixture';
-import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
 import { CastMemberCollectionPresenter } from '../cast-member.presenter';
+import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
 
 describe('CastMembersController Integration Tests', () => {
   let controller: CastMembersController;
@@ -77,7 +77,7 @@ describe('CastMembersController Integration Tests', () => {
       async ({ send_data, expected }) => {
         const presenter = await controller.update(
           castMember.cast_member_id.id,
-          send_data as any,
+          send_data,
         );
         const entity = await repository.findById(new Uuid(presenter.id));
 
@@ -85,7 +85,7 @@ describe('CastMembersController Integration Tests', () => {
           cast_member_id: presenter.id,
           created_at: presenter.created_at,
           name: expected.name ?? castMember.name,
-          type: expected.type ?? castMember.type,
+          type: expected.type ?? castMember.type.type,
         });
         expect(presenter).toEqual(
           CastMembersController.serialize(
@@ -99,7 +99,7 @@ describe('CastMembersController Integration Tests', () => {
   it('should delete a cast member', async () => {
     const castMember = CastMember.fake().anActor().build();
     await repository.insert(castMember);
-    const response = await controller.remove(castMember.cast_member_id.id);
+    const response = await controller.remove(castMember.entity_id.id);
     expect(response).not.toBeDefined();
     await expect(
       repository.findById(castMember.cast_member_id),
@@ -112,7 +112,7 @@ describe('CastMembersController Integration Tests', () => {
     const presenter = await controller.findOne(castMember.cast_member_id.id);
     expect(presenter.id).toBe(castMember.cast_member_id.id);
     expect(presenter.name).toBe(castMember.name);
-    expect(presenter.type).toBe(castMember.type);
+    expect(presenter.type).toBe(castMember.type.type);
     expect(presenter.created_at).toEqual(castMember.created_at);
   });
 

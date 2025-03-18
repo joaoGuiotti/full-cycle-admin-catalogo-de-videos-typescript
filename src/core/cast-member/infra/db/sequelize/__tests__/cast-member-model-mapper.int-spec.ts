@@ -1,9 +1,10 @@
-import { CastMember, CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
-import { EntityValidationError, LoadEntityError } from "../../../../../shared/domain/validators/validation.error";
+import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
+import { LoadEntityError } from "../../../../../shared/domain/validators/validation.error";
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { CastMemberModel } from "../cast-member.model";
 import { CastMemberModelMapper } from "../cast-member-mapper";
+import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
 
 
 describe('CastMemberModelMapper Integration Test', () => {
@@ -15,7 +16,7 @@ describe('CastMemberModelMapper Integration Test', () => {
     const model = CastMemberModel.build({
       cast_member_id: '9366b7dc-2d71-4799-b91c-c64adb205104',
       name: 'a'.repeat(256),
-      type: CastMemberTypes.ACTOR,
+      type: CastMemberType.createAnActor().type,
       created_at: new Date()
     });
     try {
@@ -36,7 +37,7 @@ describe('CastMemberModelMapper Integration Test', () => {
     const model = CastMemberModel.build({
       cast_member_id: '5490020a-e866-4229-9adc-aa44b83234c4',
       name: 'some value',
-      type: CastMemberTypes.ACTOR,
+      type: CastMemberType.createAnActor().type,
       created_at,
     });
     const entity = CastMemberModelMapper.toEntity(model);
@@ -46,7 +47,7 @@ describe('CastMemberModelMapper Integration Test', () => {
       new CastMember({
         cast_member_id: new Uuid('5490020a-e866-4229-9adc-aa44b83234c4'),
         name: 'some value',
-        type: CastMemberTypes.ACTOR,
+        type: CastMemberType.createAnActor(),
         created_at,
       }).toJSON()
     );

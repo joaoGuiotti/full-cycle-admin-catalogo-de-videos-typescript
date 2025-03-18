@@ -5,37 +5,42 @@ import { ICastMemberRepository } from "@core/cast-member/domain/cast-member.repo
 import { CastMember, CastMemberId } from "@core/cast-member/domain/cast-member.aggregate";
 import { NotFoundError } from "@core/shared/domain/errors/not-found.error";
 import { EntityValidationError } from "@core/shared/domain/validators/validation.error";
-
-export type UpdateCastMemberOutput = CastMemberOutput;
+import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
 
 export class UpdateCastMemberUseCase
-  implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput> {
+  implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput>
+{
+  constructor(private castMemberRepo: ICastMemberRepository) {}
 
-  constructor(private readonly repo: ICastMemberRepository) { }
-
-  async execute(input: UpdateCastMemberInput): Promise<CastMemberOutput> {
-    const uuid = new CastMemberId(input.id);
-    const castMember = await this.repo.findById(uuid);
+  async execute(input: UpdateCastMemberInput): Promise<UpdateCastMemberOutput> {
+    const castMemberId = new CastMemberId(input.id);
+    const castMember = await this.castMemberRepo.findById(castMemberId);
 
     if (!castMember) {
       throw new NotFoundError(input.id, CastMember);
     }
 
-    if (input.name !== undefined) {
-      castMember.changeName(input.name);
-    }
+    input.name && castMember.changeName(input.name);
 
-    if (input.type !== undefined) {
-      castMember.changeType(input.type);
+    if (input.type) {
+      const [type, errorCastMemberType] = CastMemberType.create(
+        input.type,
+      ).asArray();
+
+      castMember.changeType(type);
+
+      errorCastMemberType &&
+        castMember.notification.setError(errorCastMemberType.message, 'type');
     }
 
     if (castMember.notification.hasErrors()) {
       throw new EntityValidationError(castMember.notification.toJSON());
     }
 
-    await this.repo.update(castMember);
+    await this.castMemberRepo.update(castMember);
 
     return CastMemberOutputMapper.toOutput(castMember);
   }
-
 }
+
+export type UpdateCastMemberOutput = CastMemberOutput;

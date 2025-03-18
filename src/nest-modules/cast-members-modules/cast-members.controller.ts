@@ -9,6 +9,7 @@ import { UpdateCastMemberDto } from './dto/update-cast-memeber.dto';
 import { UpdateCastMemberUseCase } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.use-case';
 import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
 import { GetCastMemberUseCase } from '@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
+import { UpdateCastMemberInput } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.input';
 
 @Controller('cast-members')
 export class CastMembersController {
@@ -49,12 +50,10 @@ export class CastMembersController {
   @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
-    @Body() updateCastMemberDto: UpdateCastMemberDto
+    @Body() updateCastMemberDto: UpdateCastMemberDto,
   ) {
-    const output = await this.updateUseCase.execute({
-      ...updateCastMemberDto,
-      id
-    });
+    const input = new UpdateCastMemberInput({ id, ...updateCastMemberDto });
+    const output = await this.updateUseCase.execute(input);
     return CastMembersController.serialize(output);
   }
 

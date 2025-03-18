@@ -1,115 +1,127 @@
-import { Uuid } from "@core/shared/domain/value-objects/uuid.vo";
-import { CastMember } from "../cast-member.aggregate"
-import { CastMemberTypes } from "../cast-member-type.vo";
-describe('CastMember Without Validador Unit Tests', () => {
+import { CastMemberType } from '../cast-member-type.vo';
+import { CastMember, CastMemberId } from '../cast-member.aggregate';
+
+describe('CastMember Unit Tests', () => {
   beforeEach(() => {
-    CastMember.prototype.validate = jest.fn()
+    CastMember.prototype.validate = jest
+      .fn()
       .mockImplementation(CastMember.prototype.validate);
   });
-
-  test('constructor of CastMember', () => {
-    let castMember = new CastMember({ name: 'João', type: 1 });
-    expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
-    expect(castMember.name).toBe('João');
-    expect(castMember.type).toBe(CastMemberTypes.DIRECTOR);
-    expect(castMember.created_at).toBeInstanceOf(Date);
-    let created_at = new Date();
-    castMember = new CastMember({
-      name: 'Cast',
-      type: 2,
-      created_at
+  test('constructor of cast member', () => {
+    const director = CastMemberType.createADirector();
+    let castMember = new CastMember({
+      name: 'test',
+      type: director,
     });
-    expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
-    expect(castMember.name).toBe('Cast');
-    expect(castMember.type).toBe(CastMemberTypes.ACTOR);
+    expect(castMember.cast_member_id).toBeInstanceOf(CastMemberId);
+    expect(castMember.name).toBe('test');
+    expect(castMember.type).toEqual(director);
+    expect(castMember.created_at).toBeInstanceOf(Date);
+
+    const created_at = new Date();
+    castMember = new CastMember({
+      name: 'test',
+      type: director,
+      created_at,
+    });
+    expect(castMember.cast_member_id).toBeInstanceOf(CastMemberId);
+    expect(castMember.name).toBe('test');
+    expect(castMember.type).toEqual(director);
     expect(castMember.created_at).toBe(created_at);
   });
 
-  describe('create command', () => {
+  describe('id field', () => {
+    const actor = CastMemberType.createADirector();
+    const arrange = [
+      { name: 'Movie', type: actor },
+      { name: 'Movie', type: actor, id: null },
+      { name: 'Movie', type: actor, id: undefined },
+      { name: 'Movie', type: actor, id: new CastMemberId() },
+    ];
 
-    test('should create a cast member', () => {
-      const castMember = CastMember.create({
-        name: 'Cast 01', type: 2
-      });
-      expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
-      expect(castMember.name).toBe('Cast 01');
-      expect(castMember.type).toBe(CastMemberTypes.ACTOR);
-      expect(castMember.created_at).toBeInstanceOf(Date);
-      expect(castMember.toJSON()).toStrictEqual({
-        cast_member_id: castMember.cast_member_id.id,
-        name: 'Cast 01',
-        type: 2,
-        created_at: castMember.created_at
-      });
+    test.each(arrange)('when props is %j', (item) => {
+      const castMember = new CastMember(item);
+      expect(castMember.cast_member_id).toBeInstanceOf(CastMemberId);
     });
-
   });
 
-  describe('fake castMember create', () => {
-    it('should create a fake castMember', () => {
-      const castMember = CastMember.fake().anActor().build();
-      expect(castMember).not.toBeNull();
-      expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
+  describe('create command', () => {
+    test('should create a cast member', () => {
+      const actor = CastMemberType.createADirector();
+      const castMember = CastMember.create({
+        name: 'test',
+        type: actor,
+      });
+      expect(castMember.cast_member_id).toBeInstanceOf(CastMemberId);
+      expect(castMember.name).toBe('test');
+      expect(castMember.type).toEqual(actor);
+      expect(castMember.created_at).toBeInstanceOf(Date);
+      expect(CastMember.prototype.validate).toHaveBeenCalledTimes(1);
+      expect(castMember.notification.hasErrors()).toBe(false);
     });
-
-  })
+  });
 
   describe('cast_member_id field', () => {
-    const arrange = [{ id: null }, { id: undefined }, { id: new Uuid() }];
+    const arrange = [
+      { id: null },
+      { id: undefined },
+      { id: new CastMemberId() },
+    ];
+
     test.each(arrange)('should be is %j', (props) => {
       const castMember = new CastMember(props as any);
-      expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
-      expect(castMember.entity_id).toBeInstanceOf(Uuid);
+      expect(castMember.cast_member_id).toBeInstanceOf(CastMemberId);
     });
   });
 
   test('should change name', () => {
-    const castMember = new CastMember({
-      name: 'Cast', type: 1
+    const actor = CastMemberType.createADirector();
+    const castMember = CastMember.create({
+      name: 'test',
+      type: actor,
     });
-    castMember.changeName('other name');
-    expect(castMember.name).toBe('other name');
-    expect(CastMember.prototype.validate).toHaveBeenCalledTimes(1);
-    expect(CastMember.prototype.validate).toHaveBeenCalledWith(['name']);
+    castMember.changeName('new name');
+    expect(castMember.name).toBe('new name');
+    expect(CastMember.prototype.validate).toHaveBeenCalledTimes(2);
     expect(castMember.notification.hasErrors()).toBe(false);
   });
 
   test('should change type', () => {
-    const castMember = new CastMember({
-      name: 'Cast', type: CastMemberTypes.ACTOR
+    const actor = CastMemberType.createADirector();
+    const castMember = CastMember.create({
+      name: 'test',
+      type: actor,
     });
-    castMember.changeType(CastMemberTypes.DIRECTOR);
-    expect(castMember.type).toBe(1);
-    expect(CastMember.prototype.validate).not.toHaveBeenCalled();
-    expect(castMember.notification.hasErrors()).toBe(false);
+    const director = CastMemberType.createADirector();
+    castMember.changeType(director);
+    expect(castMember.type).toEqual(director);
+    expect(CastMember.prototype.validate).toHaveBeenCalledTimes(1);
   });
+});
 
-  describe('Cast Member Validator', () => {
-    describe('create command', () => {
-      test('should an invalid category with name property', () => {
-        const category = CastMember.create({ name: 't'.repeat(256), type: 1 });
-
-        expect(category.notification.hasErrors()).toBe(true);
-        expect(category.notification).notificationContainsErrorMessages([
-          {
-            name: ['name must be shorter than or equal to 255 characters'],
-          },
-        ]);
-      });
-    });
-
-    describe('changeName method', () => {
-      it('should a invalid cast member using name property', () => {
-        const castMember = CastMember.create({ name: 'Movie', type: 1 });
-        castMember.changeName('t'.repeat(256));
-        expect(castMember.notification.hasErrors()).toBe(true);
-        expect(castMember.notification).notificationContainsErrorMessages([
-          {
-            name: ['name must be shorter than or equal to 255 characters'],
-          },
-        ]);
-      });
+describe('CastMember Validator', () => {
+  describe('create command', () => {
+    test('should an invalid cast member with name property', () => {
+      const castMember = CastMember.create({ name: 't'.repeat(256) } as any);
+      expect(castMember.notification.hasErrors()).toBe(true);
+      expect(castMember.notification).notificationContainsErrorMessages([
+        {
+          name: ['name must be shorter than or equal to 255 characters'],
+        },
+      ]);
     });
   });
 
+  describe('changeName method', () => {
+    it('should a invalid cast member using name property', () => {
+      const castMember = CastMember.fake().aDirector().build();
+      castMember.changeName('t'.repeat(256));
+      expect(castMember.notification.hasErrors()).toBe(true);
+      expect(castMember.notification).notificationContainsErrorMessages([
+        {
+          name: ['name must be shorter than or equal to 255 characters'],
+        },
+      ]);
+    });
+  });
 });

@@ -1,10 +1,10 @@
 import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
-import { IsInt, IsNotEmpty, IsString, validateSync } from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, IsString, validateSync } from "class-validator";
 
 export type UpdateCastMemberInputConstructorProps = {
   id: string;
-  name: string;
-  type: CastMemberTypes;
+  name?: string;
+  type?: CastMemberTypes;
 }
 
 export class UpdateCastMemberInput {
@@ -13,14 +13,14 @@ export class UpdateCastMemberInput {
   id: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name: string;
 
   @IsInt()
-  @IsNotEmpty()
+  @IsOptional()
   type: CastMemberTypes;
 
-  constructor(props: UpdateCastMemberInputConstructorProps) {
+  constructor(props?: UpdateCastMemberInputConstructorProps) {
     if (!props) return;
     this.id = props.id;
     props.name && (this.name = props.name);
@@ -28,7 +28,7 @@ export class UpdateCastMemberInput {
   }
 }
 
-export class CalidateUpdateCastMemberInput {
+export class ValidateUpdateCastMemberInput {
   static validate(input: UpdateCastMemberInput) {
     return validateSync(input);
   }

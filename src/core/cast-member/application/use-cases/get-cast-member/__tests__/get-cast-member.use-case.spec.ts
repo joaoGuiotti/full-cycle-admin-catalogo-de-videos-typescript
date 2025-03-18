@@ -23,8 +23,8 @@ describe('GetCastMemberUseCase Unit Tests', () => {
       .rejects.toThrow(new NotFoundError(uuid.id, CastMember));
   });
 
-  it('should return a category', async () => {
-    const items = [CastMember.create({ name: 'Movie', type: CastMemberTypes.ACTOR })];
+  it('should return a category', async () => { 
+    const items = [CastMember.fake().anActor().withName('Movie').build()];
     repo.items = items;
     const spyFindId = jest.spyOn(repo, 'findById');
     const output = await useCase.execute({ id: items[0].cast_member_id.id });

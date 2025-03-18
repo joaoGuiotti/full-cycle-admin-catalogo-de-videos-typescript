@@ -1,6 +1,6 @@
 import { Chance } from 'chance';
 import { CastMember, CastMemberId } from './cast-member.aggregate';
-import { CastMemberTypes } from './cast-member-type.vo';
+import { CastMemberType } from './cast-member-type.vo';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
@@ -10,8 +10,8 @@ export class CastMemberFakeBuilder<TBuild = any> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private _type: PropOrFactory<CastMemberTypes | null> = (_index) =>
-    this.chance.integer({ min: 1, max: 2});
+  private _type: PropOrFactory<CastMemberType> = (_index) =>
+    CastMemberType.createAnActor();
   // auto generated in entity
   private _created_at: PropOrFactory<Date> | undefined = undefined;
 
@@ -19,25 +19,25 @@ export class CastMemberFakeBuilder<TBuild = any> {
 
   static aDirector() {
     return new CastMemberFakeBuilder<CastMember>().withType(
-      CastMemberTypes.ACTOR,
+      CastMemberType.createADirector(),
     );
   }
 
   static anActor() {
     return new CastMemberFakeBuilder<CastMember>().withType(
-      CastMemberTypes.ACTOR,
+      CastMemberType.createAnActor(),
     );
   }
 
   static theActors(countObjs: number) {
     return new CastMemberFakeBuilder<CastMember[]>(countObjs).withType(
-      CastMemberTypes.ACTOR,
+      CastMemberType.createAnActor(),
     );
   }
 
   static theDirectors(countObjs: number) {
     return new CastMemberFakeBuilder<CastMember[]>(countObjs).withType(
-      CastMemberTypes.DIRECTOR,
+      CastMemberType.createADirector(),
     );
   }
 
@@ -62,7 +62,7 @@ export class CastMemberFakeBuilder<TBuild = any> {
     return this;
   }
 
-  withType(valueOrFactory: PropOrFactory<CastMemberTypes>) {
+  withType(valueOrFactory: PropOrFactory<CastMemberType>) {
     this._type = valueOrFactory;
     return this;
   }
@@ -94,7 +94,7 @@ export class CastMemberFakeBuilder<TBuild = any> {
         castMember.validate();
         return castMember;
       });
-    return this.countObjs === 1 ? (castMembers[0] as any) : castMembers as any;
+    return this.countObjs === 1 ? (castMembers[0] as any) : castMembers as TBuild;
   }
 
   get cast_member_id() {

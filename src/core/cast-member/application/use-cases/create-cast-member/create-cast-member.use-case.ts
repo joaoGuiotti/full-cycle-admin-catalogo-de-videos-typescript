@@ -4,6 +4,7 @@ import { CreateCastMemberInput } from "./create-cast-member.input";
 import { ICastMemberRepository } from "@core/cast-member/domain/cast-member.repository";
 import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberOutput, CastMemberOutputMapper } from "../common/cast-member-output";
+import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
  
 export class CreateCastMemberUseCase
   implements IUseCase<CreateCastMemberInput, CreateCastMemberOutput> {
@@ -11,15 +12,19 @@ export class CreateCastMemberUseCase
   constructor(private readonly castMemberRepo: ICastMemberRepository) { }
 
   async execute(input: CreateCastMemberInput): Promise<CreateCastMemberOutput> {
-    const entity = CastMember.create(input);
+    const [type, errorCastMemberType] = CastMemberType.create(input.type).asArray();
+    const entity = CastMember.create({...input, type});
 
-    if(entity.notification.hasErrors()) {
-      throw new EntityValidationError(entity.notification.toJSON());
+    const notification = entity.notification;
+    if(errorCastMemberType) {
+      notification.setError(errorCastMemberType.message, 'type');
     }
 
-    
-    await this.castMemberRepo.insert(entity);
+    if(notification.hasErrors()) {
+      throw new EntityValidationError(notification.toJSON());
+    }
 
+    await this.castMemberRepo.insert(entity);
     return CastMemberOutputMapper.toOutput(entity);
   }
 }

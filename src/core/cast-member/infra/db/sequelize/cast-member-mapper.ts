@@ -1,28 +1,32 @@
 import { CastMember, CastMemberId } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberModel } from "./cast-member.model";
 import { LoadEntityError } from "@core/shared/domain/validators/validation.error";
+import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
 
 export class CastMemberModelMapper {
-  static toModel(entity: CastMember): CastMemberModel {
-    return CastMemberModel.build({
-      cast_member_id: entity.cast_member_id.id,
-      name: entity.name,
-      type: entity.type,
-      created_at: entity.created_at
-    })
-  }
+  static toEntity(model: CastMemberModel) {
+    const { cast_member_id: id, ...otherData } = model.toJSON();
+    const [type, errorCastMemberType] = CastMemberType.create(
+      otherData.type as any,
+    ).asArray();
 
-  static toEntity(model: CastMemberModel): CastMember {
-    const entity = new CastMember({
-      cast_member_id: new CastMemberId(model.cast_member_id),
-      name: model.name,
-      type: model.type,
-      created_at: model.created_at
+    const castMember = new CastMember({
+      ...otherData,
+      cast_member_id: new CastMemberId(id),
+      type,
     });
-    entity.validate();
-    if(entity.notification.hasErrors())  {
-      throw new LoadEntityError(entity.notification.toJSON())
+
+    castMember.validate();
+
+    const notification = castMember.notification;
+    if (errorCastMemberType) {
+      notification.setError(errorCastMemberType.message, 'type');
     }
-    return entity;
+
+    if (notification.hasErrors()) {
+      throw new LoadEntityError(notification.toJSON());
+    }
+
+    return castMember;
   }
 }

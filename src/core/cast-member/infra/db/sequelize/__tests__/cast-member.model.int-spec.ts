@@ -1,7 +1,7 @@
 import { DataType } from "sequelize-typescript"
 import { setupSequelize } from "../../../../../shared/infra/helpers/helpers";
 import { CastMemberModel } from "../cast-member.model";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member.aggregate";
+import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 // Teste de integração 
 describe('CastMemberModel Integration Test', () => {

@@ -4,7 +4,6 @@ import { ListCastMembersUseCase } from "../list-cast-members.use-case";
 import { CastMemberModel } from "@core/cast-member/infra/db/sequelize/cast-member.model";
 import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
 import { CastMemberOutputMapper } from "../../common/cast-member-output";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('ListCastMemberUseCase Integration Test', () => {
   let useCase: ListCastMembersUseCase;
@@ -36,11 +35,11 @@ describe('ListCastMemberUseCase Integration Test', () => {
 
   it('Should return output using pagination, sort and filter', async () => {
     const castMembers = [
-      new CastMember({ name: 'a', type: CastMemberTypes.ACTOR }),
-      new CastMember({ name: 'AAA', type: CastMemberTypes.ACTOR }),
-      new CastMember({ name: 'AaA', type: CastMemberTypes.ACTOR }),
-      new CastMember({ name: 'b', type: CastMemberTypes.ACTOR }),
-      new CastMember({ name: 'c', type: CastMemberTypes.ACTOR }),
+      CastMember.fake().anActor().withName('a').build(),
+      CastMember.fake().anActor().withName('AAA').build(),
+      CastMember.fake().anActor().withName('AaA').build(),
+      CastMember.fake().anActor().withName('b').build(),
+      CastMember.fake().anActor().withName('c').build()
     ];
     await repo.bulkInsert(castMembers);
     let output = await useCase.execute({

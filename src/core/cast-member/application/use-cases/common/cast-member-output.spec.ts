@@ -4,10 +4,7 @@ import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('CastMemberOutputMapper', () => {
   it('should convert a category in output', () => {
-    const entity = CastMember.create({
-      name: 'Movie',
-      type: CastMemberTypes.ACTOR,
-    });
+    const entity = CastMember.fake().anActor().withName('Movie').build();
     const spyToJson = jest.spyOn(entity, 'toJSON');
     const output = CastMemberOutputMapper.toOutput(entity);
     expect(spyToJson).toHaveBeenCalled();

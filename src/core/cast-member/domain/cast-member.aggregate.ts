@@ -1,33 +1,27 @@
-import { ValueObject } from "@core/shared/domain/value-object";
-import { Uuid } from "@core/shared/domain/value-objects/uuid.vo";
-import { CastMemberValidatorFactory } from "./cast-member.validator";
-import { CastMemberFakeBuilder } from "./cast-member-fake.builder";
-import { AggreagateRoot } from "@core/shared/domain/aggregate-root";
-
-export enum CastMemberTypes {
-  DIRECTOR = 1,
-  ACTOR = 2,
-}
+import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
+import { CastMemberType } from './cast-member-type.vo';
+import { CastMemberFakeBuilder } from './cast-member-fake.builder';
+import { AggreagateRoot } from '@core/shared/domain/aggregate-root';
+import { CastMemberValidatorFactory } from './cast-member.validator';
 
 export type CastMemberConstructorProps = {
   cast_member_id?: CastMemberId;
   name: string;
-  type: CastMemberTypes;
+  type: CastMemberType;
   created_at?: Date;
-}
+};
 
-export type CastMemberCreateCommand = { 
+export type CastMemberCreateCommand = {
   name: string;
-  type: CastMemberTypes;
-  created_at?: Date;
-}
+  type: CastMemberType;
+};
 
 export class CastMemberId extends Uuid {}
 
 export class CastMember extends AggreagateRoot {
   cast_member_id: CastMemberId;
   name: string;
-  type: CastMemberTypes;
+  type: CastMemberType;
   created_at: Date;
 
   constructor(props: CastMemberConstructorProps) {
@@ -38,22 +32,18 @@ export class CastMember extends AggreagateRoot {
     this.created_at = props.created_at ?? new Date();
   }
 
-  get entity_id(): ValueObject {
-    return this.cast_member_id;
+  static create(props: CastMemberCreateCommand) {
+    const castMember = new CastMember(props);
+    castMember.validate(['name']);
+    return castMember;
   }
 
-  static create(props: CastMemberCreateCommand): CastMember {
-    const category = new CastMember(props);
-    category.validate(['name']);
-    return category;
-  }
-
-  changeName(name: string) {
+  changeName(name: string): void {
     this.name = name;
     this.validate(['name']);
   }
 
-  changeType(type: CastMemberTypes) {
+  changeType(type: CastMemberType): void {
     this.type = type;
   }
 
@@ -63,15 +53,19 @@ export class CastMember extends AggreagateRoot {
   }
 
   static fake() {
-    return CastMemberFakeBuilder<CastMember>;
+    return CastMemberFakeBuilder;
+  }
+
+  get entity_id() {
+    return this.cast_member_id;
   }
 
   toJSON() {
-    return  {
+    return {
       cast_member_id: this.cast_member_id.id,
       name: this.name,
-      type: this.type,
-      created_at: this.created_at
-    }
+      type: this.type.type,
+      created_at: this.created_at,
+    };
   }
 }

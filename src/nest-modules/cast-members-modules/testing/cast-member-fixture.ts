@@ -1,4 +1,4 @@
-import { CastMemberTypes } from '@core/cast-member/domain/cast-member-type.vo';
+import { CastMemberTypes } from '../../../core/cast-member/domain/cast-member-type.vo';
 import { CastMember } from '../../../core/cast-member/domain/cast-member.aggregate';
 import { SortDirection } from '../../../core/shared/domain/repository/search-params';
 
@@ -389,71 +389,71 @@ export class ListCastMembersFixture {
       },
     ];
 
-    // const arrange_filter_actors_sort_by_created_desc = [
-    //   {
-    //     send_data: {
-    //       page: 1,
-    //       per_page: 2,
-    //       sort: 'created_at',
-    //       sort_dir: 'desc' as SortDirection,
-    //       filter: { type: CastMemberTypes.ACTOR },
-    //     },
-    //     expected: {
-    //       entities: [entitiesMap.actor_c, entitiesMap.actor_b],
-    //       meta: {
-    //         total: 5,
-    //         current_page: 1,
-    //         last_page: 3,
-    //         per_page: 2,
-    //       },
-    //     },
-    //   },
-    //   {
-    //     send_data: {
-    //       page: 2,
-    //       per_page: 2,
-    //       sort: 'created_at',
-    //       sort_dir: 'desc' as SortDirection,
-    //       filter: { type: CastMemberTypes.ACTOR },
-    //     },
-    //     expected: {
-    //       entities: [entitiesMap.actor_AaA, entitiesMap.actor_AAA],
-    //       meta: {
-    //         total: 5,
-    //         current_page: 2,
-    //         last_page: 3,
-    //         per_page: 2,
-    //       },
-    //     },
-    //   },
-    // ];
+    const arrange_filter_actors_sort_by_created_desc = [
+      {
+        send_data: {
+          page: 1,
+          per_page: 2,
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.ACTOR },
+        },
+        expected: {
+          entities: [entitiesMap.actor_c, entitiesMap.actor_b],
+          meta: {
+            total: 5,
+            current_page: 1,
+            last_page: 3,
+            per_page: 2,
+          },
+        },
+      },
+      {
+        send_data: {
+          page: 2,
+          per_page: 2,
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.ACTOR },
+        },
+        expected: {
+          entities: [entitiesMap.actor_AaA, entitiesMap.actor_AAA],
+          meta: {
+            total: 5,
+            current_page: 2,
+            last_page: 3,
+            per_page: 2,
+          },
+        },
+      },
+    ];
 
-    // const arrange_filter_directors_sort_by_created_desc = [
-    //   {
-    //     send_data: {
-    //       page: 1,
-    //       per_page: 2,
-    //       sort: 'created_at',
-    //       sort_dir: 'desc' as SortDirection,
-    //       filter: { type: CastMemberTypes.DIRECTOR },
-    //     },
-    //     expected: {
-    //       entities: [entitiesMap.director_e, entitiesMap.director_f],
-    //       meta: {
-    //         total: 2,
-    //         current_page: 1,
-    //         last_page: 1,
-    //         per_page: 2,
-    //       },
-    //     },
-    //   },
-    // ];
+    const arrange_filter_directors_sort_by_created_desc = [
+      {
+        send_data: {
+          page: 1,
+          per_page: 2,
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.DIRECTOR },
+        },
+        expected: {
+          entities: [entitiesMap.director_e, entitiesMap.director_f],
+          meta: {
+            total: 2,
+            current_page: 1,
+            last_page: 1,
+            per_page: 2,
+          },
+        },
+      },
+    ];
 
     return {
       arrange: [
         ...arrange_filter_by_name_sort_name_asc,
-        // ...arrange_filter_actors_sort_by_created_desc,
-        // ...arrange_filter_directors_sort_by_created_desc,
+        ...arrange_filter_actors_sort_by_created_desc,
+        ...arrange_filter_directors_sort_by_created_desc,
       ],
       entitiesMap,
     };

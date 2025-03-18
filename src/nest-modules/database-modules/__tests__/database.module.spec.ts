@@ -1,8 +1,8 @@
-import { Test } from "@nestjs/testing";
-import { DatabaseModule } from "../database.module";
-import { ConfigModule } from "src/nest-modules/config-modules/config.module";
-import { getConnectionToken } from "@nestjs/sequelize";
-import { Sequelize } from "sequelize-typescript";
+import { Test } from '@nestjs/testing';
+import { DatabaseModule } from '../database.module';
+import { getConnectionToken } from '@nestjs/sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
 
 describe('DatabaseModule Unit Tests', () => {
   describe('sqlite connection', () => {
@@ -33,8 +33,8 @@ describe('DatabaseModule Unit Tests', () => {
       expect(conn.options.dialect).toBe('sqlite');
       expect(conn.options.host).toBe(':memory:');
       await conn.close();
-    },  180000);
-  });  
+    }, 180000); 
+  });
 
   describe('mysql connection', () => {
     const connOptions = {
@@ -72,6 +72,6 @@ describe('DatabaseModule Unit Tests', () => {
       expect(conn.options.password).toBe(connOptions.DB_PASSWORD);
       expect(conn.options.port).toBe(connOptions.DB_PORT);
       await conn.close();
-    });
+    }, 180000);
   });
 });
