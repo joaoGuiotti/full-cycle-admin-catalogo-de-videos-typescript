@@ -4,7 +4,7 @@ import { Reflector } from "@nestjs/core";
 import { NotFoundErrorFilter } from "./shared-module/filters/not-found-error.filter";
 import { EntityValidationErrorFilter } from "./shared-module/filters/entity-validation-error.filter";
 
-export async  function applyGlobalConfigApp(app: INestApplication) {
+export async function applyGlobalConfigApp(app: INestApplication) {
   app.useGlobalPipes(
     new ValidationPipe({
       errorHttpStatusCode: 422,

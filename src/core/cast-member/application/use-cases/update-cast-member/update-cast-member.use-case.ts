@@ -8,9 +8,8 @@ import { EntityValidationError } from "@core/shared/domain/validators/validation
 import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
 
 export class UpdateCastMemberUseCase
-  implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput>
-{
-  constructor(private castMemberRepo: ICastMemberRepository) {}
+  implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput> {
+  constructor(private castMemberRepo: ICastMemberRepository) { }
 
   async execute(input: UpdateCastMemberInput): Promise<UpdateCastMemberOutput> {
     const castMemberId = new CastMemberId(input.id);

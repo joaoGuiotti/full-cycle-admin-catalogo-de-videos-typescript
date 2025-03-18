@@ -3,7 +3,7 @@ import { CastMemberSearchResult } from "@core/cast-member/domain/cast-member.rep
 import { CastMemberInMemoryRepository } from "@core/cast-member/infra/db/im-memory/cast-member-in-memory.repository";
 import { CastMemberOutputMapper } from "../../common/cast-member-output";
 import { ListCastMembersUseCase } from "../list-cast-members.use-case";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
+import { CastMemberType, CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('ListCastMemberUseCase Unitary Test', () => {
   let useCase: ListCastMembersUseCase;
@@ -31,7 +31,7 @@ describe('ListCastMemberUseCase Unitary Test', () => {
       last_page: 1
     });
 
-    const entity = CastMember.create({ name: 'Movie', type: CastMemberTypes.DIRECTOR });
+    const entity = CastMember.create({ name: 'Movie', type: CastMemberType.createADirector() });
     result = new CastMemberSearchResult({
       items: [entity],
       total: 1,
@@ -52,12 +52,8 @@ describe('ListCastMemberUseCase Unitary Test', () => {
 
   it('shold return output sorted by created_at when input param is empty', async () => {
     const items = [
-      new CastMember({ name: 'test1', type: CastMemberTypes.ACTOR }),
-      new CastMember({
-        name: 'test2',
-        type: 2,
-        created_at: new Date(new Date().getTime() + 100)
-      })
+      CastMember.create({ name: 'test1', type: CastMemberType.createAnActor() }),
+      CastMember.create({ name: 'test2', type: CastMemberType.createAnActor() }),
     ];
     repo.items = items;
     const output = await useCase.execute({});

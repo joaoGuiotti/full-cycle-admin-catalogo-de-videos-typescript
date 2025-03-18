@@ -3,7 +3,7 @@ import { NotFoundError } from "../../../../../shared/domain/errors/not-found.err
 import { InvalidUuidError, Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { DeleteCastMemberUseCase } from "../delete-cast-member.use-case";
 import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
+import { CastMemberType } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('DeleteCastMemberUseCase Unit Tests', () => {
   let useCase: DeleteCastMemberUseCase;
@@ -27,7 +27,7 @@ describe('DeleteCastMemberUseCase Unit Tests', () => {
   });
 
   it('should delete a category', async () => {
-    const items = [new CastMember({ name: 'test 1', type: CastMemberTypes.ACTOR })];
+    const items = [ CastMember.create({ name: 'test 1', type: CastMemberType.createAnActor() })];
     repository.items = items;
     await useCase.execute({
       id: items[0].cast_member_id.id,

@@ -1,10 +1,9 @@
 import request from "supertest";
 import { startApp } from "src/nest-modules/shared-module/testing/helper";
-import supertest from "supertest";
 import { ICategoryRepository } from "@core/category/domain/category.repository";
 import { REPOSITORIES } from "src/nest-modules/categories-modules/categories.provider";
-import { Category } from "@core/category/domain/category.entity";
 import { GetCategoryFixture } from "src/nest-modules/categories-modules/testing/category-fixture";
+import { Category } from "@core/category/domain/category.aggregate";
 
 
 describe('CategoriesController (e2e)', () => {

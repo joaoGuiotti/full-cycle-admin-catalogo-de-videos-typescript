@@ -6,7 +6,12 @@ import { NotFoundErrorFilter } from './nest-modules/shared-module/filters/not-fo
 import { EntityValidationErrorFilter } from './nest-modules/shared-module/filters/entity-validation-error.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: { 
+      // Configure cors to allow all origins
+      origin: '*'
+    }
+  });
 
   app.useGlobalPipes(new ValidationPipe({ errorHttpStatusCode: 422, }));
   app.useGlobalInterceptors(

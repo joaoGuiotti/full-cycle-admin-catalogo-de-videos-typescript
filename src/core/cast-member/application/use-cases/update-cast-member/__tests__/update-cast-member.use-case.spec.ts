@@ -3,7 +3,7 @@ import { NotFoundError } from "../../../../../shared/domain/errors/not-found.err
 import { InvalidUuidError, Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { UpdateCastMemberUseCase } from "../update-cast-member.use-case";
 import { CastMember } from "@core/cast-member/domain/cast-member.aggregate";
-import { CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
+import { CastMemberType, CastMemberTypes } from "@core/cast-member/domain/cast-member-type.vo";
 
 describe('UpdateCastMemberUseCase Unit Test', () => {
   let useCase!: UpdateCastMemberUseCase;
@@ -22,12 +22,12 @@ describe('UpdateCastMemberUseCase Unit Test', () => {
     const uuid = new Uuid();
 
     await expect(() =>
-      useCase.execute({ id: uuid.id, name: 'fake',  type: CastMemberTypes.DIRECTOR })
+      useCase.execute({ id: uuid.id, name: 'fake', type: CastMemberTypes.DIRECTOR })
     ).rejects.toThrow(new NotFoundError(uuid.id, CastMember));
   });
   it('Should throws error when entiity not found', async () => {
     const spyUpdate = jest.spyOn(repository, 'update');
-    const entity = new CastMember({ name: 'test', type: CastMemberTypes.ACTOR });
+    const entity = CastMember.create({ name: 'test', type: CastMemberType.createAnActor() });
 
     repository.items = [entity];
 
