@@ -1,6 +1,6 @@
-import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-member.model';
 import { CategoryModel } from '../../core/category/infra/db/sequelize/category.model';
-import { Module } from '@nestjs/common';
+import { CastMemberModel } from '../../core/cast-member/infra/db/sequelize/cast-member.model';
+import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-modules/config.module';
@@ -10,6 +10,7 @@ const models = [
   CastMemberModel
 ];
 
+@Global()
 @Module({
   imports: [
     SequelizeModule.forRootAsync({

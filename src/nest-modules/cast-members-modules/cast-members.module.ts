@@ -1,4 +1,4 @@
-import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-member.model';
+import { CastMemberModel } from '../../core/cast-member/infra/db/sequelize/cast-member.model';
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CastMembersController } from './cast-members.controller';

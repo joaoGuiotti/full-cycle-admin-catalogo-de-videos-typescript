@@ -1,4 +1,4 @@
-import { CastMemberTypes } from '@core/cast-member/domain/cast-member-type.vo';
+import { CastMemberTypes } from '../../../domain/cast-member-type.vo';
 import {
   Column,
   DataType,
@@ -11,7 +11,7 @@ export type CastMemberModelProps = {
   cast_member_id: string;
   name: string;
   type: CastMemberTypes;
-  created_at?: Date;
+  created_at: Date;
 };
 
 @Table({ tableName: 'cast_members', timestamps: false })

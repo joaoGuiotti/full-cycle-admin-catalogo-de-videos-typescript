@@ -1,5 +1,5 @@
-import { Either } from "@core/shared/domain/either";
-import { ValueObject } from "@core/shared/domain/value-object";
+import { Either } from "../../shared/domain/either";
+import { ValueObject } from "../../shared/domain/value-object";
 
 export enum CastMemberTypes {
   DIRECTOR = 1,
