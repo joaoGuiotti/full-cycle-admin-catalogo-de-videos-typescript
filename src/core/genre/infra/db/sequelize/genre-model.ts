@@ -1,5 +1,14 @@
-import { CategoryModel } from "@core/category/infra/db/sequelize/category.model";
-import { BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
+import { CategoryModel } from '../../../../category/infra/db/sequelize/category.model';
 
 export type GenreModelProps = {
   genre_id: string;
@@ -8,7 +17,7 @@ export type GenreModelProps = {
   categories?: CategoryModel[];
   is_active: boolean;
   created_at: Date;
-}
+};
 
 @Table({ tableName: 'genres', timestamps: false })
 export class GenreModel extends Model<GenreModelProps> {
@@ -26,9 +35,9 @@ export class GenreModel extends Model<GenreModelProps> {
   declare categories: CategoryModel[];
 
   @Column({ allowNull: false, type: DataType.BOOLEAN })
-  declare is_activated: boolean;
+  declare is_active: boolean;
 
-  @Column({ allowNull: false, type: DataType.DATE })
+  @Column({ allowNull: false, type: DataType.DATE(6) })
   declare created_at: Date;
 }
 
