@@ -1,4 +1,4 @@
-import { CategoryId } from "@core/category/domain/category.aggregate";
+import { CategoryId } from "../../../category/domain/category.aggregate";
 import { Genre, GenreId } from "../genre.aggregate";
 
 describe('Genre Unit Tests', () => {
@@ -143,7 +143,7 @@ describe('Genre Unit Tests', () => {
         ]);
       });
     });
-    
+
   });
 
 });
