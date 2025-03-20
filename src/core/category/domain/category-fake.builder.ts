@@ -1,20 +1,21 @@
 import { Chance } from 'chance';
 import { Category, CategoryId } from './category.aggregate';
+import { Nullable, Undefined } from '@core/shared/domain/nullable';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
 export class CategoryFakeBuilder<TBuild = any> {
   // auto generated in entity
-  private _category_id: PropOrFactory<CategoryId> | undefined = undefined;
+  private _category_id: Undefined<PropOrFactory<CategoryId>> = undefined;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private _description: PropOrFactory<string | null> = (_index) =>
+  private _description: PropOrFactory<Nullable<string>> = (_index) =>
     this.chance.paragraph();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _is_active: PropOrFactory<boolean> = (_index) => true;
   // auto generated in entity
-  private _created_at: PropOrFactory<Date> | undefined = undefined;
+  private _created_at: Undefined<PropOrFactory<Date>> = undefined;
 
   private countObjs;
 
@@ -43,7 +44,7 @@ export class CategoryFakeBuilder<TBuild = any> {
     return this;
   }
 
-  withDescription(valueOrFactory: PropOrFactory<string | null>) {
+  withDescription(valueOrFactory: PropOrFactory<Nullable<string>>) {
     this._description = valueOrFactory;
     return this;
   }
@@ -85,8 +86,8 @@ export class CategoryFakeBuilder<TBuild = any> {
         });
         category.validate();
         return category;
-      });
-    return this.countObjs === 1 ? (categories[0] as any) : categories;
+      }) as TBuild;
+    return this.countObjs === 1 ? (categories[0]) : categories;
   }
 
   get category_id() {
