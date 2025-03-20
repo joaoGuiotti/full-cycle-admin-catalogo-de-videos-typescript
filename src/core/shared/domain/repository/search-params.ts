@@ -90,4 +90,10 @@ export class SearchParams<Filter = string> extends ValueObject {
         ? null
         : (`${value}` as any);
   }
+
+  calculeteOffsetLimit() {
+    const offset = (this.page - 1) * this.per_page;
+    const limit = this.per_page;
+    return { offset, limit };
+  }
 }
