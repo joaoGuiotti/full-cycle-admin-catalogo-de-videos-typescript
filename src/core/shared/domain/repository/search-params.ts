@@ -91,7 +91,7 @@ export class SearchParams<Filter = string> extends ValueObject {
         : (`${value}` as any);
   }
 
-  calculeteOffsetLimit() {
+  calculateOffsetLimit() {
     const offset = (this.page - 1) * this.per_page;
     const limit = this.per_page;
     return { offset, limit };

@@ -21,9 +21,7 @@ export class GenreSequelizeRepository implements IGenreRepository {
     },
   };
 
-  constructor(
-    private genreModel: typeof GenreModel,
-  ) { }
+  constructor(private genreModel: typeof GenreModel) { }
 
   async insert(entity: Genre): Promise<void> {
     await this.genreModel.create(GenreModelMapper.toModel(entity), {
@@ -122,9 +120,8 @@ export class GenreSequelizeRepository implements IGenreRepository {
   }
 
   async search(props: GenreSearchParams): Promise<GenreSearchResult> {
-    const { offset, limit } = props.calculeteOffsetLimit();
-    const genreCategoryRelation =
-      this.genreModel.associations.categories_id.target;
+    const { offset, limit } = props.calculateOffsetLimit();
+    const genreCategoryRelation = this.genreModel.associations.categories_id.target;
     const genreTableName = this.genreModel.getTableName();
     const genreCategoryTableName = genreCategoryRelation.getTableName();
     const genreAlias = this.genreModel.name;
