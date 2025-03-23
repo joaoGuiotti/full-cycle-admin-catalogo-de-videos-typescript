@@ -4,7 +4,7 @@ import { GenreOutput, GenreOutputMapper } from "../common/genre-output";
 import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
 import { IGenreRepository } from "../../../../genre/domain/genre.repository";
 import { ICategoryRepository } from "../../../../category/domain/category.repository";
-import { CategoriesIdExistsInDatabaseValidator } from "../../../../category/application/validations/categories-ids-exists-in-datavase.validators";
+import { CategoriesIdExistsInDatabaseValidator } from "../../../../category/application/validations/categories-ids-exists-in-database.validators";
 import { Genre, GenreId } from "../../../../genre/domain/genre.aggregate";
 import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
 import { EntityValidationError } from "@core/shared/domain/validators/validation.error";

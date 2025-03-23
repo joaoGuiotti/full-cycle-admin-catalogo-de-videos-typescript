@@ -3,7 +3,7 @@ import { CreateGenreInput } from "./create-genre.input";
 import { GenreOutput, GenreOutputMapper } from "../common/genre-output";
 import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
 import { IGenreRepository } from "../../../../genre/domain/genre.repository";
-import { CategoriesIdExistsInDatabaseValidator } from "../../../../category/application/validations/categories-ids-exists-in-datavase.validators";
+import { CategoriesIdExistsInDatabaseValidator } from "../../../../category/application/validations/categories-ids-exists-in-database.validators";
 import { Genre } from "../../../../genre/domain/genre.aggregate";
 import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
 import { ICategoryRepository } from "../../../../category/domain/category.repository";
