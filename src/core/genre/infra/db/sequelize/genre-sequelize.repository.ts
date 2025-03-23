@@ -1,4 +1,3 @@
-import { Transform } from 'class-transformer';
 import { UnitOfWorkSequelize } from './../../../../shared/infra/db/sequelize/unit-of-work-sequelize';
 import { Nullable } from './../../../../shared/domain/nullable';
 import { SortDirection } from "../../../../shared/domain/repository/search-params";
@@ -9,7 +8,6 @@ import { GenreModelMapper } from "./genre-model.mapper";
 import { FindOptions, literal, Op } from 'sequelize';
 import { InvalidArgumentError } from '../../../../shared/domain/errors/invalid-argument.error';
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
-import { throws } from 'assert';
 
 const INCLUDE_CATEGORIES_ID: FindOptions = {
   include: ['categories_id'],
