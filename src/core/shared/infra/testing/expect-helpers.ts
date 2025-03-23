@@ -18,7 +18,7 @@ expect.extend({
     const every = received.every((error) => {
       if (typeof error === 'string') {
         return expected.errors.has(error);
-      } else {
+      } else { 
         return Object.entries(error).every(([field, messages]) => {
           const fieldMessages = expected.errors.get(field) as string[];
 

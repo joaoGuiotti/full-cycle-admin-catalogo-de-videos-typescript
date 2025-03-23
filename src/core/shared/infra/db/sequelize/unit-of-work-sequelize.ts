@@ -2,7 +2,7 @@ import { Sequelize, Transaction } from "sequelize";
 import { IUnitOfWork } from "../../../domain/repository/unit-of-work.interface";
 import { Nullable } from "../../../domain/nullable";
 
-export class UnitOfWorkSeuqelize implements IUnitOfWork {
+export class UnitOfWorkSequelize implements IUnitOfWork {
   private transaction: Nullable<Transaction>;
 
   constructor(private sequelzie: Sequelize) { }
@@ -26,7 +26,7 @@ export class UnitOfWorkSeuqelize implements IUnitOfWork {
   }
 
   getTransaction() {
-    return this.transaction
+    return this.transaction;
   }
 
   async do<T>(workFn: (IUnitOfWork) => Promise<T>): Promise<T> {

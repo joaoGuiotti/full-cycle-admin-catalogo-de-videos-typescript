@@ -216,9 +216,6 @@ const config: Config = {
     'validator-rules.ts',
     '-fixture.ts',
     '.input.ts',
-    'index.ts',
-    '.config.ts',
-    'main.ts',
     '.d.ts',
   ],
   coverageThreshold: {
@@ -232,7 +229,6 @@ const config: Config = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./core/shared/infra/testing/expect-helpers.ts'],
   coverageProvider: 'v8',
-  collectCoverage: true,
   clearMocks: true,
 };
 
