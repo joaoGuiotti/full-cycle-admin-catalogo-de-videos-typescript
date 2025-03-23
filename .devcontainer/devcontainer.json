@@ -47,7 +47,10 @@
 			"extensions": [
 				"Orta.vscode-jest",
 				"firsttris.vscode-jest-runner",
-				"humao.rest-client"
+				"humao.rest-client",
+				"rbbit.typescript-hero",
+				"ms-vscode.vscode-typescript-next",
+				"steoates.autoimport"
 			]
 		}
 	}
