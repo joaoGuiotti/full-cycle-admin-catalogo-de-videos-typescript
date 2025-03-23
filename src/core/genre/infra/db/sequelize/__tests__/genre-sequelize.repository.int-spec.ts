@@ -12,7 +12,8 @@ import { GenreModelMapper } from '../genre-model.mapper';
 
 describe('GenreSequelizeRepository Integration Tests', () => {
   const sequelizeHelper = setupSequelize({
-    models: [GenreModel, GenreCategoryModel, CategoryModel]
+    models: [GenreModel, GenreCategoryModel, CategoryModel],
+    logging: true
   });
   let uow!: UnitOfWorkSequelize;
   let genreRepo!: GenreSequelizeRepository;
