@@ -1,13 +1,14 @@
 import { literal, Op } from "sequelize";
 import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../domain/category.aggregate";
+import { Category, CategoryId } from "../../../domain/category.aggregate";
 import { CategorySearchParams, CategorySearchResult, ICategoryRepository } from "../../../domain/category.repository";
 import { CategoryModel } from "./category.model";
 import { CategoryModelMapper } from "./category-model-mapper";
 import { Injectable } from "@nestjs/common";
 import { log } from "console";
 import { SortDirection } from "@core/shared/domain/repository/search-params";
+import { InvalidArgumentError } from "@core/shared/domain/errors/invalid-argument.error";
 
 @Injectable()
 export class CategorySequelizeRepository implements ICategoryRepository {
@@ -61,6 +62,33 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   async findById(entity_id: Uuid): Promise<Category | null> {
     const model = await this.categoryModel.findByPk(entity_id.id);
     return model ? CategoryModelMapper.toEntity(model) : null;
+  }
+
+  async findByIds(ids: CategoryId[]): Promise<Category[]> {
+    const models = await this.categoryModel.findAll({
+      where: {
+        category_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+    return models.map((m) => CategoryModelMapper.toEntity(m));
+  }
+
+  async existsById(ids: CategoryId[]): Promise<{ exists: CategoryId[]; not_exists: CategoryId[] }> {
+    if (!ids.length)
+      throw new InvalidArgumentError('ids must be an array with at least one element');
+    const existsCategoryModels = await this.categoryModel.findAll({
+      attributes: ['category_id'],
+      where: {
+        category_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+    const existsCategoryIds = existsCategoryModels.map((m) => new CategoryId(m.category_id));
+    const notExistsCategoryIds = ids.filter((id) => !existsCategoryIds.some((e) => e.equals(id)));
+    return { exists: existsCategoryIds, not_exists: notExistsCategoryIds, };
   }
 
   private async _get(id: string) {

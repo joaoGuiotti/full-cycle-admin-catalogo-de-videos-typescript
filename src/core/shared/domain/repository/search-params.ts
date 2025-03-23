@@ -1,3 +1,4 @@
+import { Nullable } from '@core/shared/domain/nullable';
 import { ValueObject } from '../value-object';
 
 export type SortDirection = 'asc' | 'desc';
@@ -5,9 +6,9 @@ export type SortDirection = 'asc' | 'desc';
 export type SearchParamsConstructorProps<Filter = string> = {
   page?: number;
   per_page?: number;
-  sort?: string | null;
-  sort_dir?: SortDirection | null;
-  filter?: Filter | null;
+  sort?: Nullable<string>;
+  sort_dir?: Nullable<SortDirection>;
+  filter?: Nullable<Filter>;
 };
 
 export class SearchParams<Filter = string> extends ValueObject {

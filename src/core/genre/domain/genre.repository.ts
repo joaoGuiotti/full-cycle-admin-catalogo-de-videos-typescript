@@ -7,55 +7,58 @@ import { ISearchableRepository } from "../../shared/domain/repository/repository
 
 export type GenreFilter = {
   name?: string;
-  categories_id?: CategoryId[]
-}
-
-export type GenreSearchParamsCreateCommand = Omit<SearchParamsConstructorProps<GenreFilter>, 'filter'> & {
-  filter?: {
-    name?: string;
-    categories_id?: CategoryId[] | string[];
-  }
+  categories_id?: CategoryId[];
 };
 
 export class GenreSearchParams extends SearchParams<GenreFilter> {
-
   private constructor(props: SearchParamsConstructorProps<GenreFilter> = {}) {
     super(props);
   }
 
-  static create(props: GenreSearchParamsCreateCommand = {}) {
-    const categories_id = props.filter?.categories_id
-      ?.map((c) => c instanceof CategoryId ? c : new CategoryId(c));
+  static create(
+    props: Omit<SearchParamsConstructorProps<GenreFilter>, 'filter'> & {
+      filter?: {
+        name?: string;
+        categories_id?: CategoryId[] | string[];
+      };
+    } = {},
+  ) {
+    const categories_id = props.filter?.categories_id?.map((c) => {
+      return c instanceof CategoryId ? c : new CategoryId(c);
+    });
+
     return new GenreSearchParams({
       ...props,
       filter: {
         name: props.filter?.name,
-        categories_id
-      }
-    })
+        categories_id,
+      },
+    });
   }
 
-  get filter(): Nullable<GenreFilter> {
+  get filter(): GenreFilter | null {
     return this._filter;
   }
 
-  protected set filter(value: Nullable<GenreFilter>) {
-    const _value = !value || (value as unknown) === '' || typeof value !== 'object'
-      ? null : value;
+  protected set filter(value: GenreFilter | null) {
+    const _value =
+      !value || (value as unknown) === '' || typeof value !== 'object'
+        ? null
+        : value;
 
     const filter = {
       ...(_value?.name && { name: `${_value.name}` }),
-      ...(_value?.categories_id && _value?.categories_id.length > 0 && {
-        categories_id: _value.categories_id
-      })
+      ...(_value?.categories_id &&
+        _value?.categories_id.length && {
+          categories_id: _value.categories_id,
+        }),
     };
 
-    this._filter = Object.keys(filter).length === 0
-      ? null : filter;
+    this._filter = Object.keys(filter).length === 0 ? null : filter;
   }
 }
 
-export class GenreSearchResult extends SearchResult<Genre> { }
+export class GenreSearchResult extends SearchResult<Genre> {}
 
 export interface IGenreRepository
   extends ISearchableRepository<
@@ -64,4 +67,4 @@ export interface IGenreRepository
     GenreFilter,
     GenreSearchParams,
     GenreSearchResult
-  > { }
+  > {}
