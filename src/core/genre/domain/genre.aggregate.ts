@@ -37,12 +37,14 @@ export class Genre extends AggregateRoot {
     this.created_at = props.created_at ?? new Date();
   }
 
-  static create(props: GenreCreateCommand): Genre {
+  static create(props: GenreCreateCommand) {
     const genre = new Genre({
       ...props,
-      categories_id: new Map(props.categories_id.map(category_id => [category_id.id, category_id]))
+      categories_id: new Map(
+        props.categories_id.map((category_id) => [category_id.id, category_id]),
+      ),
     });
-    genre.validate(['name']);
+    genre.validate();
     return genre;
   }
 
