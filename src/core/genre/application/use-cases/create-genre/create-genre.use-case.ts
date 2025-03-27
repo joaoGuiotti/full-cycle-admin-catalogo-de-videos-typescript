@@ -3,7 +3,7 @@ import { CreateGenreInput } from "./create-genre.input";
 import { GenreOutput, GenreOutputMapper } from "../common/genre-output";
 import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
 import { IGenreRepository } from "../../../../genre/domain/genre.repository";
-import { CategoriesIdExistsInDatabaseValidator } from "../../../../category/application/validations/categories-ids-exists-in-database.validators";
+import { CategoriesIdStorageValidator } from "../../../../category/application/validators/categories-ids-exists-in-storage.validators";
 import { Genre } from "../../../../genre/domain/genre.aggregate";
 import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
 import { ICategoryRepository } from "../../../../category/domain/category.repository";
@@ -17,15 +17,15 @@ export class CreateGenreUseCase
     private uow: IUnitOfWork,
     private genreRepo: IGenreRepository,
     private categoryRepo: ICategoryRepository,
-    private categoriesIdExistsInStorage: CategoriesIdExistsInDatabaseValidator
+    private categoriesIdExistsInStorage: CategoriesIdStorageValidator
   ) { }
 
   async execute(input: CreateGenreInput): Promise<CreateGenreOutput> {
+    const { name, is_active } = input;
+
     const [categoriesId, errorsCategoriesIds] = (
       await this.categoriesIdExistsInStorage.validate(input.categories_id)
     ).asArray();
-
-    const { name, is_active } = input;
 
     const entity = Genre.create({
       name,

@@ -21,7 +21,7 @@ export class CreateGenreInput {
   is_active?: boolean = true;
 
   constructor(props?: CreateGenreInputConstructorProps) {
-    if(!props) return;
+    if (!props) return;
     this.name = props.name;
     this.categories_id = props.categories_id;
     this.is_active = props.is_active ?? true;

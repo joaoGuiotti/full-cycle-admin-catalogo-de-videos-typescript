@@ -8,8 +8,7 @@ import { CategoryFilter, ICategoryRepository } from "../../../domain/category.re
 
 export class CategoryInMemoryRepository
   extends InMemorySearchableRepository<Category, CategoryId>
-  implements ICategoryRepository
-{
+  implements ICategoryRepository {
   sortableFields: string[] = ['name', 'created_at'];
 
   protected async applyFilter(
@@ -24,6 +23,7 @@ export class CategoryInMemoryRepository
       return i.name.toLowerCase().includes(filter.toLowerCase());
     });
   }
+
   getEntity(): new (...args: any[]) => Category {
     return Category;
   }
