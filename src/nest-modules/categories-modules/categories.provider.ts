@@ -1,4 +1,5 @@
 import { CreateCategoryUseCase, DeleteCategoryUseCase, GetCategoryUseCase, ListCategoriesUseCase, UpdateCategoryUseCase } from "@core/category/application/use-cases";
+import { CategoriesIdStorageValidator } from "@core/category/application/validators/categories-ids-exists-in-storage.validators";
 import { ICategoryRepository } from "@core/category/domain/category.repository";
 import { CategoryInMemoryRepository } from "@core/category/infra/db/in-memory/category-in-memory.repository";
 import { CategorySequelizeRepository } from "@core/category/infra/db/sequelize/category-sequelize.repository";
@@ -61,7 +62,18 @@ export const USE_CASES = {
   },
 };
 
+export const VALIDATIONS = {
+  CATEGORIES_ID_STORAGE_VALIDATOR: {
+    provide: CategoriesIdStorageValidator,
+    useFactory: (categoryRepo: ICategoryRepository) => {
+      return new CategoriesIdStorageValidator(categoryRepo);
+    },
+    inject: [REPOSITORIES.CATEGORY_REPOSITORY.provide],
+  },
+};
+
 export const CATEGORY_PROVIDERS = {
   REPOSITORIES,
-  USE_CASES
+  USE_CASES,
+  VALIDATIONS
 };
