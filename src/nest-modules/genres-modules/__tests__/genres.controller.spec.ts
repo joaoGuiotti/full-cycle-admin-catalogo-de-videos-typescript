@@ -5,7 +5,7 @@ import { CreateGenreDto } from '../dto/create-genre.dto';
 import { CreateGenreOutput } from '../../../core/genre/application/use-cases/create-genre/create-genre.use-case';
 import { UpdateGenreOutput } from '../../../core/genre/application/use-cases/update-genre/update-genre.use-case';
 import { GetGenreOutput } from '../../../core/genre/application/use-cases/get-genre/get-genre.use-case';
-import { UpdateGenreDto } from '../dto/update-genre.dto copy';
+import { UpdateGenreDto } from '../dto/update-genre.dto';
 import { ListGenreOutput } from '@core/genre/application';
 
 describe('GenresController Unit Tests', () => {

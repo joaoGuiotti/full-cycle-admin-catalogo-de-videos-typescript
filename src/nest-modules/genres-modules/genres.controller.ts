@@ -21,7 +21,7 @@ import { UpdateGenreInput } from '../../core/genre/application/use-cases/update-
 import { GenreOutput } from '../../core/genre/application/use-cases/common/genre-output';
 import { ListGenreUseCase } from '@core/genre/application';
 import { SearchGenreDto } from './dto/search-genre.dto';
-import { UpdateGenreDto } from './dto/update-genre.dto copy';
+import { UpdateGenreDto } from './dto/update-genre.dto';
 
 @Controller('genres')
 export class GenresController {
