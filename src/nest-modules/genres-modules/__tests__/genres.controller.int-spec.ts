@@ -19,7 +19,7 @@ import { GenreOutputMapper } from '../../../core/genre/application/use-cases/com
 import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
 import { DatabaseModule } from 'src/nest-modules/database-modules/database.module';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
-import { GENRE_PROVIDERS } from '../genres.provider';
+import { GENRES_PROVIDERS } from '../genres.provider';
 import { ListGenresUseCase } from '@core/genre/application';
 import { CreateGenreFixture, ListGenresFixture, UpdateGenreFixture } from './fixture/genre-fixture';
 
@@ -46,7 +46,7 @@ describe('GenresController Integration Tests', () => {
       .compile();
     controller = module.get(GenresController);
     genreRepo = module.get(
-      GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+      GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
     );
     categoryRepo = module.get(
       CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,

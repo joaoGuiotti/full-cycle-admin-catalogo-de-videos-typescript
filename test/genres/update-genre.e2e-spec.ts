@@ -7,7 +7,7 @@ import { Category } from '../../src/core/category/domain/category.aggregate';
 import { GenreOutputMapper } from '../../src/core/genre/application/use-cases/common/genre-output';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
 import { UpdateGenreFixture } from 'src/nest-modules/genres-modules/__tests__/fixture/genre-fixture';
-import { GENRE_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
+import { GENRES_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
 import { GenresController } from 'src/nest-modules/genres-modules/genres.controller';
 
@@ -81,7 +81,7 @@ describe('GenresController (e2e)', () => {
 
       beforeEach(() => {
         genreRepo = app.app.get<IGenreRepository>(
-          GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+          GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
         );
         categoryRepo = app.app.get<ICategoryRepository>(
           CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
@@ -110,7 +110,7 @@ describe('GenresController (e2e)', () => {
       let categoryRepo: ICategoryRepository;
       beforeEach(async () => {
         genreRepo = app.app.get<IGenreRepository>(
-          GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+          GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
         );
         categoryRepo = app.app.get<ICategoryRepository>(
           CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,

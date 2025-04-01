@@ -103,7 +103,7 @@ export const VALIDATIONS = {
   },
 };
 
-export const GENRE_PROVIDERS = {
+export const GENRES_PROVIDERS = {
   REPOSITORIES,
   USE_CASES,
   VALIDATIONS

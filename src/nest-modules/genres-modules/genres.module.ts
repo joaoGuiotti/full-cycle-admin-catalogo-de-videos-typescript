@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GenresController } from './genres.controller';
 import { CategoriesModule } from '../categories-modules/categories.module';
-import { GENRE_PROVIDERS } from './genres.provider';
+import { GENRES_PROVIDERS } from './genres.provider';
 
 @Module({
   imports: [
@@ -12,13 +12,13 @@ import { GENRE_PROVIDERS } from './genres.provider';
   ],
   controllers: [GenresController],
   providers: [
-    ...Object.values(GENRE_PROVIDERS.REPOSITORIES),
-    ...Object.values(GENRE_PROVIDERS.USE_CASES),
-    ...Object.values(GENRE_PROVIDERS.VALIDATIONS)
+    ...Object.values(GENRES_PROVIDERS.REPOSITORIES),
+    ...Object.values(GENRES_PROVIDERS.USE_CASES),
+    ...Object.values(GENRES_PROVIDERS.VALIDATIONS)
   ],
   exports: [
-    GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
-    GENRE_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide
+    GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+    GENRES_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide
   ]
 })
 export class GenresModule { }

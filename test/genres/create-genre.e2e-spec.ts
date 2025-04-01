@@ -7,7 +7,7 @@ import { GenreOutputMapper } from '../../src/core/genre/application/use-cases/co
 import { CreateGenreFixture } from 'src/nest-modules/genres-modules/__tests__/fixture/genre-fixture';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
-import { GENRE_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
+import { GENRES_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
 import { GenresController } from 'src/nest-modules/genres-modules/genres.controller';
 
 describe('GenresController (e2e)', () => {
@@ -52,7 +52,7 @@ describe('GenresController (e2e)', () => {
       let categoryRepo: ICategoryRepository;
       beforeEach(async () => {
         genreRepo = app.app.get<IGenreRepository>(
-          GENRE_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
+          GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide,
         );
         categoryRepo = app.app.get<ICategoryRepository>(
           CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
