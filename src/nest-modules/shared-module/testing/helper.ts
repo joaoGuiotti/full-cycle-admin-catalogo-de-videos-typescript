@@ -1,3 +1,4 @@
+import { UnitOfWorkSequelize } from "../../../core/shared/infra/db/sequelize/unit-of-work-sequelize";
 import { INestApplication } from "@nestjs/common";
 import { getConnectionToken } from "@nestjs/sequelize";
 import { Test, TestingModule } from "@nestjs/testing";
@@ -15,7 +16,12 @@ export function startApp(): StartHelper {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
-    }).compile();
+    }).overrideProvider('UnitOfWork')
+      .useFactory({
+        factory: (sequelize: Sequelize) => new UnitOfWorkSequelize(sequelize),
+        inject: [getConnectionToken()],
+      })
+      .compile();
 
     const sequelize = moduleFixture.get<Sequelize>(getConnectionToken());
     await sequelize.sync({ force: true });

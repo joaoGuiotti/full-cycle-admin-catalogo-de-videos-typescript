@@ -1,9 +1,9 @@
-import { CreateCategoryUseCase, DeleteCategoryUseCase, GetCategoryUseCase, ListCategoriesUseCase, UpdateCategoryUseCase } from "@core/category/application/use-cases";
-import { CategoriesIdStorageValidator } from "@core/category/application/validators/categories-ids-exists-in-storage.validators";
-import { ICategoryRepository } from "@core/category/domain/category.repository";
-import { CategoryInMemoryRepository } from "@core/category/infra/db/in-memory/category-in-memory.repository";
-import { CategorySequelizeRepository } from "@core/category/infra/db/sequelize/category-sequelize.repository";
-import { CategoryModel } from "@core/category/infra/db/sequelize/category.model";
+import { CreateCategoryUseCase, DeleteCategoryUseCase, GetCategoryUseCase, ListCategoriesUseCase, UpdateCategoryUseCase } from "../../core/category/application/use-cases";
+import { CategoriesIdStorageValidator } from "../../core/category/application/validators/categories-ids-exists-in-storage.validators";
+import { ICategoryRepository } from "../../core/category/domain/category.repository";
+import { CategoryInMemoryRepository } from "../../core/category/infra/db/in-memory/category-in-memory.repository";
+import { CategorySequelizeRepository } from "../../core/category/infra/db/sequelize/category-sequelize.repository";
+import { CategoryModel } from "../../core/category/infra/db/sequelize/category.model";
 import { getModelToken } from "@nestjs/sequelize";
 
 export const REPOSITORIES = {

@@ -1,7 +1,7 @@
-import { CategoryOutputMapper } from "@core/category/application/use-cases/common/category-output";
-import { Category } from "@core/category/domain/category.aggregate";
-import { ICategoryRepository } from "@core/category/domain/category.repository";
-import { Uuid } from "@core/shared/domain/value-objects/uuid.vo";
+import { CategoryOutputMapper } from "../../src/core/category/application/use-cases/common/category-output";
+import { Category } from "../../src/core/category/domain/category.aggregate";
+import { ICategoryRepository } from "../../src/core/category/domain/category.repository";
+import { Uuid } from "../../src/core/shared/domain/value-objects/uuid.vo";
 import { instanceToPlain } from "class-transformer";
 import { CategoriesController } from "src/nest-modules/categories-modules/categories.controller";
 import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-modules/categories.provider";

@@ -5,17 +5,17 @@ import { Genre } from '../../../../domain/genre.aggregate';
 import { GenreSearchResult } from '../../../../domain/genre.repository';
 import { GenreInMemoryRepository } from '../../../../infra/db/in-memory/genre-in-memory.repository';
 import { GenreOutputMapper } from '../../common/genre-output';
-import { ListGenreUseCase } from '../list-genre.use-case';
+import { ListGenresUseCase } from '../list-genre.use-case';
 
 describe('ListGenresUseCase Unit Tests', () => {
-  let useCase: ListGenreUseCase;
+  let useCase: ListGenresUseCase;
   let genreRepo: GenreInMemoryRepository;
   let categoryRepo: CategoryInMemoryRepository;
 
   beforeEach(() => {
     genreRepo = new GenreInMemoryRepository();
     categoryRepo = new CategoryInMemoryRepository();
-    useCase = new ListGenreUseCase(genreRepo, categoryRepo);
+    useCase = new ListGenresUseCase(genreRepo, categoryRepo);
   });
 
   test('toOutput method', async () => {

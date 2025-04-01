@@ -1,16 +1,16 @@
-import { CategoriesIdStorageValidator } from "@core/category/application/validators/categories-ids-exists-in-storage.validators"
-import { ICategoryRepository } from "@core/category/domain/category.repository"
-import { CreateGenreUseCase } from "@core/genre/application/use-cases/create-genre/create-genre.use-case"
-import { IGenreRepository } from "@core/genre/domain/genre.repository"
-import { GenreInMemoryRepository } from "@core/genre/infra/db/in-memory/genre-in-memory.repository"
-import { GenreModel } from "@core/genre/infra/db/sequelize/genre-model"
-import { GenreSequelizeRepository } from "@core/genre/infra/db/sequelize/genre-sequelize.repository"
-import { IUnitOfWork } from "@core/shared/domain/repository/unit-of-work.interface"
-import { UnitOfWorkSequelize } from "@core/shared/infra/db/sequelize/unit-of-work-sequelize"
+import { CategoriesIdStorageValidator } from "../../core/category/application/validators/categories-ids-exists-in-storage.validators"
+import { ICategoryRepository } from "../../core/category/domain/category.repository"
+import { CreateGenreUseCase } from "../../core/genre/application/use-cases/create-genre/create-genre.use-case"
+import { IGenreRepository } from "../../core/genre/domain/genre.repository"
+import { GenreInMemoryRepository } from "../../core/genre/infra/db/in-memory/genre-in-memory.repository"
+import { GenreModel } from "../../core/genre/infra/db/sequelize/genre-model"
+import { GenreSequelizeRepository } from "../../core/genre/infra/db/sequelize/genre-sequelize.repository"
+import { IUnitOfWork } from "../../core/shared/domain/repository/unit-of-work.interface"
+import { UnitOfWorkSequelize } from "../../core/shared/infra/db/sequelize/unit-of-work-sequelize"
 import { getModelToken } from "@nestjs/sequelize"
 import { CATEGORY_PROVIDERS } from "../categories-modules/categories.provider"
-import { DeleteGenreUseCase, GetGenreUseCase, ListGenreUseCase, UpdateGenreUseCase } from "@core/genre/application"
-import { GenresIdStorageValidator } from "@core/genre/application/validations/genres-id-storage-validator"
+import { DeleteGenreUseCase, GetGenreUseCase, ListGenresUseCase, UpdateGenreUseCase } from "../../core/genre/application"
+import { GenresIdStorageValidator } from "../../core/genre/application/validations/genres-id-storage-validator"
 
 export const UOW_TOKEN = 'UnitOfWork';
 
@@ -63,11 +63,11 @@ export const USE_CASES = {
     ],
   },
   LIST_GENRE_USE_CASE: {
-    provide: ListGenreUseCase,
+    provide: ListGenresUseCase,
     useFactory: (
       genreRepo: IGenreRepository,
       categoryRepo: ICategoryRepository
-    ) => new ListGenreUseCase(genreRepo, categoryRepo),
+    ) => new ListGenresUseCase(genreRepo, categoryRepo),
     inject: [
       REPOSITORIES.GENRE_REPOSITORY.provide,
       CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,

@@ -10,11 +10,11 @@ import {
 } from '../../../../infra/db/sequelize/genre-model';
 import { GenreSequelizeRepository } from '../../../../infra/db/sequelize/genre-sequelize.repository';
 import { GenreOutputMapper } from '../../common/genre-output';
-import { ListGenreUseCase } from '../list-genre.use-case';
+import { ListGenresUseCase } from '../list-genre.use-case';
 
 describe('ListGenresUseCase Integration Tests', () => {
   let uow: UnitOfWorkSequelize;
-  let useCase: ListGenreUseCase;
+  let useCase: ListGenresUseCase;
   let genreRepo: GenreSequelizeRepository;
   let categoryRepo: CategorySequelizeRepository;
 
@@ -26,7 +26,7 @@ describe('ListGenresUseCase Integration Tests', () => {
     uow = new UnitOfWorkSequelize(sequelizeHelper.sequelize);
     genreRepo = new GenreSequelizeRepository(GenreModel, uow);
     categoryRepo = new CategorySequelizeRepository(CategoryModel);
-    useCase = new ListGenreUseCase(genreRepo, categoryRepo);
+    useCase = new ListGenresUseCase(genreRepo, categoryRepo);
   });
 
   it('should return output sorted by created_at when input param is empty', async () => {

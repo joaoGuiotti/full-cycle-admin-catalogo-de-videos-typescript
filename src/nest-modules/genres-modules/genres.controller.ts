@@ -19,7 +19,7 @@ import { DeleteGenreUseCase } from '../../core/genre/application/use-cases/delet
 import { GetGenreUseCase } from '../../core/genre/application/use-cases/get-genre/get-genre.use-case';
 import { UpdateGenreInput } from '../../core/genre/application/use-cases/update-genre/update-genre.input';
 import { GenreOutput } from '../../core/genre/application/use-cases/common/genre-output';
-import { ListGenreUseCase } from '@core/genre/application';
+import { ListGenresOutput, ListGenresUseCase } from '../../core/genre/application';
 import { SearchGenreDto } from './dto/search-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
 
@@ -37,8 +37,8 @@ export class GenresController {
   @Inject(GetGenreUseCase)
   private getUseCase: GetGenreUseCase;
 
-  @Inject(ListGenreUseCase)
-  private listUseCase: ListGenreUseCase;
+  @Inject(ListGenresUseCase)
+  private listUseCase: ListGenresUseCase;
 
   @Post()
   async create(@Body() createGenreDto: CreateGenreDto) {
@@ -49,7 +49,7 @@ export class GenresController {
   @Get()
   async search(@Query() searchParams: SearchGenreDto) {
     const output = await this.listUseCase.execute(searchParams);
-    return new GenreCollectionPresenter(output);
+    return GenresController.serializeColection(output);
   }
 
   @Get(':id')
@@ -80,5 +80,9 @@ export class GenresController {
 
   static serialize(output: GenreOutput) {
     return new GenrePresenter(output);
+  }
+
+  static serializeColection(output: ListGenresOutput) {
+    return new GenreCollectionPresenter(output);
   }
 }

@@ -10,7 +10,7 @@ export class ListGenresFilter {
   categories_id?: string[];
 }
 
-export class ListGenreInput implements SearchInput<ListGenresFilter> {
+export class ListGenresInput implements SearchInput<ListGenresFilter> {
   page?: number;
   per_page?: number;
   sort?: string;
@@ -20,7 +20,7 @@ export class ListGenreInput implements SearchInput<ListGenresFilter> {
 }
 
 export class ValidateListGenresInput {
-  static validate(input: ListGenreInput) {
+  static validate(input: ListGenresInput) {
     return validateSync(input);
   }
 }

@@ -1,6 +1,10 @@
-import { Transform, Type } from "class-transformer";
-import { CollectionPresenter } from "../shared-module/collection.presenter";
-import { GenreCategoryOutput, GenreOutput, ListGenreOutput } from "@core/genre/application";
+import { Transform, Type } from 'class-transformer';
+import { CollectionPresenter } from '../shared-module/collection.presenter';
+import {
+  GenreCategoryOutput,
+  GenreOutput,
+} from '../../core/genre/application/use-cases/common/genre-output';
+import { ListGenresOutput } from '../../core/genre/application';
 
 export class GenreCategoryPresenter {
   id: string;
@@ -40,12 +44,14 @@ export class GenrePresenter {
     this.created_at = output.created_at;
   }
 }
+
 export class GenreCollectionPresenter extends CollectionPresenter {
+  @Type(() => GenrePresenter)
   data: GenrePresenter[];
 
-  constructor(output: ListGenreOutput) {
+  constructor(output: ListGenresOutput) {
     const { items, ...paginationProps } = output;
     super(paginationProps);
-    this.data = items.map((i) => new GenrePresenter(i));
+    this.data = items.map((item) => new GenrePresenter(item));
   }
 }

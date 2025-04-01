@@ -7,9 +7,9 @@ import {
   UpdateCategoryUseCase,
   DeleteCategoryUseCase,
   ListCategoriesUseCase,
-} from '@core/category/application/use-cases';
+} from '../../core/category/application/use-cases';
 import { CategoryCollectionPresenter, CategoryPresenter } from './category.presenter';
-import { CategoryOutput } from '@core/category/application/use-cases/common/category-output';
+import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
 
 @Controller('categories')

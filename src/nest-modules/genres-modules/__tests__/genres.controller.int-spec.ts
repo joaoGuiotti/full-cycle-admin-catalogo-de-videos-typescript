@@ -20,7 +20,7 @@ import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
 import { DatabaseModule } from 'src/nest-modules/database-modules/database.module';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
 import { GENRE_PROVIDERS } from '../genres.provider';
-import { ListGenreUseCase } from '@core/genre/application';
+import { ListGenresUseCase } from '@core/genre/application';
 import { CreateGenreFixture, ListGenresFixture, UpdateGenreFixture } from './fixture/genre-fixture';
 
 describe('GenresController Integration Tests', () => {
@@ -57,7 +57,7 @@ describe('GenresController Integration Tests', () => {
     expect(controller).toBeDefined();
     expect(controller['createUseCase']).toBeInstanceOf(CreateGenreUseCase);
     expect(controller['updateUseCase']).toBeInstanceOf(UpdateGenreUseCase);
-    expect(controller['listUseCase']).toBeInstanceOf(ListGenreUseCase);
+    expect(controller['listUseCase']).toBeInstanceOf(ListGenresUseCase);
     expect(controller['getUseCase']).toBeInstanceOf(GetGenreUseCase);
     expect(controller['deleteUseCase']).toBeInstanceOf(DeleteGenreUseCase);
   });
