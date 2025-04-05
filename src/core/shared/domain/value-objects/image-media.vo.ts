@@ -10,7 +10,6 @@ export interface IMediaFile {
 }
 
 export abstract class ImageMedia extends ValueObject {
-
   constructor(
     readonly name: string,
     readonly location: string,

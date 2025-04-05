@@ -11,8 +11,8 @@ export class ThumbnailHalf extends ImageMedia {
     "image/png",
   ];
 
-  static createFromFile(props: IThumbnailHalfCreateFromFile) {
-    return Either.safe<ThumbnailHalf | InvalidMediaFileSizeError | InvalidMediaFileMimeTypeError>(() => {
+  static createFromFile(props: IThumbnailHalfCreateFromFile): Either<ThumbnailHalf> {
+    return Either.safe(() => {
       const { name } = this.validate(
         props,
         ThumbnailHalf.max_size,
@@ -20,7 +20,7 @@ export class ThumbnailHalf extends ImageMedia {
       );
       return new ThumbnailHalf(
         `${props.video_id.id}-${name}`,
-        `videos/${props.video_id.id}/thumbnailsHalf`
+        `videos/${props.video_id.id}/thumbnailsHalfs`
       );
     });
   }
