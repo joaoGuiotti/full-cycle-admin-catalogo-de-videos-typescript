@@ -1,9 +1,11 @@
+import { Nullable } from "../../shared/domain/nullable";
 import { CastMemberId } from "../../cast-member/domain/cast-member.aggregate";
 import { CategoryId } from "../../category/domain/category.aggregate";
 import { GenreId } from "../../genre/domain/genre.aggregate";
 import { AggregateRoot } from "../../shared/domain/aggregate-root";
 import { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { Banner } from "./banner.vo";
 import { Rating } from "./rating.vo";
 import VideoValidatorFactory from "./video.validator";
 
@@ -16,6 +18,9 @@ export type VideoConsctructorProps = {
   rating: Rating;
   is_opened: boolean;
   is_published: boolean;
+
+  banner?: Banner;
+
   categories_id: Map<string, CategoryId>;
   genres_id: Map<string, GenreId>;
   cast_members_id: Map<string, CastMemberId>;
@@ -30,6 +35,9 @@ export type VideoCreateCommand = {
   rating: Rating;
   is_opened: boolean;
   is_published: boolean;
+
+  banner?: Banner;
+
   categories_id: CategoryId[];
   genres_id: GenreId[];
   cast_members_id: CastMemberId[];
@@ -46,6 +54,8 @@ export class Video extends AggregateRoot {
   rating: Rating;
   is_opened: boolean;
   is_published: boolean;
+
+  banner: Nullable<Banner>;
 
   // Relations 
   categories_id: Map<string, CategoryId>;
@@ -64,6 +74,9 @@ export class Video extends AggregateRoot {
     this.rating = props.rating;
     this.is_opened = props.is_opened;
     this.is_published = props.is_published;
+
+    this.banner = props.banner ?? null;
+
     this.categories_id = props.categories_id;
     this.genres_id = props.genres_id;
     this.cast_members_id = props.cast_members_id;
