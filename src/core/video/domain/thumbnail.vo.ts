@@ -1,5 +1,4 @@
 import { Either } from "../../shared/domain/either";
-import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError } from "../../shared/domain/validators/media-file.validator";
 import { ImageMedia, IMediaFile } from "../../shared/domain/value-objects/image-media.vo";
 
 export interface IThumbnailCreateFromFile extends IMediaFile { }
@@ -11,8 +10,8 @@ export class Thumbnail extends ImageMedia {
     "image/png",
   ];
 
-  static createFromFile(props: IThumbnailCreateFromFile) {
-    return Either.safe<Thumbnail | InvalidMediaFileSizeError | InvalidMediaFileMimeTypeError>(() => {
+  static createFromFile(props: IThumbnailCreateFromFile): Either<Thumbnail> {
+    return Either.safe(() => {
       const { name } = this.validate(
         props,
         Thumbnail.max_size,

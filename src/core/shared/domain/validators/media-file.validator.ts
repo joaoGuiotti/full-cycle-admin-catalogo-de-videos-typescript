@@ -1,4 +1,5 @@
 import { IMediaFile } from "../value-objects/image-media.vo";
+import crypto from 'crypto';
 
 export class MediaFileValidator {
   private constructor(
@@ -36,8 +37,12 @@ export class MediaFileValidator {
   }
 
   private generateRendomName(raw_name) {
-    const [name, ext] = raw_name.split('.');
-    return `${name}-${crypto.randomUUID()}.${ext}`;
+    const extension = raw_name.split('.').pop();
+    const hash = crypto
+      .createHash('sha256')
+      .update(raw_name + Math.random() + Date.now())
+      .digest('hex');
+    return `${hash}.${extension}`;
   }
 }
 
