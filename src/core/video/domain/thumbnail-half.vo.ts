@@ -1,5 +1,5 @@
 import { Either } from "../../shared/domain/either";
-import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError } from "../../shared/domain/validators/media-file.validator";
+import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError, MediaFileValidator } from "../../shared/domain/validators/media-file.validator";
 import { ImageMedia, IMediaFile } from "../../shared/domain/value-objects/image-media.vo";
 
 export interface IThumbnailHalfCreateFromFile extends IMediaFile { }
@@ -13,11 +13,10 @@ export class ThumbnailHalf extends ImageMedia {
 
   static createFromFile(props: IThumbnailHalfCreateFromFile): Either<ThumbnailHalf> {
     return Either.safe(() => {
-      const { name } = this.validate(
-        props,
-        ThumbnailHalf.max_size,
-        ThumbnailHalf.mimes_types
-      );
+      const { name } = MediaFileValidator
+        .create(ThumbnailHalf.max_size, ThumbnailHalf.mimes_types)
+        .validate(props);
+
       return new ThumbnailHalf(
         `${props.video_id.id}-${name}`,
         `videos/${props.video_id.id}/thumbnailsHalfs`

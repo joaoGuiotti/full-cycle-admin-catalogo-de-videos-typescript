@@ -1,3 +1,4 @@
+import { MediaFileValidator } from "@core/shared/domain/validators/media-file.validator";
 import { Either } from "../../shared/domain/either";
 import { ImageMedia, IMediaFile } from "../../shared/domain/value-objects/image-media.vo";
 
@@ -12,11 +13,9 @@ export class Thumbnail extends ImageMedia {
 
   static createFromFile(props: IThumbnailCreateFromFile): Either<Thumbnail> {
     return Either.safe(() => {
-      const { name } = this.validate(
-        props,
-        Thumbnail.max_size,
-        Thumbnail.mimes_types
-      );
+      const { name } = MediaFileValidator
+        .create(Thumbnail.max_size, Thumbnail.mimes_types)
+        .validate(props);
       return new Thumbnail(
         `${props.video_id.id}-${name}`,
         `videos/${props.video_id.id}/thumbnails`

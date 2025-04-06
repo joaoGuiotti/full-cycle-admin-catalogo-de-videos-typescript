@@ -17,14 +17,6 @@ export abstract class ImageMedia extends ValueObject {
     super();
   }
 
-  static validate(props: IMediaFile, max_size: number, mimes_types: string[]) {
-    return MediaFileValidator.validate(
-      props,
-      max_size,
-      mimes_types
-    );
-  }
-
   get url(): string {
     return `${this.location}/${this.name}`;
   }

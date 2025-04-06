@@ -7,7 +7,11 @@ import { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { Banner } from "./banner.vo";
 import { Rating } from "./rating.vo";
-import VideoValidatorFactory from "./video.validator";
+import { Thumbnail } from "./thumbnail.vo";
+import { Trailer } from "./trailer.vo";
+import { VideoMedia } from "./video-media.vo";
+import { ThumbnailHalf } from "./thumbnail-half.vo";
+import { VideoValidatorFactory } from "./video.validator";
 
 export type VideoConsctructorProps = {
   video_id?: VideoId;
@@ -20,6 +24,10 @@ export type VideoConsctructorProps = {
   is_published: boolean;
 
   banner?: Banner;
+  thumnail?: Thumbnail;
+  thumbnail_half?: ThumbnailHalf;
+  trailer?: Trailer;
+  video?: VideoMedia;
 
   categories_id: Map<string, CategoryId>;
   genres_id: Map<string, GenreId>;
@@ -37,6 +45,10 @@ export type VideoCreateCommand = {
   is_published: boolean;
 
   banner?: Banner;
+  thumnail?: Thumbnail;
+  thumbnail_half?: ThumbnailHalf;
+  trailer?: Trailer;
+  video?: VideoMedia;
 
   categories_id: CategoryId[];
   genres_id: GenreId[];
@@ -56,6 +68,10 @@ export class Video extends AggregateRoot {
   is_published: boolean;
 
   banner: Nullable<Banner>;
+  thumnail: Nullable<Thumbnail>;
+  thumbnail_half: Nullable<ThumbnailHalf>;
+  trailer: Nullable<Trailer>;
+  video: Nullable<VideoMedia>;
 
   // Relations 
   categories_id: Map<string, CategoryId>;
@@ -76,6 +92,10 @@ export class Video extends AggregateRoot {
     this.is_published = props.is_published;
 
     this.banner = props.banner ?? null;
+    this.thumnail = props.thumnail ?? null;
+    this.thumbnail_half = props.thumbnail_half ?? null;
+    this.trailer = props.trailer ?? null;
+    this.video = props.video ?? null;
 
     this.categories_id = props.categories_id;
     this.genres_id = props.genres_id;
@@ -196,6 +216,11 @@ export class Video extends AggregateRoot {
       rating: this.rating,
       is_opened: this.is_opened,
       is_published: this.is_published,
+      banner: this.banner ? this.banner.toJSON() : null,
+      thumnail: this.thumnail ? this.thumnail.toJSON() : null,
+      thumbnail_half: this.thumbnail_half ? this.thumbnail_half.toJSON() : null,
+      trailer: this.trailer ? this.trailer.toJSON() : null,
+      video: this.video ? this.video.toJSON() : null,
       categories_id: Array.from(this.categories_id.values())
         .map((category) => category.id),
       genres_id: Array.from(this.genres_id.values())

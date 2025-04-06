@@ -13,12 +13,12 @@ export class MediaFileValidator {
 
   static validate(file: IMediaFile, max_size: number, mimes_types: string[]) {
     const mediaFileValidator = new MediaFileValidator(max_size, mimes_types);
-    return mediaFileValidator.validate(file, max_size, mimes_types);
+    return mediaFileValidator.validate(file);
   }
 
-  validate(file: IMediaFile, max_size: number, mimes_types: string[]) {
+  validate(file: IMediaFile) {
     if (!this.validateMimeType(file.mime_type))
-      throw new InvalidMediaFileMimeTypeError(mimes_types.join(', '), this.mimes_types);
+      throw new InvalidMediaFileMimeTypeError(this.mimes_types.join(', '), this.mimes_types);
     if (!this.validateSize(file.size))
       throw new InvalidMediaFileSizeError(file.size, this.max_size);
 

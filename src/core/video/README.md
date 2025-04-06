@@ -19,3 +19,10 @@ video ou banner - checksum
 - raw_location
 - encoded_location
 - status = [processing, completed]
+
+
+## Audio videos
+ - name
+ - raw_location
+ - encoded_location
+ - status 

@@ -3,9 +3,8 @@ import { Video } from "./video.aggregate";
 import { ClassValidatorFields } from "@core/shared/domain/validators/class-validator-fields";
 import { Notification } from "@core/shared/domain/validators/notification";
 
-
 export class VideoRules {
-  @MaxLength(255)
+  @MaxLength(255, { groups: ['title'] })
   title: string;
 
   constructor(aggregate: Video) {
@@ -28,6 +27,4 @@ export class VideoValidatorFactory {
   static create(): VideoValidator {
     return new VideoValidator();
   }
-}
-
-export default VideoValidatorFactory;
+} 

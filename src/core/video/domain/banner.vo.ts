@@ -1,4 +1,4 @@
-import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError } from "../../shared/domain/validators/media-file.validator";
+import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError, MediaFileValidator } from "../../shared/domain/validators/media-file.validator";
 import { Either } from "../../shared/domain/either";
 import { ImageMedia, IMediaFile } from "../../shared/domain/value-objects/image-media.vo";
 
@@ -14,11 +14,9 @@ export class Banner extends ImageMedia {
 
   static createFromFile(props: IBannerCreateFromFile): Either<Banner, InvalidMediaFileMimeTypeError | InvalidMediaFileSizeError> {
     return Either.safe<Banner>(() => {
-      const { name } = this.validate(
-        props,
-        Banner.max_size,
-        Banner.mimes_types
-      );
+      const { name } = MediaFileValidator
+        .create(Banner.max_size, Banner.mimes_types)
+        .validate(props);
       return new Banner(name, `videos/${props.video_id.id}/imagens`);
     });
   }
