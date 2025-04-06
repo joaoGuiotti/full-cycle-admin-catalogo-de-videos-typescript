@@ -4,13 +4,13 @@ import { Uuid } from "../value-objects/uuid.vo";
 
 class StubEvent implements IDomainEvent {
   event_version: number = 1;
-  ocurrend_on: Date;
+  occurred_on: Date;
 
   constructor(
     public aggregate_id: Uuid,
     public name: string
   ) {
-    this.ocurrend_on = new Date();
+    this.occurred_on = new Date();
   }
 }
 

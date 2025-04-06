@@ -2,6 +2,6 @@ import { ValueObject } from "../value-object";
 
 export interface IDomainEvent {
   aggregate_id: ValueObject;
-  ocurrend_on: Date;
+  occurred_on: Date;
   event_version: number;
 }
