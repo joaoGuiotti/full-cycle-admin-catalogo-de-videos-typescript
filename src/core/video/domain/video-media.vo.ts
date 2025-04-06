@@ -38,7 +38,7 @@ export class VideoMedia extends AudioVideoMedia {
     });
   }
 
-  completed(encoded_location: string) {
+  complete(encoded_location: string) {
     return new VideoMedia({
       name: this.name,
       raw_location: this.raw_location,

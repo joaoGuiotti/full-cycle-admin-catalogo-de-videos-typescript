@@ -15,6 +15,7 @@ import { VideoValidatorFactory } from "./video.validator";
 import { AudioVideoMediaStatus } from "../../shared/domain/value-objects/audio-video-media.vo";
 import { VideoCreatedEvent } from "./events/video-created.event";
 import { VideoAudioMediaReplacedEvent } from "./events/video-audio-media-replaced.event";
+import { VideoFakeBuilder } from "./video-fake.builder";
 
 export type VideoConsctructorProps = {
   video_id?: VideoId;
@@ -106,7 +107,7 @@ export class Video extends AggregateRoot {
     this.created_at = props.created_at ?? new Date();
 
     this.registerHandler(VideoCreatedEvent.name, this.onVideoCreated.bind(this));
-    this.registerHandler(VideoCreatedEvent.name, this.onVideoAudioMediaReplaced.bind(this));
+    this.registerHandler(VideoAudioMediaReplacedEvent.name, this.onVideoAudioMediaReplaced.bind(this));
   }
 
   static create(props: VideoCreateCommand): Video {
@@ -118,9 +119,12 @@ export class Video extends AggregateRoot {
       is_published: false
     });
     video.validate();
-    video.tryMarkAsPublished();
     video.applyEvent(VideoCreatedEvent.create(video));
     return video;
+  }
+
+  static fake() {
+    return VideoFakeBuilder;
   }
 
   changeTitle(title: string) {
@@ -210,9 +214,8 @@ export class Video extends AggregateRoot {
   }
 
   syncGenresId(genres_id: GenreId[]) {
-    if (!genres_id.length) {
+    if (!genres_id.length)
       throw new Error('Genres id cannot be empty');
-    }
     this.genres_id = new Map(genres_id.map((genre) => [genre.id, genre]));
   }
 
@@ -225,9 +228,8 @@ export class Video extends AggregateRoot {
   }
 
   syncCastMembersId(cast_members_id: CastMemberId[]) {
-    if (!cast_members_id.length) {
+    if (!cast_members_id.length)
       throw new Error('Cast members id cannot be empty');
-    }
     this.cast_members_id = new Map(cast_members_id.map((castMember) => [castMember.id, castMember]));
   }
 
