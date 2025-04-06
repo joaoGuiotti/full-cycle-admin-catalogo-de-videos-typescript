@@ -1,5 +1,5 @@
 import { NullableOr } from "../../shared/domain/nullable";
-import { Video, VideoCreateCommand, VideoId } from "./video.aggregate";
+import { Video, VideoId } from "./video.aggregate";
 import { Chance } from "chance";
 import { Rating } from "./rating.vo";
 import { Banner } from "./banner.vo";
@@ -285,9 +285,8 @@ export class VideoFakeBuilder<TBuild = any> {
   get cast_members_id(): CastMemberId[] {
     let cast_members_id = this.getValue('cast_members_id');
 
-    if (!cast_members_id.length) {
+    if (!cast_members_id.length)
       cast_members_id = [new CastMemberId()];
-    }
 
     return cast_members_id;
   }
