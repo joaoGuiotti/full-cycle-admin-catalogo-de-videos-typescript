@@ -6,7 +6,7 @@ import { CreateGenreOutput } from '../../../core/genre/application/use-cases/cre
 import { UpdateGenreOutput } from '../../../core/genre/application/use-cases/update-genre/update-genre.use-case';
 import { GetGenreOutput } from '../../../core/genre/application/use-cases/get-genre/get-genre.use-case';
 import { UpdateGenreDto } from '../dto/update-genre.dto';
-import { ListGenreOutput } from '@core/genre/application';
+import { ListGenresOutput } from '@core/genre/application';
 
 describe('GenresController Unit Tests', () => {
   let controller: GenresController;
@@ -82,6 +82,7 @@ describe('GenresController Unit Tests', () => {
     const mockDeleteUseCase = {
       execute: jest.fn().mockReturnValue(Promise.resolve(expectedOutput)),
     };
+    //@ts-expect-error defined part of methods
     controller['deleteUseCase'] = mockDeleteUseCase;
     const id = '9366b7dc-2d71-4799-b91c-c64adb205104';
     expect(controller.remove(id)).toBeInstanceOf(Promise);
@@ -118,7 +119,7 @@ describe('GenresController Unit Tests', () => {
   });
 
   it('should list categories', async () => {
-    const output: ListGenreOutput = {
+    const output: ListGenresOutput = {
       items: [
         {
           id: '9366b7dc-2d71-4799-b91c-c64adb205104',
