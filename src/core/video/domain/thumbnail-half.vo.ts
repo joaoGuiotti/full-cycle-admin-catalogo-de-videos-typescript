@@ -1,5 +1,5 @@
 import { Either } from "../../shared/domain/either";
-import { InvalidMediaFileMimeTypeError, InvalidMediaFileSizeError, MediaFileValidator } from "../../shared/domain/validators/media-file.validator";
+import { MediaFileValidator } from "../../shared/domain/validators/media-file.validator";
 import { ImageMedia, IMediaFile } from "../../shared/domain/value-objects/image-media.vo";
 
 export interface IThumbnailHalfCreateFromFile extends IMediaFile { }

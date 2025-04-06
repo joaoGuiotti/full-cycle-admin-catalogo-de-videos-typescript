@@ -12,6 +12,7 @@ import { Trailer } from "./trailer.vo";
 import { VideoMedia } from "./video-media.vo";
 import { ThumbnailHalf } from "./thumbnail-half.vo";
 import { VideoValidatorFactory } from "./video.validator";
+import { AudioVideoMediaStatus } from "../../shared/domain/value-objects/audio-video-media.vo";
 
 export type VideoConsctructorProps = {
   video_id?: VideoId;
@@ -24,7 +25,7 @@ export type VideoConsctructorProps = {
   is_published: boolean;
 
   banner?: Banner;
-  thumnail?: Thumbnail;
+  thumbnail?: Thumbnail;
   thumbnail_half?: ThumbnailHalf;
   trailer?: Trailer;
   video?: VideoMedia;
@@ -42,10 +43,10 @@ export type VideoCreateCommand = {
   duration: number;
   rating: Rating;
   is_opened: boolean;
-  is_published: boolean;
+  is_published?: boolean;
 
   banner?: Banner;
-  thumnail?: Thumbnail;
+  thumbnail?: Thumbnail;
   thumbnail_half?: ThumbnailHalf;
   trailer?: Trailer;
   video?: VideoMedia;
@@ -68,7 +69,7 @@ export class Video extends AggregateRoot {
   is_published: boolean;
 
   banner: Nullable<Banner>;
-  thumnail: Nullable<Thumbnail>;
+  thumbnail: Nullable<Thumbnail>;
   thumbnail_half: Nullable<ThumbnailHalf>;
   trailer: Nullable<Trailer>;
   video: Nullable<VideoMedia>;
@@ -92,7 +93,7 @@ export class Video extends AggregateRoot {
     this.is_published = props.is_published;
 
     this.banner = props.banner ?? null;
-    this.thumnail = props.thumnail ?? null;
+    this.thumbnail = props.thumbnail ?? null;
     this.thumbnail_half = props.thumbnail_half ?? null;
     this.trailer = props.trailer ?? null;
     this.video = props.video ?? null;
@@ -101,6 +102,9 @@ export class Video extends AggregateRoot {
     this.genres_id = props.genres_id;
     this.cast_members_id = props.cast_members_id;
     this.created_at = props.created_at ?? new Date();
+
+    this.validate();
+    this.markAsPublished();
   }
 
   static create(props: VideoCreateCommand): Video {
@@ -112,6 +116,7 @@ export class Video extends AggregateRoot {
       is_published: false
     });
     video.validate();
+    video.markAsPublished();
     return video;
   }
 
@@ -144,12 +149,41 @@ export class Video extends AggregateRoot {
     this.is_opened = false;
   }
 
-  markAsPublished() {
-    this.is_published = true;
-  }
-
   markAsUnpublished() {
     this.is_published = false;
+  }
+
+  replaceBanner(banner: Banner) {
+    this.banner = banner;
+  }
+
+  replaceThumbnail(thumbnail: Thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+
+  replaceThumbnailHalf(thumbnail_half: ThumbnailHalf) {
+    this.thumbnail_half = thumbnail_half;
+  }
+
+  replaceTrailer(trailer: Trailer) {
+    this.trailer = trailer;
+    this.markAsPublished();
+  }
+
+  replaceVideo(video: VideoMedia) {
+    this.video = video;
+    this.markAsPublished();
+  }
+
+  private markAsPublished() {
+    if (
+      this.trailer &&
+      this.video &&
+      this.trailer.status === AudioVideoMediaStatus.COMPLETED &&
+      this.video.status === AudioVideoMediaStatus.COMPLETED
+    ) {
+      this.is_published = true;
+    }
   }
 
   addCategoryId(category_id: CategoryId) {
@@ -217,7 +251,7 @@ export class Video extends AggregateRoot {
       is_opened: this.is_opened,
       is_published: this.is_published,
       banner: this.banner ? this.banner.toJSON() : null,
-      thumnail: this.thumnail ? this.thumnail.toJSON() : null,
+      thumnail: this.thumbnail ? this.thumbnail.toJSON() : null,
       thumbnail_half: this.thumbnail_half ? this.thumbnail_half.toJSON() : null,
       trailer: this.trailer ? this.trailer.toJSON() : null,
       video: this.video ? this.video.toJSON() : null,
