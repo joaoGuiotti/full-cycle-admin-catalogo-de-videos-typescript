@@ -1,3 +1,4 @@
+import { Nullable } from "@core/shared/domain/nullable";
 import { InvalidArgumentError } from "../../../../shared/domain/errors/invalid-argument.error";
 import { Entity } from "../../../domain/entity";
 import { NotFoundError } from "../../../domain/errors/not-found.error";
@@ -103,7 +104,7 @@ export abstract class InMemorySearchableRepository<
     });
   }
 
-  protected abstract applyFilter(items: E[], filter: Filter | null): Promise<E[]>;
+  protected abstract applyFilter(items: E[], filter: Nullable<Filter>): Promise<E[]>;
 
   protected applyPaginate(items: E[], page: SearchParams['page'], per_page: SearchParams['per_page']) {
     const start = (page - 1) * per_page;
@@ -113,8 +114,8 @@ export abstract class InMemorySearchableRepository<
 
   protected applySort(
     items: E[],
-    sort: string | null,
-    sort_dir: SortDirection | null,
+    sort: Nullable<string>,
+    sort_dir: Nullable<SortDirection>,
     custom_getter?: (sort: string, item: E) => any,
   ) {
     if (!sort || !this.sortableFields.includes(sort)) {
