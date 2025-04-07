@@ -3,6 +3,8 @@ import { RatingValues } from "../../../../video/domain/rating.vo";
 import { GenreModel } from "../../../../genre/infra/db/sequelize/genre-model";
 import { CastMemberModel } from "../../../../cast-member/infra/db/sequelize/cast-member.model";
 import { BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { ImageMediaModel } from "./image-media.model";
+import { AudioVideoMediaModel } from "./audio-video-media.model";
 
 export interface VideoModelProps {
   video_id: string;
@@ -14,11 +16,8 @@ export interface VideoModelProps {
   is_opened: boolean;
   is_published: boolean;
 
-  // banner?: Banner;
-  // thumbnail?: Thumbnail;
-  // thumbnail_half?: ThumbnailHalf;
-  // trailer?: Trailer;
-  // video?: VideoMedia;
+  image_medias: ImageMediaModel[];
+  audio_video_medias: AudioVideoMediaModel[];
 
   categories_id: VideoCategoryModel[];
   categories?: CategoryModel[];
@@ -64,6 +63,12 @@ export class VideoModel extends Model<VideoModelProps> {
 
   @Column({ allowNull: false, type: DataType.BOOLEAN })
   declare is_published: string;
+
+  @HasMany(() => ImageMediaModel, 'video_id')
+  declare image_medias: ImageMediaModel[];
+  
+  @HasMany(() => AudioVideoMediaModel, 'video_id')
+  declare audio_video_medias: AudioVideoMediaModel[];
 
   @HasMany(() => VideoCategoryModel, 'video_id')
   declare categories_id: VideoCategoryModel[];

@@ -1,7 +1,7 @@
-import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
+import { AudioVideoMediaStatus } from '../../../../shared/domain/value-objects/audio-video-media.vo';
 import { Nullable } from './../../../../shared/domain/nullable';
 import { Column, DataType, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { VideoModel } from './video.model';
 
 export enum AudioVideoMediaRelatedField {
