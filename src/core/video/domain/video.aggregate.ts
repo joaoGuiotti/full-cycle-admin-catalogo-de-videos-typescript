@@ -27,11 +27,11 @@ export type VideoConsctructorProps = {
   is_opened: boolean;
   is_published: boolean;
 
-  banner?: Banner;
-  thumbnail?: Thumbnail;
-  thumbnail_half?: ThumbnailHalf;
-  trailer?: Trailer;
-  video?: VideoMedia;
+  banner?: Banner; //name and location
+  thumbnail?: Thumbnail; //name and location
+  thumbnail_half?: ThumbnailHalf; //name and location
+  trailer?: Trailer; // name, raw_location, encoded_locaiton, status
+  video?: VideoMedia; // name, raw_location, encoded_locaiton, status
 
   categories_id: Map<string, CategoryId>;
   genres_id: Map<string, GenreId>;
