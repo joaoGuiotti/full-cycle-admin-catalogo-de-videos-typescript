@@ -6,7 +6,7 @@ import { VideoModel } from './video.model';
 
 export enum AudioVideoMediaRelatedField {
   TRAILER = 'trailer',
-  VIDOE = 'video',
+  VIDEO = 'video',
 }
 
 export type AudioVideoMediaModelProps = {

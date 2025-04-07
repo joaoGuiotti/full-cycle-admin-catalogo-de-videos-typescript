@@ -1,5 +1,5 @@
 import { CategoryModel } from "../../../../category/infra/db/sequelize/category.model";
-import { RatingValues } from "../../../../video/domain/rating.vo";
+import { RatingValues } from "../../../domain/rating.vo";
 import { GenreModel } from "../../../../genre/infra/db/sequelize/genre-model";
 import { CastMemberModel } from "../../../../cast-member/infra/db/sequelize/cast-member.model";
 import { BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
@@ -21,7 +21,7 @@ export interface VideoModelProps {
 
   categories_id: VideoCategoryModel[];
   categories?: CategoryModel[];
-  genres_id: VideoGenreModel;
+  genres_id: VideoGenreModel[];
   genres?: GenreModel[];
   cast_members_id: VideoCastMemberModel[];
   cast_members?: CastMemberModel[];

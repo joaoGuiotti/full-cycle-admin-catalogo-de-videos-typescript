@@ -17,7 +17,7 @@ export class Banner extends ImageMedia {
       const { name } = MediaFileValidator
         .create(Banner.max_size, Banner.mimes_types)
         .validate(props);
-      return new Banner(name, `videos/${props.video_id.id}/imagens`);
+      return new Banner(name, `videos/${props.video_id.id}/images`);
     });
   }
 }

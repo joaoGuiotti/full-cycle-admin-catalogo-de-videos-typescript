@@ -267,26 +267,25 @@ export class Video extends AggregateRoot {
 
   toJSON() {
     return {
-      video_id: this.video_id,
+      video_id: this.video_id.id,
       title: this.title,
       description: this.description,
       year_launched: this.year_launched,
       duration: this.duration,
-      rating: this.rating,
+      rating: this.rating.value,
       is_opened: this.is_opened,
       is_published: this.is_published,
       banner: this.banner ? this.banner.toJSON() : null,
-      thumnail: this.thumbnail ? this.thumbnail.toJSON() : null,
+      thumbnail: this.thumbnail ? this.thumbnail.toJSON() : null,
       thumbnail_half: this.thumbnail_half ? this.thumbnail_half.toJSON() : null,
       trailer: this.trailer ? this.trailer.toJSON() : null,
       video: this.video ? this.video.toJSON() : null,
-      categories_id: Array.from(this.categories_id.values())
-        .map((category) => category.id),
-      genres_id: Array.from(this.genres_id.values())
-        .map((genre) => genre.id),
-      cast_members_id: Array.from(this.cast_members_id.values())
-        .map((castMember) => castMember.id),
-      created_at: this.created_at
+      categories_id: Array.from(this.categories_id.values()).map((id) => id.id),
+      genres_id: Array.from(this.genres_id.values()).map((id) => id.id),
+      cast_members_id: Array.from(this.cast_members_id.values()).map(
+        (id) => id.id,
+      ),
+      created_at: this.created_at,
     };
   }
 }
