@@ -11,7 +11,9 @@ import {
 import { CategoryCollectionPresenter, CategoryPresenter } from './category.presenter';
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {
 
@@ -31,6 +33,7 @@ export class CategoriesController {
   private listUseCase: ListCategoriesUseCase;
 
   @Post()
+  @ApiBody({ type: CreateCategoryDto })
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     const output = await this.createUseCase.execute(createCategoryDto);
     return CategoriesController.serialize(output);

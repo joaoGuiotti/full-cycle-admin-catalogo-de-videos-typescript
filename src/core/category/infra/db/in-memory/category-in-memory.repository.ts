@@ -1,7 +1,4 @@
-import { Entity } from "../../../../shared/domain/entity";
-import { SearchParams, SortDirection } from "../../../../shared/domain/repository/search-params";
-import { SearchResult } from "../../../../shared/domain/repository/search-result";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
+import { SortDirection } from "../../../../shared/domain/repository/search-params";
 import { InMemorySearchableRepository } from "../../../../shared/infra/db/in-memory/in-memory.repository";
 import { Category, CategoryId } from "../../../domain/category.aggregate";
 import { CategoryFilter, ICategoryRepository } from "../../../domain/category.repository";
