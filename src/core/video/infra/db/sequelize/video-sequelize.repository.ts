@@ -210,10 +210,8 @@ export class VideoSequelizeRepository implements IVideoRepository {
       transaction: this.uow.getTransaction(),
     });
 
-    if (affectedRows !== 1) {
+    if (affectedRows !== 1)
       throw new NotFoundError(id.id, this.getEntity());
-    }
-
   }
 
   async search(props: VideoSearchParams): Promise<VideoSearchResult> {
@@ -238,7 +236,7 @@ export class VideoSequelizeRepository implements IVideoRepository {
         props.filter.genres_id ||
         props.filter.cast_members_id)
     ) {
-      if (props.filter.title) {
+      if (props.filter.title)
         wheres.push({
           field: 'title',
           value: `%${props.filter.title}%`,
@@ -251,9 +249,8 @@ export class VideoSequelizeRepository implements IVideoRepository {
           },
           rawCondition: `${videoAlias}.title LIKE :title`,
         });
-      }
 
-      if (props.filter.categories_id) {
+      if (props.filter.categories_id)
         wheres.push({
           field: 'categories_id',
           value: props.filter.categories_id.map((c) => c.id),
@@ -266,9 +263,8 @@ export class VideoSequelizeRepository implements IVideoRepository {
           },
           rawCondition: `${videoCategoryTableName}.category_id IN (:categories_id)`,
         });
-      }
 
-      if (props.filter.genres_id) {
+      if (props.filter.genres_id)
         wheres.push({
           field: 'genres_id',
           value: props.filter.genres_id.map((c) => c.id),
@@ -281,9 +277,8 @@ export class VideoSequelizeRepository implements IVideoRepository {
           },
           rawCondition: `${videoGenreTableName}.genre_id IN (:genres_id)`,
         });
-      }
 
-      if (props.filter.cast_members_id) {
+      if (props.filter.cast_members_id)
         wheres.push({
           field: 'cast_members_id',
           value: props.filter.cast_members_id.map((c) => c.id),
@@ -296,7 +291,6 @@ export class VideoSequelizeRepository implements IVideoRepository {
           },
           rawCondition: `${videoCastMemberTableName}.cast_member_id IN (:cast_members_id)`,
         });
-      }
     }
 
     const orderBy =
