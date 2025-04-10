@@ -309,7 +309,7 @@ describe('VideoModelMapper Unit Tests', () => {
       ]),
     });
 
-    const model = VideoModelMapper.toModelProps(entity);
+    const model = VideoModelMapper.toModel(entity);
     expect(model).toEqual({
       video_id: videoProps.video_id.id,
       title: videoProps.title,
@@ -368,7 +368,7 @@ describe('VideoModelMapper Unit Tests', () => {
       ]),
     });
 
-    const model2 = VideoModelMapper.toModelProps(entity);
+    const model2 = VideoModelMapper.toModel(entity);
     expect(model2.video_id).toEqual(videoProps.video_id.id);
     expect(model2.title).toEqual(videoProps.title);
     expect(model2.description).toEqual(videoProps.description);

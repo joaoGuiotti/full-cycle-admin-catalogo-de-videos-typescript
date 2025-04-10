@@ -1,4 +1,5 @@
 import { Entity } from "../entity";
+import { Nullable } from "../nullable";
 import { ValueObject } from "../value-object";
 import { SearchParams } from "./search-params";
 import { SearchResult } from "./search-result";
@@ -9,7 +10,7 @@ export interface IRepository<E extends Entity, EntityId extends ValueObject> {
   update(entity: E): Promise<void>;
   delete(entity_id: EntityId): Promise<void>;
 
-  findById(entity_id: EntityId): Promise<E | null>;
+  findById(entity_id: EntityId): Promise<Nullable<E>>;
   findAll(): Promise<E[]>;
   findByIds(ids: EntityId[]): Promise<E[]>;
   existsById(ids: EntityId[]): Promise<{

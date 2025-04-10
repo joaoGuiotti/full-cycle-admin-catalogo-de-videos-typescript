@@ -139,7 +139,7 @@ export class VideoModelMapper {
     return videoEntity;
   }
 
-  static toModelProps(entity: Video) {
+  static toModel(entity: Video) {
     const {
       banner,
       thumbnail,
@@ -215,5 +215,13 @@ export class VideoModelMapper {
         }),
       ),
     };
+  }
+
+  static toCollectionModel(entities: Video[]) {
+    return entities.map((e) => VideoModelMapper.toModel(e));
+  }
+
+  static toCollectionEntity(models: VideoModel[]) {
+    return models.map((m) => VideoModelMapper.toEntity(m));
   }
 }

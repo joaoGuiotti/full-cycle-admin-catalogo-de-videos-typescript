@@ -1,9 +1,11 @@
 import { Sequelize, Transaction } from "sequelize";
 import { IUnitOfWork } from "../../../domain/repository/unit-of-work.interface";
 import { Nullable } from "../../../domain/nullable";
+import { AggregateRoot } from "@core/shared/domain/aggregate-root";
 
 export class UnitOfWorkSequelize implements IUnitOfWork {
   private transaction: Nullable<Transaction>;
+  private aggregateRoots: Set<AggregateRoot> = new Set<AggregateRoot>();
 
   constructor(private sequelzie: Sequelize) { }
 
@@ -30,7 +32,7 @@ export class UnitOfWorkSequelize implements IUnitOfWork {
   }
 
   async do<T>(workFn: (IUnitOfWork) => Promise<T>): Promise<T> {
-    let isAutoTransaction = false; 
+    let isAutoTransaction = false;
     try {
       if (this.transaction) {
         const result = await workFn(this);
@@ -45,8 +47,8 @@ export class UnitOfWorkSequelize implements IUnitOfWork {
         return result;
       });
     } catch (e) {
-      if(!isAutoTransaction)
-          this.transaction?.rollback();
+      if (!isAutoTransaction)
+        this.transaction?.rollback();
       this.resetTransaction();
       throw e;
     }
@@ -60,6 +62,14 @@ export class UnitOfWorkSequelize implements IUnitOfWork {
 
   private resetTransaction() {
     this.transaction = null;
+  }
+
+  addAggregateRoot(aggregateRoot: AggregateRoot): void {
+    this.aggregateRoots.add(aggregateRoot);
+  }
+
+  getAggregateRoots(): AggregateRoot[] {
+    return [...this.aggregateRoots];
   }
 
 }
