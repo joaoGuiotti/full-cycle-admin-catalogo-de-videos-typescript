@@ -16,8 +16,8 @@ export class UploadImageMediasUseCase
   implements IUseCase<UploadImageMediasInput, UploadImageMediasOutput> {
 
   constructor(
-    private readonly videoRepo: IVideoRepository,
     private readonly uow: IUnitOfWork,
+    private readonly videoRepo: IVideoRepository,
     private readonly storage: IStorage,
   ) { }
 
@@ -54,7 +54,7 @@ export class UploadImageMediasUseCase
       id: image.url,
     });
 
-    this.uow.do(async () => {
+    await this.uow.do(async () => {
       await this.videoRepo.update(video)
     });
   }

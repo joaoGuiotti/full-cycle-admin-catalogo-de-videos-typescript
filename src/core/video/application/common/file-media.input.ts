@@ -23,8 +23,8 @@ export class FileMediaInput {
   @IsInt()
   @IsNotEmpty()
   size: number;
-
-  constructorr(props: FileMediaInputProps) {
+ 
+  constructor(props: FileMediaInputProps) {
     if (!props) return;
     this.raw_name = props.raw_name;
     this.data = props.data;

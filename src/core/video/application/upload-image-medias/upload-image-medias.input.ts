@@ -23,6 +23,7 @@ export class UploadImageMediasInput {
   @IsIn(['banner', 'thumbnail', 'thumbnail_half'])
   @IsNotEmpty()
   field: 'banner' | 'thumbnail' | 'thumbnail_half';
+  
   @ValidateNested()
   file: FileMediaInput;
 
