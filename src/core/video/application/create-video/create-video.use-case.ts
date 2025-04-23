@@ -63,3 +63,8 @@ export class CreateVideoUseCase
   }
 
 }
+
+//cqs (bertrand meyer) !== cqrs (greg young)
+
+// CQRS is a pattern that separates the read and write sides of an application.
+// CQS is a principle that states that a method should either be a command (which changes state) or a query (which returns data), but not both.

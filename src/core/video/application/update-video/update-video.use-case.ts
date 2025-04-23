@@ -11,23 +11,21 @@ import { Rating } from "../../../video/domain/rating.vo";
 import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
 
 export class UpdateVideoUseCase
-  implements IUseCase<UpdateVideoInput, UpdateVideoOutput>
-{
+  implements IUseCase<UpdateVideoInput, UpdateVideoOutput> {
   constructor(
     private uow: IUnitOfWork,
     private videoRepo: IVideoRepository,
     private categoriesIdValidator: CategoriesIdStorageValidator,
     private genresIdValidator: GenresIdStorageValidator,
     private castMembersIdValidator: CastMembersIdStorageValidator,
-  ) {}
+  ) { }
 
   async execute(input: UpdateVideoInput): Promise<UpdateVideoOutput> {
     const videoId = new VideoId(input.id);
     const video = await this.videoRepo.findById(videoId);
 
-    if (!video) {
+    if (!video)
       throw new NotFoundError(input.id, Video);
-    }
 
     input.title && video.changeTitle(input.title);
     input.description && video.changeDescription(input.description);
@@ -41,13 +39,11 @@ export class UpdateVideoUseCase
       errorRating && video.notification.setError(errorRating.message, 'type');
     }
 
-    if (input.is_opened === true) {
+    if (input.is_opened === true)
       video.markAsOpened();
-    }
 
-    if (input.is_opened === false) {
+    if (input.is_opened === false)
       video.markAsClosed();
-    }
 
     const notification = video.notification;
 
@@ -93,13 +89,10 @@ export class UpdateVideoUseCase
         );
     }
 
-    if (video.notification.hasErrors()) {
+    if (video.notification.hasErrors())
       throw new EntityValidationError(video.notification.toJSON());
-    }
 
-    await this.uow.do(async () => {
-      return this.videoRepo.update(video);
-    });
+    await this.uow.do(async () => this.videoRepo.update(video));
 
     return { id: video.video_id.id };
   }
