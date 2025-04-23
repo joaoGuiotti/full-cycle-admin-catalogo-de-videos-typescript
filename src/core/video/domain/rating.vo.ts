@@ -1,6 +1,5 @@
-import { Either } from "@core/shared/domain/either";
-import { InvalidArgumentError } from "@core/shared/domain/errors/invalid-argument.error";
-import { ValueObject } from "@core/shared/domain/value-object";
+import { Either } from "../../shared/domain/either";
+import { ValueObject } from "../../shared/domain/value-object";
 
 export enum RatingValues {
   RL = 'L',
