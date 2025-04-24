@@ -1,5 +1,5 @@
 import { IVideoRepository } from "../../../../video/domain/video.repository";
-import { UploadImageMediasUseCase } from "../upload-image-medias.use-case";
+import { UploadAudioVideoMediasUseCase } from "../upload-audio-video-medias.use-case";
 import { ICategoryRepository } from "../../../../category/domain/category.repository";
 import { IGenreRepository } from "../../../../genre/domain/genre.repository";
 import { ICastMemberRepository } from "../../../../cast-member/domain/cast-member.repository";
@@ -10,20 +10,19 @@ import { CategorySequelizeRepository } from "../../../../category/infra/db/seque
 import { GenreSequelizeRepository } from "../../../../genre/infra/db/sequelize/genre-sequelize.repository";
 import { CastMemberSequelizeRepository } from "../../../../cast-member/infra/db/sequelize/cast-member-sequelize.repository";
 import { VideoSequelizeRepository } from "../../../../video/infra/db/sequelize/video-sequelize.repository";
-import { CategoryModel } from "../../../../category/infra/db/sequelize/category.model";
-import { GenreModel } from "../../../../genre/infra/db/sequelize/genre-model";
-import { CastMemberModel } from "../../../../cast-member/infra/db/sequelize/cast-member.model";
-import { VideoModel } from "../../../../video/infra/db/sequelize/video.model";
 import { InMemoryStorage } from "../../../../shared/infra/storage/in-memory.storage";
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
-import { Video } from "../../../../video/domain/video.aggregate";
+import { CastMemberModel } from "../../../../cast-member/infra/db/sequelize/cast-member.model";
+import { GenreModel } from "../../../../genre/infra/db/sequelize/genre-model";
+import { CategoryModel } from "../../../../category/infra/db/sequelize/category.model";
+import { VideoModel } from "../../../../video/infra/db/sequelize/video.model";
 import { Category } from "../../../../category/domain/category.aggregate";
 import { Genre } from "../../../../genre/domain/genre.aggregate";
 import { CastMember } from "../../../../cast-member/domain/cast-member.aggregate";
+import { Video } from "../../../../video/domain/video.aggregate";
 import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
 
-describe('UploadImageMediasUseCase Integration Tests', () => {
-  let uploadImageMediasUseCase: UploadImageMediasUseCase;
+describe('UploadAudioVideoMediasUseCase Integration Tests', () => {
+  let uploadAudioVideoMediasUseCase: UploadAudioVideoMediasUseCase;
   let videoRepo: IVideoRepository;
   let categoryRepo: ICategoryRepository;
   let genreRepo: IGenreRepository;
@@ -44,7 +43,7 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
     // });
     // storageService = new GoogleCloudStorage(storageSdk, Config.bucketName());
 
-    uploadImageMediasUseCase = new UploadImageMediasUseCase(
+    uploadAudioVideoMediasUseCase = new UploadAudioVideoMediasUseCase(
       uow,
       videoRepo,
       storageService,
@@ -53,18 +52,18 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
 
   it('should throw error when video not found', async () => {
     await expect(
-      uploadImageMediasUseCase.execute({
+      uploadAudioVideoMediasUseCase.execute({
         video_id: '4e9e2e4e-4b4a-4b4a-8b8b-8b8b8b8b8b8b',
-        field: 'banner',
+        field: 'trailer',
         file: {
-          raw_name: 'banner.jpg',
+          raw_name: 'trailer.mp4',
+          mime_type: 'video/mp4',
           data: Buffer.from(''),
-          mime_type: 'image/jpg',
           size: 100,
         },
       }),
     ).rejects.toThrow(
-      new NotFoundError('4e9e2e4e-4b4a-4b4a-8b8b-8b8b8b8b8b8b', Video),
+      new Error('Video Not Found using ID 4e9e2e4e-4b4a-4b4a-8b8b-8b8b8b8b8b8b'),
     );
   });
 
@@ -89,9 +88,9 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
     await videoRepo.insert(video);
 
     try {
-      await uploadImageMediasUseCase.execute({
+      await uploadAudioVideoMediasUseCase.execute({
         video_id: video.video_id.id,
-        field: 'banner',
+        field: 'trailer',
         file: {
           raw_name: 'banner.jpg',
           data: Buffer.from(''),
@@ -103,15 +102,15 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
       expect(error).toBeInstanceOf(EntityValidationError);
       expect(error.error).toEqual([
         {
-          banner: [
-            'Invalid media file mime type: image/jpeg, image/png, image/gif not in image/jpeg, image/png, image/gif',
+          trailer: [
+            'Invalid media file mime type: video/mp4 not in video/mp4',
           ],
         },
       ]);
     }
   }, 10000);
 
-  it('should upload banner image', async () => {
+  it('should upload trailer image', async () => {
     const storeSpy = jest.spyOn(storageService, 'store');
     const category = Category.fake().aCategory().build();
     await categoryRepo.insert(category);
@@ -131,27 +130,31 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
 
     await videoRepo.insert(video);
 
-    await uploadImageMediasUseCase.execute({
+    await uploadAudioVideoMediasUseCase.execute({
       video_id: video.video_id.id,
-      field: 'banner',
+      field: 'trailer',
       file: {
-        raw_name: 'banner.jpg',
+        raw_name: 'trailer.mp4',
         data: Buffer.from('test data'),
-        mime_type: 'image/jpeg',
+        mime_type: 'video/mp4',
         size: 100,
       },
     });
 
     const videoUpdated = await videoRepo.findById(video.video_id);
-    expect(videoUpdated!.banner).toBeDefined();
-    expect(videoUpdated!.banner!.name.includes('.jpg')).toBeTruthy();
-    expect(videoUpdated!.banner!.location).toBe(
-      `videos/${videoUpdated!.video_id.id}/images`,
-    );
+    expect(videoUpdated!.trailer).toBeDefined();
+    expect(videoUpdated!.trailer!.name.includes('.mp4')).toBeTruthy();
+    expect(videoUpdated!.trailer!.raw_url).toBeDefined();
     expect(storeSpy).toHaveBeenCalledWith({
-      data: Buffer.from('test data'),
-      id: videoUpdated!.banner!.url,
-      mime_type: 'image/jpeg',
+      data: expect.any(Buffer),
+      mime_type: 'video/mp4',
+      id: expect.stringMatching(
+        new RegExp(`^videos/${video.video_id.id}/videos/`),
+      ),
     });
+    expect(storeSpy).toHaveBeenCalledTimes(1);
+     
   }, 10000);
 });
+
+
