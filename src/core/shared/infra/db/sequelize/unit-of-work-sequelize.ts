@@ -72,4 +72,10 @@ export class UnitOfWorkSequelize implements IUnitOfWork {
     return [...this.aggregateRoots];
   }
 
+  addCollectionAggregateRoot(aggregateRoot: AggregateRoot[]): void { 
+    aggregateRoot.forEach((aggregate) => {
+      this.aggregateRoots.add(aggregate);
+    });
+  }
+
 }

@@ -11,4 +11,5 @@ export interface IUnitOfWork {
 
   addAggregateRoot(aggregateRoot: AggregateRoot): void;
   getAggregateRoots(): AggregateRoot[];
+  addCollectionAggregateRoot(aggregateRoot: AggregateRoot[]): void;
 }

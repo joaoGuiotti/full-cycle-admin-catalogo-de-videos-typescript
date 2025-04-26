@@ -37,11 +37,13 @@ export class VideoSequelizeRepository implements IVideoRepository {
     await this.videoModel.create(VideoModelMapper.toModel(entity), {
       ...this.modelConfig,
     });
+    this.uow.addAggregateRoot(entity);
   }
 
   async bulkInsert(entities: Video[]): Promise<void> {
     const models = entities.map((e) => VideoModelMapper.toModel(e));
     await this.videoModel.bulkCreate(models, { ...this.modelConfig });
+    this.uow.addCollectionAggregateRoot(entities);
   }
 
   async findById(entity_id: VideoId): Promise<Nullable<Video>> {
