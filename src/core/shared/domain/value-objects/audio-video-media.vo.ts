@@ -21,6 +21,10 @@ export abstract class AudioVideoMedia extends ValueObject {
   readonly encoded_location?: Nullable<string>; // mpeg-dash (mpd) fragments
   readonly status: AudioVideoMediaStatus;
 
+  abstract process(): AudioVideoMedia;
+  abstract complete(encoded_location: string): AudioVideoMedia;
+  abstract fail(): AudioVideoMedia;
+
   constructor(props: IAudioVideoMediaCreate) {
     super();
     this.name = props.name;
