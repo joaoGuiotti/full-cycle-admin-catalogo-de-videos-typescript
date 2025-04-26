@@ -4,7 +4,7 @@ import { IUnitOfWork } from "../../../domain/repository/unit-of-work.interface";
 export class UnitOfWorkFakeInMemory implements IUnitOfWork {
   private aggregateRoots: Set<AggregateRoot> = new Set<AggregateRoot>();
 
-  constructor() {}
+  constructor() { }
 
   async start(): Promise<void> {
     return;
@@ -31,5 +31,11 @@ export class UnitOfWorkFakeInMemory implements IUnitOfWork {
   }
   getAggregateRoots(): AggregateRoot[] {
     return [...this.aggregateRoots];
+  }
+
+  addCollectionAggregateRoot(aggregateRoot: AggregateRoot[]): void {
+    aggregateRoot.forEach((aggregate) => {
+      this.aggregateRoots.add(aggregate);
+    });
   }
 }

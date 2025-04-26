@@ -8,7 +8,7 @@ import { Thumbnail } from "../../../video/domain/thumbnail.vo";
 import { ThumbnailHalf } from "../../../video/domain/thumbnail-half.vo";
 import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
 import { IUnitOfWork } from "../../../shared/domain/repository/unit-of-work.interface";
-import { IStorage } from "@core/shared/application/storage.interafce";
+import { IStorage } from "../../../shared/application/storage.interafce";
 
 export type UploadImageMediasOutput = void;
 
@@ -18,7 +18,7 @@ export class UploadImageMediasUseCase
   constructor(
     private readonly uow: IUnitOfWork,
     private readonly videoRepo: IVideoRepository,
-    private readonly storage: IStorage,
+    private readonly storage: IStorage, 
   ) { }
 
   async execute(input: UploadImageMediasInput): Promise<UploadImageMediasOutput> {
