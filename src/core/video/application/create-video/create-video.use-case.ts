@@ -27,8 +27,8 @@ export class CreateVideoUseCase
 
     const [eitherCategoriesId, eitherGenresId, eitherCastMembers] = await Promise.all([
       await this.categoriesIdValidator.validate(input.categories_id),
-      await this.genresIdValidator.validate(input.categories_id),
-      await this.castMembersIdValidator.validate(input.categories_id),
+      await this.genresIdValidator.validate(input.genres_id),
+      await this.castMembersIdValidator.validate(input.cast_members_id),
     ]);
 
     const [categoriesId, errorsCategoriesId] = eitherCategoriesId.asArray();

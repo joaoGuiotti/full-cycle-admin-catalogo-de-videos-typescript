@@ -5,7 +5,6 @@ import { CreateVideoUseCase } from '@core/video/application/create-video/create-
 import { VideoInMemoryRepository } from "@core/video/infra/db/in-memory/video-in-memory.repository";
 import { VideoSequelizeRepository } from "@core/video/infra/db/sequelize/video-sequelize.repository";
 import { VideoModel } from "@core/video/infra/db/sequelize/video.model";
-import { Provider } from '@nestjs/common';
 import { getModelToken } from "@nestjs/sequelize";
 import { IVideoRepository } from '@core/video/domain/video.repository';
 import { CategoriesIdStorageValidator } from '@core/category/application/validators/categories-ids-exists-in-storage.validators';
@@ -34,35 +33,41 @@ export const REPOSITORIES = {
   },
   VIDEO_SEQUELIZE_REPOSITORY: {
     provide: VideoSequelizeRepository,
-    useFactory: (videoModel: typeof VideoModel, uow: UnitOfWorkSequelize) =>
-      new VideoSequelizeRepository(videoModel, uow),
+    useFactory: (videoModel: typeof VideoModel, uow: UnitOfWorkSequelize) => {
+      return new VideoSequelizeRepository(videoModel, uow);
+    },
     inject: [getModelToken(VideoModel), 'UnitOfWork'],
   },
 };
 
-export const USE_CASES: { [key: string]: Provider } = {
+export const USE_CASES = {
   CREATE_VIDEO_USE_CASE: {
     provide: CreateVideoUseCase,
     useFactory: (
       uow: IUnitOfWork,
       videoRepo: IVideoRepository,
       categoriesIdValidator: CategoriesIdStorageValidator,
-      genreIdValidator: GenresIdStorageValidator,
+      genresIdValidator: GenresIdStorageValidator,
       castMembersIdValidator: CastMembersIdStorageValidator,
-    ) => new CreateVideoUseCase(
-      uow,
-      videoRepo,
-      categoriesIdValidator,
-      genreIdValidator,
-      castMembersIdValidator,
-    ),
+    ) => {
+      return new CreateVideoUseCase(
+        uow,
+        videoRepo,
+        categoriesIdValidator,
+        genresIdValidator,
+        castMembersIdValidator,
+      );
+    },
     inject: [
       'UnitOfWork',
       REPOSITORIES.VIDEO_REPOSITORY.provide,
-      CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_ID_STORAGE_VALIDATOR.provide,
-      GENRES_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
-      CAST_MEMBERS_PROVIDERS.VALIDATIONS.CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
-    ]
+      CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_ID_STORAGE_VALIDATOR
+        .provide,
+      GENRES_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR
+        .provide,
+      CAST_MEMBERS_PROVIDERS.VALIDATIONS
+        .CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
+    ],
   },
   UPDATE_VIDEO_USE_CASE: {
     provide: UpdateVideoUseCase,
@@ -70,39 +75,42 @@ export const USE_CASES: { [key: string]: Provider } = {
       uow: IUnitOfWork,
       videoRepo: IVideoRepository,
       categoriesIdValidator: CategoriesIdStorageValidator,
-      genreIdValidator: GenresIdStorageValidator,
+      genresIdValidator: GenresIdStorageValidator,
       castMembersIdValidator: CastMembersIdStorageValidator,
-    ) => new UpdateVideoUseCase(
-      uow,
-      videoRepo,
-      categoriesIdValidator,
-      genreIdValidator,
-      castMembersIdValidator,
-    ),
+    ) => {
+      return new UpdateVideoUseCase(
+        uow,
+        videoRepo,
+        categoriesIdValidator,
+        genresIdValidator,
+        castMembersIdValidator,
+      );
+    },
     inject: [
       'UnitOfWork',
       REPOSITORIES.VIDEO_REPOSITORY.provide,
-      CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_ID_STORAGE_VALIDATOR.provide,
-      GENRES_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
-      CAST_MEMBERS_PROVIDERS.VALIDATIONS.CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
-    ]
+      CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_ID_STORAGE_VALIDATOR
+        .provide,
+      GENRES_PROVIDERS.VALIDATIONS.GENRES_IDS_EXISTS_IN_DATABASE_VALIDATOR
+        .provide,
+      CAST_MEMBERS_PROVIDERS.VALIDATIONS
+        .CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR.provide,
+    ],
   },
-  UPLOAD_AUDIO_VIDEO_MEDIAS_USE_CASE: {
+  UPLOAD_AUDIO_VIDEO_MEDIA_USE_CASE: {
     provide: UploadAudioVideoMediasUseCase,
     useFactory: (
       appService: ApplicationService,
       videoRepo: IVideoRepository,
       storage: IStorage,
-    ) => new UploadAudioVideoMediasUseCase(
-      appService,
-      videoRepo,
-      storage,
-    ),
+    ) => {
+      return new UploadAudioVideoMediasUseCase(appService, videoRepo, storage);
+    },
     inject: [
       ApplicationService,
       REPOSITORIES.VIDEO_REPOSITORY.provide,
       'IStorage',
-    ]
+    ],
   },
   GET_VIDEO_USE_CASE: {
     provide: GetVideoUseCase,
@@ -111,12 +119,14 @@ export const USE_CASES: { [key: string]: Provider } = {
       categoryRepo: ICategoryRepository,
       genreRepo: IGenreRepository,
       castMemberRepo: ICastMemberRepository,
-    ) => new GetVideoUseCase(
-      videoRepo,
-      categoryRepo,
-      genreRepo,
-      castMemberRepo,
-    ),
+    ) => {
+      return new GetVideoUseCase(
+        videoRepo,
+        categoryRepo,
+        genreRepo,
+        castMemberRepo,
+      );
+    },
     inject: [
       REPOSITORIES.VIDEO_REPOSITORY.provide,
       CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
@@ -143,8 +153,8 @@ export const USE_CASES: { [key: string]: Provider } = {
 //   },
 // };
 
-export const VIDEOS_PROVIDERS = { 
+export const VIDEOS_PROVIDERS = {
   REPOSITORIES,
   USE_CASES,
-  // HANDLERS, 
-}
+  // HANDLERS,
+};

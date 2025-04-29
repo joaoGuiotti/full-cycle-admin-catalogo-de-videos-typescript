@@ -68,12 +68,14 @@ export class GenreSequelizeRepository implements IGenreRepository {
     return models.map((m) => GenreModelMapper.toEntity(m))
   }
 
-  async existsById(ids: GenreId[]): Promise<{ exists: GenreId[]; not_exists: GenreId[] }> {
-    if (!ids.length)
+  async existsById(
+    ids: GenreId[],
+  ): Promise<{ exists: GenreId[]; not_exists: GenreId[] }> {
+    if (!ids.length) {
       throw new InvalidArgumentError(
-        'ids must be an array at least one element',
+        'ids must be an array with at least one element',
       );
-
+    }
     const existsGenreModels = await this.genreModel.findAll({
       attributes: ['genre_id'],
       where: {
@@ -83,14 +85,16 @@ export class GenreSequelizeRepository implements IGenreRepository {
       },
       transaction: this.uow.getTransaction(),
     });
-
-    const existsGenreIds = existsGenreModels.map((m) => new GenreId(m.genre_id));
-    const notExistsGenreIds = ids.filter((id) => !existsGenreIds.some((e) => e.equals(id)));
-
+    const existsGenreIds = existsGenreModels.map(
+      (m) => new GenreId(m.genre_id),
+    );
+    const notExistsGenreIds = ids.filter(
+      (id) => !existsGenreIds.some((e) => e.equals(id)),
+    );
     return {
       exists: existsGenreIds,
       not_exists: notExistsGenreIds,
-    }
+    };
   }
 
   async update(entity: Genre): Promise<void> {

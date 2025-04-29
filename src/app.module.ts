@@ -10,12 +10,12 @@ import { VideosModule } from './nest-modules/videos-module/videos.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    SharedModule,
     DatabaseModule,
     CategoriesModule,
     CastMembersModule,
     GenresModule,
-    SharedModule,
-    // VideosModule,
+    VideosModule,
   ],
   controllers: [],
   providers: [],
