@@ -5,6 +5,7 @@ import { ConfigModule } from './nest-modules/config-modules/config.module';
 import { SharedModule } from './nest-modules/shared-module/shared.module';
 import { CastMembersModule } from './nest-modules/cast-members-modules/cast-members.module';
 import { GenresModule } from './nest-modules/genres-modules/genres.module';
+import { VideosModule } from './nest-modules/videos-module/videos.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GenresModule } from './nest-modules/genres-modules/genres.module';
     CastMembersModule,
     GenresModule,
     SharedModule,
+    // VideosModule,
   ],
   controllers: [],
   providers: [],

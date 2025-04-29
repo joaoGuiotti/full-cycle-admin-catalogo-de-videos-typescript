@@ -20,6 +20,9 @@ import { Genre } from "../../../../genre/domain/genre.aggregate";
 import { CastMember } from "../../../../cast-member/domain/cast-member.aggregate";
 import { Video } from "../../../../video/domain/video.aggregate";
 import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
+import { ApplicationService } from "../../../../shared/application/application.service";
+import { DomainEventMediator } from "@core/shared/domain/events/domain-event-mediator";
+import EventEmitter2 from "eventemitter2";
 
 describe('UploadAudioVideoMediasUseCase Integration Tests', () => {
   let uploadAudioVideoMediasUseCase: UploadAudioVideoMediasUseCase;
@@ -27,12 +30,16 @@ describe('UploadAudioVideoMediasUseCase Integration Tests', () => {
   let categoryRepo: ICategoryRepository;
   let genreRepo: IGenreRepository;
   let castMemberRepo: ICastMemberRepository;
+  let appService: ApplicationService;
   let uow: UnitOfWorkSequelize;
   let storageService: IStorage;
   const sequelizeHelper = setupSequelizeForVideo();
 
   beforeEach(() => {
     uow = new UnitOfWorkSequelize(sequelizeHelper.sequelize);
+    const eventEmitter = new EventEmitter2();
+    const mediator = new DomainEventMediator(eventEmitter);
+    appService = new ApplicationService(uow, mediator);
     categoryRepo = new CategorySequelizeRepository(CategoryModel);
     genreRepo = new GenreSequelizeRepository(GenreModel, uow);
     castMemberRepo = new CastMemberSequelizeRepository(CastMemberModel);
@@ -44,7 +51,7 @@ describe('UploadAudioVideoMediasUseCase Integration Tests', () => {
     // storageService = new GoogleCloudStorage(storageSdk, Config.bucketName());
 
     uploadAudioVideoMediasUseCase = new UploadAudioVideoMediasUseCase(
-      uow,
+      appService,
       videoRepo,
       storageService,
     );
@@ -153,7 +160,7 @@ describe('UploadAudioVideoMediasUseCase Integration Tests', () => {
       ),
     });
     expect(storeSpy).toHaveBeenCalledTimes(1);
-     
+
   }, 10000);
 });
 

@@ -12,8 +12,8 @@ export class ProcessMediasUseCase
   implements IUseCase<ProcessMediasInput, ProcessMediasOutput> {
 
   constructor(
-    private videoRepo: IVideoRepository,
     private uow: IUnitOfWork,
+    private videoRepo: IVideoRepository,
   ) { }
 
   async execute(input: ProcessMediasInput): Promise<ProcessMediasOutput> {

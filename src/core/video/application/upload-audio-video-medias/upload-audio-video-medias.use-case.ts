@@ -9,6 +9,7 @@ import { Video } from '../../../video/domain/video.aggregate';
 import { Trailer } from '../../../video/domain/trailer.vo';
 import { VideoMedia } from '../../../video/domain/video-media.vo';
 import { EntityValidationError } from '../../../shared/domain/validators/validation.error';
+import { ApplicationService } from '../../../shared/application/application.service';
 
 export type UploadAudioVideoMediaOutput = void;
 
@@ -16,7 +17,7 @@ export class UploadAudioVideoMediasUseCase
   implements IUseCase<UploadAudioVideoMediaInput, UploadAudioVideoMediaOutput> {
 
   constructor(
-    private readonly uow: IUnitOfWork,
+    private appService: ApplicationService,
     private readonly videoRepo: IVideoRepository,
     private readonly storage: IStorage,
   ) { }
@@ -49,7 +50,7 @@ export class UploadAudioVideoMediasUseCase
       id: audioVideoMedia.raw_url,
     });
 
-    await this.uow.do(async () => {
+    await this.appService.run(async () => {
       await this.videoRepo.update(video);
     });
   }

@@ -22,3 +22,4 @@ export async function applyGlobalConfigApp(app: INestApplication) {
     new EntityValidationErrorFilter()
   );
 }
+
