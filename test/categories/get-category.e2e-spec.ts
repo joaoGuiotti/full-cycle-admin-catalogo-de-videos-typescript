@@ -1,8 +1,8 @@
 import request from "supertest";
 import { startApp } from "src/nest-modules/shared-module/testing/helper";
 import { ICategoryRepository } from "../../src/core/category/domain/category.repository";
-import { REPOSITORIES } from "src/nest-modules/categories-modules/categories.provider";
-import { GetCategoryFixture } from "src/nest-modules/categories-modules/testing/category-fixture";
+import { REPOSITORIES } from "src/nest-modules/categories-module/categories.provider";
+import { GetCategoryFixture } from "src/nest-modules/categories-module/testing/category-fixture";
 import { Category } from "../../src/core/category/domain/category.aggregate";
 
 

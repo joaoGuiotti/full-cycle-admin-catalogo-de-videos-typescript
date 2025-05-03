@@ -2,7 +2,7 @@ import { GenreCategoryModel, GenreModel } from '../../core/genre/infra/db/sequel
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GenresController } from './genres.controller';
-import { CategoriesModule } from '../categories-modules/categories.module';
+import { CategoriesModule } from '../categories-module/categories.module';
 import { GENRES_PROVIDERS } from './genres.provider';
 
 @Module({

@@ -8,7 +8,7 @@ import { GenreSequelizeRepository } from "../../core/genre/infra/db/sequelize/ge
 import { IUnitOfWork } from "../../core/shared/domain/repository/unit-of-work.interface"
 import { UnitOfWorkSequelize } from "../../core/shared/infra/db/sequelize/unit-of-work-sequelize"
 import { getModelToken } from "@nestjs/sequelize"
-import { CATEGORY_PROVIDERS } from "../categories-modules/categories.provider"
+import { CATEGORY_PROVIDERS } from "../categories-module/categories.provider"
 import { DeleteGenreUseCase, GetGenreUseCase, ListGenresUseCase, UpdateGenreUseCase } from "../../core/genre/application"
 import { GenresIdStorageValidator } from "../../core/genre/application/validations/genres-id-storage-validator"
 

@@ -6,10 +6,10 @@ import { ICategoryRepository } from '../../src/core/category/domain/category.rep
 import { Category } from '../../src/core/category/domain/category.aggregate';
 import { GenreOutputMapper } from '../../src/core/genre/application/use-cases/common/genre-output';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
-import { UpdateGenreFixture } from 'src/nest-modules/genres-modules/__tests__/fixture/genre-fixture';
-import { GENRES_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
-import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
-import { GenresController } from 'src/nest-modules/genres-modules/genres.controller';
+import { UpdateGenreFixture } from 'src/nest-modules/genres-module/__tests__/fixture/genre-fixture';
+import { GENRES_PROVIDERS } from 'src/nest-modules/genres-module/genres.provider';
+import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.provider';
+import { GenresController } from 'src/nest-modules/genres-module/genres.controller';
 
 describe('GenresController (e2e)', () => {
   const uuid = '9366b7dc-2d71-4799-b91c-c64adb205104';

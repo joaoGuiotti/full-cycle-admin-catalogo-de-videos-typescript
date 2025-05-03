@@ -4,8 +4,8 @@ import { Genre } from '../../src/core/genre/domain/genre.aggregate';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { Category } from '../../src/core/category/domain/category.aggregate';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
-import { GENRES_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
-import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
+import { GENRES_PROVIDERS } from 'src/nest-modules/genres-module/genres.provider';
+import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.provider';
 
 describe('GenresController (e2e)', () => {
   describe('/delete/:id (DELETE)', () => {

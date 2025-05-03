@@ -4,9 +4,9 @@ import { CastMember } from '../../src/core/cast-member/domain/cast-member.aggreg
 import { ICastMemberRepository } from '../../src/core/cast-member/domain/cast-member.repository';
 import { Uuid } from '../../src/core/shared/domain/value-objects/uuid.vo';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
-import { UpdateCastMemberFixture } from 'src/nest-modules/cast-members-modules/testing/cast-member-fixture';
-import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-modules/cast-members.provider';
-import { CastMembersController } from 'src/nest-modules/cast-members-modules/cast-members.controller';
+import { UpdateCastMemberFixture } from 'src/nest-modules/cast-members-module/testing/cast-member-fixture';
+import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.provider';
+import { CastMembersController } from 'src/nest-modules/cast-members-module/cast-members.controller';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
  
 describe('CastMembersController (e2e)', () => {

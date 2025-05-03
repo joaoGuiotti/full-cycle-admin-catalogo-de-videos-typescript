@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { ICastMemberRepository } from '../../src/core/cast-member/domain/cast-member.repository';
 import { CastMember } from '../../src/core/cast-member/domain/cast-member.aggregate';
-import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-modules/cast-members.provider';
+import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.provider';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
 
 describe('CastMembersController (e2e)', () => {

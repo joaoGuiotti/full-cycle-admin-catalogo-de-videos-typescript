@@ -3,9 +3,9 @@ import qs from 'qs';
 import { IGenreRepository } from '../../src/core/genre/domain/genre.repository';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
-import { ListGenresFixture } from 'src/nest-modules/genres-modules/__tests__/fixture/genre-fixture';
-import { GENRES_PROVIDERS } from 'src/nest-modules/genres-modules/genres.provider';
-import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-modules/categories.provider';
+import { ListGenresFixture } from 'src/nest-modules/genres-module/__tests__/fixture/genre-fixture';
+import { GENRES_PROVIDERS } from 'src/nest-modules/genres-module/genres.provider';
+import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.provider';
 
 describe('GenresController (e2e)', () => {
   describe('/genres (GET)', () => {

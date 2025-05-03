@@ -11,7 +11,7 @@ import { CastMember } from '../../../core/cast-member/domain/cast-member.aggrega
 import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
 import { CastMemberOutputMapper } from '../../../core/cast-member/application/use-cases/common/cast-member-output';
 import { CAST_MEMBERS_PROVIDERS } from '../cast-members.provider';
-import { DatabaseModule } from 'src/nest-modules/database-modules/database.module';
+import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
 import { CreateCastMemberFixture, ListCastMembersFixture, UpdateCastMemberFixture } from '../testing/cast-member-fixture';
 import { CastMemberCollectionPresenter } from '../cast-member.presenter';
 import { ConfigModule } from 'src/nest-modules/config-modules/config.module';

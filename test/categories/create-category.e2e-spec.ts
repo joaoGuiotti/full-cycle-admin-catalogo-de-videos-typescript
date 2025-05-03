@@ -1,9 +1,9 @@
-import { CreateCategoryFixture } from "src/nest-modules/categories-modules/testing/category-fixture";
+import { CreateCategoryFixture } from "src/nest-modules/categories-module/testing/category-fixture";
 import { ICategoryRepository } from "../../src/core/category/domain/category.repository";
-import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-modules/categories.provider";
+import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-module/categories.provider";
 import { startApp, StartHelper } from "src/nest-modules/shared-module/testing/helper";
 import { Uuid } from "../../src/core/shared/domain/value-objects/uuid.vo";
-import { CategoriesController } from "src/nest-modules/categories-modules/categories.controller";
+import { CategoriesController } from "src/nest-modules/categories-module/categories.controller";
 import { CategoryOutputMapper } from "../../src/core/category/application/use-cases/common/category-output";
 import { instanceToPlain } from "class-transformer";
 import request from 'supertest';

@@ -1,6 +1,6 @@
 import { Category } from "../../src/core/category/domain/category.aggregate";
 import { ICategoryRepository } from "../../src/core/category/domain/category.repository";
-import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-modules/categories.provider";
+import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-module/categories.provider";
 import { startApp } from "src/nest-modules/shared-module/testing/helper";
 import request from 'supertest';
 

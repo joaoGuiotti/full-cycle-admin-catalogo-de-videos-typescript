@@ -1,10 +1,10 @@
 import { CategorySearchParams, ICategoryRepository } from "../../src/core/category/domain/category.repository";
 import request from "supertest";
-import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-modules/categories.provider";
-import { ListCategoriesFixture } from "src/nest-modules/categories-modules/testing/category-fixture";
+import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-module/categories.provider";
+import { ListCategoriesFixture } from "src/nest-modules/categories-module/testing/category-fixture";
 import { startApp } from "src/nest-modules/shared-module/testing/helper";
 import { instanceToPlain } from "class-transformer";
-import { CategoriesController } from "src/nest-modules/categories-modules/categories.controller";
+import { CategoriesController } from "src/nest-modules/categories-module/categories.controller";
 import { CategoryOutputMapper } from "../../src/core/category/application/use-cases/common/category-output";
 
 describe('CategoriesController (e2e)', () => {

@@ -4,9 +4,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { VideoCastMemberModel, VideoCategoryModel, VideoGenreModel, VideoModel } from '../../core/video/infra/db/sequelize/video.model';
 import { ImageMediaModel } from '../../core/video/infra/db/sequelize/image-media.model';
 import { AudioVideoMediaModel } from '../../core/video/infra/db/sequelize/audio-video-media.model';
-import { CategoriesModule } from '../categories-modules/categories.module';
-import { GenresModule } from '../genres-modules/genres.module';
-import { CastMembersModule } from '../cast-members-modules/cast-members.module';
+import { CategoriesModule } from '../categories-module/categories.module';
+import { GenresModule } from '../genres-module/genres.module';
+import { CastMembersModule } from '../cast-members-module/cast-members.module';
 import { VIDEOS_PROVIDERS } from './videos.providers';
 import { VideoUploadService } from './services/upload.service';
 

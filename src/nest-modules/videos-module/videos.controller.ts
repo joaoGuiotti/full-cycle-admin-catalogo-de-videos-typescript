@@ -1,13 +1,24 @@
 import { CreateVideoUseCase } from '@core/video/application/create-video/create-video.use-case';
 import { GetVideoUseCase } from '@core/video/application/get-video/get-video.use-case';
 import { UpdateVideoUseCase } from '@core/video/application/update-video/update-video.use-case';
-import { UploadAudioVideoMediasUseCase } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.use-case';
-import { BadRequestException, Body, Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Post, UploadedFiles, UseInterceptors, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  UploadedFiles,
+  UseInterceptors,
+  ValidationPipe
+} from '@nestjs/common';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
 import { UpdateVideoInput } from '@core/video/application/update-video/update-video.input';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { UploadAudioVideoMediaInput } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.input';
 import { VideoUploadService } from './services/upload.service';
 import { VideoFiles } from './dto/upload-file.dto';
 
@@ -76,7 +87,6 @@ export class VideosController {
       throw new BadRequestException('Only one file can be sent at a time');
 
     await this.videoUploadService.uploadFile(id, files);
-
     return await this.getUseCase.execute({ id });
   }
 

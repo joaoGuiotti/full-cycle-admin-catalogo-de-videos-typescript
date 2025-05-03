@@ -3,9 +3,9 @@ import { Category } from "../../src/core/category/domain/category.aggregate";
 import { ICategoryRepository } from "../../src/core/category/domain/category.repository";
 import { Uuid } from "../../src/core/shared/domain/value-objects/uuid.vo";
 import { instanceToPlain } from "class-transformer";
-import { CategoriesController } from "src/nest-modules/categories-modules/categories.controller";
-import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-modules/categories.provider";
-import { UpdateCategoryFixture } from "src/nest-modules/categories-modules/testing/category-fixture";
+import { CategoriesController } from "src/nest-modules/categories-module/categories.controller";
+import { CATEGORY_PROVIDERS } from "src/nest-modules/categories-module/categories.provider";
+import { UpdateCategoryFixture } from "src/nest-modules/categories-module/testing/category-fixture";
 import { startApp } from "src/nest-modules/shared-module/testing/helper";
 import request from 'supertest';
 

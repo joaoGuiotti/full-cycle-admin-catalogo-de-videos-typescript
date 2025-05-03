@@ -2,7 +2,7 @@ import { ICategoryRepository } from "@core/category/domain/category.repository";
 import { CategoriesController } from "../categories.controller"
 import { Test, TestingModule } from "@nestjs/testing";
 import { ConfigModule } from "src/nest-modules/config-modules/config.module";
-import { DatabaseModule } from "src/nest-modules/database-modules/database.module";
+import { DatabaseModule } from "src/nest-modules/database-module/database.module";
 import { CategoriesModule } from "../categories.module";
 import { CATEGORY_PROVIDERS } from "../categories.provider";
 import { CreateCategoryUseCase, DeleteCategoryUseCase, GetCategoryUseCase, ListCategoriesUseCase, UpdateCategoryUseCase } from "@core/category/application/use-cases";

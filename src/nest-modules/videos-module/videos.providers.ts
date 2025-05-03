@@ -1,5 +1,5 @@
 import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interface';
-import { GENRES_PROVIDERS } from './../genres-modules/genres.provider';
+import { GENRES_PROVIDERS } from '../genres-module/genres.provider';
 import { UnitOfWorkSequelize } from "@core/shared/infra/db/sequelize/unit-of-work-sequelize";
 import { CreateVideoUseCase } from '@core/video/application/create-video/create-video.use-case';
 import { VideoInMemoryRepository } from "@core/video/infra/db/in-memory/video-in-memory.repository";
@@ -10,8 +10,8 @@ import { IVideoRepository } from '@core/video/domain/video.repository';
 import { CategoriesIdStorageValidator } from '@core/category/application/validators/categories-ids-exists-in-storage.validators';
 import { GenresIdStorageValidator } from '@core/genre/application/validations/genres-id-storage-validator';
 import { CastMembersIdStorageValidator } from '@core/cast-member/application/validators/cast-members-id-storage-validator';
-import { CATEGORY_PROVIDERS } from '../categories-modules/categories.provider';
-import { CAST_MEMBERS_PROVIDERS } from '../cast-members-modules/cast-members.provider';
+import { CATEGORY_PROVIDERS } from '../categories-module/categories.provider';
+import { CAST_MEMBERS_PROVIDERS } from '../cast-members-module/cast-members.provider';
 import { UpdateVideoUseCase } from '@core/video/application/update-video/update-video.use-case';
 import { UploadAudioVideoMediasUseCase } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.use-case';
 import { ApplicationService } from '@core/shared/application/application.service';
