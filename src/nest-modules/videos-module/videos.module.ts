@@ -8,6 +8,7 @@ import { CategoriesModule } from '../categories-modules/categories.module';
 import { GenresModule } from '../genres-modules/genres.module';
 import { CastMembersModule } from '../cast-members-modules/cast-members.module';
 import { VIDEOS_PROVIDERS } from './videos.providers';
+import { VideoUploadService } from './services/upload.service';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { VIDEOS_PROVIDERS } from './videos.providers';
   providers: [
     ...Object.values(VIDEOS_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEOS_PROVIDERS.USE_CASES),
+    VideoUploadService,
   ],
 })
 export class VideosModule {}

@@ -89,3 +89,41 @@ Content-Type: application/json
 @videoId = {{createVideo.response.body.data.id}}
 
 ###
+
+# @name updateVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: application/json
+
+{
+  "title": "Video Teste Atualizado",
+  "description": "Descrição do video teste atualizado",
+  "year_launched": 2024,
+  "is_opened": false,
+  "rating": "L",
+  "duration": 90,
+  "categories_id": ["{{categoryId}}"],
+  "genres_id": ["{{genreId}}"],
+  "cast_members_id": ["{{castMemberId}}"]
+}
+
+###
+# @name updateVideo
+
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
+
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="video"; filename="video.mp4"
+Content-Type: video/mp4
+
+< ./package.json
+# ------WebKitFormBoundary1234
+# Content-Disposition: form-data; name="video"; filename="video.mp4"
+# Content-Type: video/mp4
+
+# < ./package.json
+------WebKitFormBoundary1234--
+ 
+
+###
+
