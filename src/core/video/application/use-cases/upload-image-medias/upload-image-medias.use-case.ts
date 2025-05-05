@@ -1,14 +1,14 @@
-import { Video, VideoId } from "../../../video/domain/video.aggregate";
-import { IUseCase } from "../../../shared/application/use-case.interface";
+import { Video, VideoId } from "../../../domain/video.aggregate";
+import { IUseCase } from "../../../../shared/application/use-case.interface";
 import { UploadImageMediasInput } from "./upload-image-medias.input";
-import { IVideoRepository } from "../../../video/domain/video.repository";
-import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
-import { Banner } from "../../../video/domain/banner.vo";
-import { Thumbnail } from "../../../video/domain/thumbnail.vo";
-import { ThumbnailHalf } from "../../../video/domain/thumbnail-half.vo";
-import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
-import { IUnitOfWork } from "../../../shared/domain/repository/unit-of-work.interface";
-import { IStorage } from "../../../shared/application/storage.interafce";
+import { IVideoRepository } from "../../../domain/video.repository";
+import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
+import { Banner } from "../../../domain/banner.vo";
+import { Thumbnail } from "../../../domain/thumbnail.vo";
+import { ThumbnailHalf } from "../../../domain/thumbnail-half.vo";
+import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
+import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
+import { IStorage } from "../../../../shared/application/storage.interafce";
 
 export type UploadImageMediasOutput = void;
 

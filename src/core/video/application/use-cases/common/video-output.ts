@@ -1,9 +1,9 @@
-import { CastMemberTypes } from "../../../cast-member/domain/cast-member-type.vo";
-import { CastMember } from "../../../cast-member/domain/cast-member.aggregate";
-import { Category } from "../../../category/domain/category.aggregate";
-import { Genre } from "../../../genre/domain/genre.aggregate";
-import { RatingValues } from "../../../video/domain/rating.vo";
-import { Video } from "../../../video/domain/video.aggregate";
+import { CastMemberTypes } from "../../../../cast-member/domain/cast-member-type.vo";
+import { CastMember } from "../../../../cast-member/domain/cast-member.aggregate";
+import { Category } from "../../../../category/domain/category.aggregate";
+import { Genre } from "../../../../genre/domain/genre.aggregate";
+import { RatingValues } from "../../../../video/domain/rating.vo";
+import { Video } from "../../../../video/domain/video.aggregate";
 
 export type VideoCategoryOutput = {
   id: string;

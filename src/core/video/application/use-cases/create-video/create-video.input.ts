@@ -1,6 +1,6 @@
 
 
-import { RatingValues } from '../../domain/rating.vo';
+import { RatingValues } from '../../../domain/rating.vo';
 import {
   IsBoolean,
   IsNotEmpty,

@@ -1,4 +1,4 @@
-import { UploadAudioVideoMediaInput } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.input';
+import { UploadAudioVideoMediaInput } from "@core/video/application/use-cases";
 
 export class UploadFileDto extends UploadAudioVideoMediaInput { }
 

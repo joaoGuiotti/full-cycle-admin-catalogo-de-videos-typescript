@@ -1,7 +1,6 @@
 import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interface';
 import { GENRES_PROVIDERS } from '../genres-module/genres.provider';
 import { UnitOfWorkSequelize } from "@core/shared/infra/db/sequelize/unit-of-work-sequelize";
-import { CreateVideoUseCase } from '@core/video/application/create-video/create-video.use-case';
 import { VideoInMemoryRepository } from "@core/video/infra/db/in-memory/video-in-memory.repository";
 import { VideoSequelizeRepository } from "@core/video/infra/db/sequelize/video-sequelize.repository";
 import { VideoModel } from "@core/video/infra/db/sequelize/video.model";
@@ -12,15 +11,18 @@ import { GenresIdStorageValidator } from '@core/genre/application/validations/ge
 import { CastMembersIdStorageValidator } from '@core/cast-member/application/validators/cast-members-id-storage-validator';
 import { CATEGORY_PROVIDERS } from '../categories-module/categories.provider';
 import { CAST_MEMBERS_PROVIDERS } from '../cast-members-module/cast-members.provider';
-import { UpdateVideoUseCase } from '@core/video/application/update-video/update-video.use-case';
-import { UploadAudioVideoMediasUseCase } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.use-case';
 import { ApplicationService } from '@core/shared/application/application.service';
 import { IStorage } from '@core/shared/application/storage.interafce';
-import { GetVideoUseCase } from '@core/video/application/get-video/get-video.use-case';
 import { ICategoryRepository } from '@core/category/domain/category.repository';
 import { IGenreRepository } from '@core/genre/domain/genre.repository';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
-import { ProcessMediasUseCase } from '@core/video/application/process-medias/process-medias.use-case';
+import {
+  CreateVideoUseCase,
+  GetVideoUseCase,
+  ProcessMediasUseCase,
+  UpdateVideoUseCase,
+  UploadAudioVideoMediasUseCase
+} from '@core/video/application/use-cases';
 
 export const REPOSITORIES = {
   VIDEO_REPOSITORY: {

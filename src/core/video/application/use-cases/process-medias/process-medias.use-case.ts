@@ -1,10 +1,10 @@
-import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
-import { AudioVideoMedia, AudioVideoMediaStatus } from "../../../shared/domain/value-objects/audio-video-media.vo";
-import { Video, VideoId } from "../../../video/domain/video.aggregate";
-import { IVideoRepository } from "../../../video/domain/video.repository";
+import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
+import { AudioVideoMedia, AudioVideoMediaStatus } from "../../../../shared/domain/value-objects/audio-video-media.vo";
+import { Video, VideoId } from "../../../../video/domain/video.aggregate";
+import { IVideoRepository } from "../../../../video/domain/video.repository";
 import { ProcessMediasInput } from "./process-medias.input";
-import { IUseCase } from "../../../shared/application/use-case.interface";
-import { IUnitOfWork } from "../../../shared/domain/repository/unit-of-work.interface";
+import { IUseCase } from "../../../../shared/application/use-case.interface";
+import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
 
 type ProcessMediasOutput = void;
 

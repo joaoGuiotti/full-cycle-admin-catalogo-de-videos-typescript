@@ -1,6 +1,6 @@
 import { Inject, Injectable, ValidationPipe } from '@nestjs/common';
 import { UploadFileDto, VideoFiles } from '../dto/upload-file.dto';
-import { UploadAudioVideoMediasUseCase } from '@core/video/application/upload-audio-video-medias/upload-audio-video-medias.use-case';
+import { UploadAudioVideoMediasUseCase } from '@core/video/application/use-cases';
 
 @Injectable()
 export class VideoUploadService {

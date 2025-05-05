@@ -1,13 +1,13 @@
-import { IUseCase } from "../../../shared/application/use-case.interface";
+import { IUseCase } from "../../../../shared/application/use-case.interface";
 import { CreateVideoInput } from "./create-video.input";
-import { IUnitOfWork } from "../../../shared/domain/repository/unit-of-work.interface";
-import { IVideoRepository } from "../../../video/domain/video.repository";
-import { CategoriesIdStorageValidator } from "../../../category/application/validators/categories-ids-exists-in-storage.validators";
-import { GenresIdStorageValidator } from "../../../genre/application/validations/genres-id-storage-validator";
-import { CastMembersIdStorageValidator } from "../../../cast-member/application/validators/cast-members-id-storage-validator";
-import { Video } from "../../../video/domain/video.aggregate";
-import { Rating } from "../../../video/domain/rating.vo";
-import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
+import { IUnitOfWork } from "../../../../shared/domain/repository/unit-of-work.interface";
+import { IVideoRepository } from "../../../../video/domain/video.repository";
+import { CategoriesIdStorageValidator } from "../../../../category/application/validators/categories-ids-exists-in-storage.validators";
+import { GenresIdStorageValidator } from "../../../../genre/application/validations/genres-id-storage-validator";
+import { CastMembersIdStorageValidator } from "../../../../cast-member/application/validators/cast-members-id-storage-validator";
+import { Video } from "../../../../video/domain/video.aggregate";
+import { Rating } from "../../../../video/domain/rating.vo";
+import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
 
 export type CreateVideoOutput = { id: string };
 

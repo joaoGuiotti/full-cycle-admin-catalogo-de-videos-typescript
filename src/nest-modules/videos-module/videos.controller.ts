@@ -1,6 +1,3 @@
-import { CreateVideoUseCase } from '@core/video/application/create-video/create-video.use-case';
-import { GetVideoUseCase } from '@core/video/application/get-video/get-video.use-case';
-import { UpdateVideoUseCase } from '@core/video/application/update-video/update-video.use-case';
 import {
   BadRequestException,
   Body,
@@ -15,12 +12,17 @@ import {
   UseInterceptors,
   ValidationPipe
 } from '@nestjs/common';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
-import { UpdateVideoInput } from '@core/video/application/update-video/update-video.input';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { VideoUploadService } from './services/upload.service';
 import { VideoFiles } from './dto/upload-file.dto';
+import {
+  CreateVideoUseCase,
+  GetVideoUseCase,
+  UpdateVideoInput,
+  UpdateVideoUseCase
+} from '@core/video/application/use-cases';
+import { CreateVideoDto } from './dto/create-video.dto';
+import { UpdateVideoDto } from './dto/update-video.dto';
 
 @Controller('videos')
 export class VideosController {
