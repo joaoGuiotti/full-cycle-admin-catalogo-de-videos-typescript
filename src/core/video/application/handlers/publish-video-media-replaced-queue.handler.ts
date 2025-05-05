@@ -11,3 +11,5 @@ export class PublishVideoMediaReplacedQueueHandler
   }
 
 }
+
+//agreagados que disparam eventos 

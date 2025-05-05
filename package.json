@@ -25,6 +25,7 @@
     "tsc:check": "tsc --noEmit"
   },
   "dependencies": {
+    "@golevelup/nestjs-rabbitmq": "^5.7.0",
     "@google-cloud/storage": "^7.16.0",
     "@nestjs/common": "^11.0.13",
     "@nestjs/config": "^4.0.2",
