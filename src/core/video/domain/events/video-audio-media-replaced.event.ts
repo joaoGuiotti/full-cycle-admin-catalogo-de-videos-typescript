@@ -1,5 +1,4 @@
 import { IDomainEvent } from "@core/shared/domain/events/domain-event.interafce";
-import { ValueObject } from "@core/shared/domain/value-object";
 import { VideoId } from "../video.aggregate";
 import { Trailer } from "../trailer.vo";
 import { VideoMedia } from "../video-media.vo";

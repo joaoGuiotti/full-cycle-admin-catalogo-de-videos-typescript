@@ -28,6 +28,7 @@ import { VideoUploadService } from './services/upload.service';
   providers: [
     ...Object.values(VIDEOS_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEOS_PROVIDERS.USE_CASES),
+    ...Object.values(VIDEOS_PROVIDERS.HANDLERS),
     VideoUploadService,
   ],
 })
