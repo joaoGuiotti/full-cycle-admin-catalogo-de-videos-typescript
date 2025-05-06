@@ -1,4 +1,4 @@
-import { IDomainEvent } from "@core/shared/domain/events/domain-event.interafce";
+import { IDomainEvent, IIntegrationEvent } from "@core/shared/domain/events/domain-event.interafce";
 import { VideoId } from "../video.aggregate";
 import { Trailer } from "../trailer.vo";
 import { VideoMedia } from "../video-media.vo";
@@ -29,4 +29,26 @@ export class VideoAudioMediaReplacedEvent implements IDomainEvent {
   static create(props: VideoAudioMediaReplacedProps) {
     return new VideoAudioMediaReplacedEvent(props)
   }
+
+  getIntegrationEvent(): IIntegrationEvent {
+    return new VideoAudioMediaUploadedIntegrationEvent(this);
+  }
 }
+
+export class VideoAudioMediaUploadedIntegrationEvent
+  implements IIntegrationEvent {
+    event_name: string;
+    event_version: number;
+    occurred_on: Date;
+    payload: any;
+
+    constructor(event: VideoAudioMediaReplacedEvent) {
+      this.event_name = this.constructor.name;
+      this.event_version = event.event_version;
+      this.occurred_on = event.occurred_on;
+      this.payload = {
+        aggregate_id: event.aggregate_id.id,
+        media: event.media.toJSON(),
+      }
+    }
+  }

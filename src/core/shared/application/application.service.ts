@@ -18,6 +18,9 @@ export class ApplicationService {
       await this.domainEventMediator.publish(aggregateRoot);
     }
     await this.unitOfWork.commit();
+    for (const aggregateRoot of aggregateRoots) {
+      await this.domainEventMediator.publishIntegrationEvents(aggregateRoot);
+    }
   }
 
   async rollback() {

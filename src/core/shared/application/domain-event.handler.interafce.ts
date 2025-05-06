@@ -1,5 +1,9 @@
-import { IDomainEvent } from './../domain/events/domain-event.interafce';
+import { IDomainEvent, IIntegrationEvent } from './../domain/events/domain-event.interafce';
 
-export interface IDomainEventHandler<T extends IDomainEvent> { 
-  handle(event: T): Promise<void>;
+export interface IDomainEventHandler {
+  handle(event: IDomainEvent): Promise<void>;
+}
+
+export interface IIntegrationEventHandler {
+  handle(event: IIntegrationEvent): Promise<void>;
 }

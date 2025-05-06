@@ -5,6 +5,7 @@ import { UnitOfWorkFakeInMemory } from "../../../shared/infra/db/in-memory/fake-
 import EventEmitter2 from "eventemitter2";
 import { AggregateRoot } from "../../../shared/domain/aggregate-root";
 import { ValueObject } from "../../../shared/domain/value-object";
+import { IIntegrationEvent } from "@core/shared/domain/events/domain-event.interafce";
 
 class StubAggregateRoot extends AggregateRoot {
   get entity_id(): ValueObject {
@@ -47,11 +48,13 @@ describe('ApplicationService Unit Tests', () => {
     it('should call the publish method of the domainEventMediator and the commit method', async () => {
       const aggregateRoot = new StubAggregateRoot();
       uow.addAggregateRoot(aggregateRoot);
-      const publishSpy = jest.spyOn(domainEventMediator, 'publish');
+      jest.spyOn(domainEventMediator, 'publish');
+      jest.spyOn(domainEventMediator, 'publishIntegrationEvents');
       const commitSpy = jest.spyOn(uow, 'commit');
       await appService.commit();
-      expect(publishSpy).toHaveBeenCalledWith(aggregateRoot);
+      expect(domainEventMediator.publish).toHaveBeenCalledWith(aggregateRoot);
       expect(commitSpy).toHaveBeenCalled();
+      expect(domainEventMediator.publishIntegrationEvents).toHaveBeenCalledWith(aggregateRoot);
     });
   });
 
@@ -77,5 +80,4 @@ describe('ApplicationService Unit Tests', () => {
       expect(failSpy).toHaveBeenCalled();
     });
   });
-
 });
