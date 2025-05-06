@@ -11,11 +11,11 @@ services:
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
     labels:
       filebeat_collector: true
-      
-  db: 
+
+  db:
     image: mysql:8.0.30-debian
     environment:
       - MYSQL_DATABASE=micro_videos
@@ -24,13 +24,11 @@ services:
       - ./.docker/mysql:/docker-entrypoint-initdb.d
     security_opt:
       - seccomp:unconfined
-  
-  rabbitmq: 
+
+  rabbitmq:
     image: rabbitmq:3.8-management-alpine
+    ports:
+      - 15672:15672
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
-    # volumes:
-    #   -  ./.docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
-    ports:
-      - 15672:15672
