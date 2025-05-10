@@ -71,7 +71,6 @@ const models = [
       provide: 'UnitOfWork',
       useExisting: UnitOfWorkSequelize,
       scope: Scope.REQUEST
-
     },
   ],
   exports: ['UnitOfWork']
