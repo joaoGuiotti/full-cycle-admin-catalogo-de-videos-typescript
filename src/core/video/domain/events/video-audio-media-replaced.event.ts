@@ -1,4 +1,4 @@
-import { IDomainEvent, IIntegrationEvent } from "@core/shared/domain/events/domain-event.interafce";
+import { IDomainEvent, IIntegrationEvent } from "../../../shared/domain/events/domain-event.interafce";
 import { VideoId } from "../video.aggregate";
 import { Trailer } from "../trailer.vo";
 import { VideoMedia } from "../video-media.vo";

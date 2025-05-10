@@ -50,7 +50,7 @@ export class UploadAudioVideoMediasUseCase
     });
 
     await this.appService.run(async () => {
-      await this.videoRepo.update(video);
+      return this.videoRepo.update(video);
     });
   }
 }

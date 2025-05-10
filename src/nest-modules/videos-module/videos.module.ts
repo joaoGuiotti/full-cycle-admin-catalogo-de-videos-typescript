@@ -9,6 +9,7 @@ import { GenresModule } from '../genres-module/genres.module';
 import { CastMembersModule } from '../cast-members-module/cast-members.module';
 import { VIDEOS_PROVIDERS } from './videos.providers';
 import { VideoUploadService } from './services/upload.service';
+import { RabbitmqModule } from '../rabbitmq-module/rabbitmq.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { VideoUploadService } from './services/upload.service';
       ImageMediaModel,
       AudioVideoMediaModel,
     ]),
+    RabbitmqModule.forFeature(),
     CategoriesModule,
     GenresModule,
     CastMembersModule,

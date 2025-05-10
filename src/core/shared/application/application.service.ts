@@ -4,27 +4,29 @@ import { IUnitOfWork } from "../domain/repository/unit-of-work.interface";
 export class ApplicationService {
 
   constructor(
-    private readonly unitOfWork: IUnitOfWork,
+    private readonly uow: IUnitOfWork,
     private readonly domainEventMediator: DomainEventMediator,
   ) { }
 
   async start() {
-    await this.unitOfWork.start();
+    await this.uow.start();
   }
 
   async commit() {
-    const aggregateRoots = [...this.unitOfWork.getAggregateRoots()];
+    const aggregateRoots = [...this.uow.getAggregateRoots()];
     for (const aggregateRoot of aggregateRoots) {
       await this.domainEventMediator.publish(aggregateRoot);
     }
-    await this.unitOfWork.commit();
+
+    await this.uow.commit();
+
     for (const aggregateRoot of aggregateRoots) {
       await this.domainEventMediator.publishIntegrationEvents(aggregateRoot);
     }
   }
 
   async rollback() {
-    await this.unitOfWork.rollback();
+    await this.uow.rollback();
   }
 
   async run<T>(callbackFn: () => Promise<T>): Promise<T> {

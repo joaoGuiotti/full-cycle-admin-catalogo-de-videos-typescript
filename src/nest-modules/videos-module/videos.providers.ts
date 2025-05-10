@@ -24,6 +24,7 @@ import {
   UploadAudioVideoMediasUseCase
 } from '@core/video/application/use-cases';
 import { PublishVideoMediaReplacedQueueHandler } from '@core/video/application/handlers';
+import { IMessageBroker } from '@core/shared/application/message-broker.interface';
 
 export const REPOSITORIES = {
   VIDEO_REPOSITORY: {
@@ -147,9 +148,12 @@ export const USE_CASES = {
 };
 
 export const HANDLERS = {
-  PUBLISH_VIDEO_MEDIA_REPLACED_QUEUE_HANDLER: {
+  PUBLISH_VIDEO_MEDIA_REPLACED_IN_QUEUE_HANDLER: {
     provide: PublishVideoMediaReplacedQueueHandler,
-    useClass: PublishVideoMediaReplacedQueueHandler,
+    useFactory: (messageBroker: IMessageBroker) => {
+      return new PublishVideoMediaReplacedQueueHandler(messageBroker);
+    },
+    inject: ['IMessageBroker'],
   },
 };
 

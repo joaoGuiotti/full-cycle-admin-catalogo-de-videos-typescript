@@ -14,6 +14,9 @@ services:
       - 'host.docker.internal:host-gateway'
     labels:
       filebeat_collector: true
+    depends_on:
+      - rabbitmq
+      - db
 
   db:
     image: mysql:8.0.30-debian
@@ -26,7 +29,7 @@ services:
       - seccomp:unconfined
 
   rabbitmq:
-    image: rabbitmq:3.8-management-alpine
+    image: rabbitmq:3.8-management
     ports:
       - 15672:15672
     environment:
