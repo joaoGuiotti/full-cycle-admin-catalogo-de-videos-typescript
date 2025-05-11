@@ -8,7 +8,7 @@ export class RabbitMQMessageBroker implements IMessageBroker {
   constructor(private readonly conn: AmqpConnection) { }
 
   async publishEvent(event: IIntegrationEvent): Promise<void> {
-    const config = EVENTS_MESSAGE_BROKER_CONFIG[event.event_name];
+    const config = EVENTS_MESSAGE_BROKER_CONFIG[event.constructor.name];
     await this.conn.publish(
       config.exchange,
       config.routing_key,
