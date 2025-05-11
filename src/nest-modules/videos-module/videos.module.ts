@@ -10,6 +10,7 @@ import { CastMembersModule } from '../cast-members-module/cast-members.module';
 import { VIDEOS_PROVIDERS } from './videos.providers';
 import { VideoUploadService } from './services/upload.service';
 import { RabbitmqModule } from '../rabbitmq-module/rabbitmq.module';
+import { VideosConsumersServices } from './services/videos-consumers.service';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { RabbitmqModule } from '../rabbitmq-module/rabbitmq.module';
     ...Object.values(VIDEOS_PROVIDERS.USE_CASES),
     ...Object.values(VIDEOS_PROVIDERS.HANDLERS),
     VideoUploadService,
+    VideosConsumersServices,
   ],
 })
 export class VideosModule {}
