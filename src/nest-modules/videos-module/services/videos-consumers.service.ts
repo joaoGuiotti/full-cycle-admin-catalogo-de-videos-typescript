@@ -4,8 +4,6 @@ import { RabbitSubscribe } from "@golevelup/nestjs-rabbitmq";
 import { Inject, Injectable, ValidationPipe } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
 
-const FILE_RESOURCE_REGEX = /^.+\.[a-zA-Z0-9]+$/;
-
 @Injectable()
 export class VideosConsumersServices {
 
