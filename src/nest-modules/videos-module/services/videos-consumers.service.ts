@@ -1,12 +1,17 @@
 import { AudioVideoMediaStatus } from "@core/shared/domain/value-objects/audio-video-media.vo";
-import { ProcessMediasInput } from "@core/video/application/use-cases";
+import { ProcessMediasInput, ProcessMediasUseCase } from "@core/video/application/use-cases";
 import { RabbitSubscribe } from "@golevelup/nestjs-rabbitmq";
-import { Injectable, ValidationPipe } from "@nestjs/common";
+import { Inject, Injectable, ValidationPipe } from "@nestjs/common";
+import { ModuleRef } from "@nestjs/core";
 
 const FILE_RESOURCE_REGEX = /^.+\.[a-zA-Z0-9]+$/;
 
 @Injectable()
 export class VideosConsumersServices {
+
+  @Inject(ModuleRef)
+  private readonly moduleRef: ModuleRef;
+
   @RabbitSubscribe({
     exchange: 'amq.direct',
     routingKey: 'videos.convert',
@@ -36,10 +41,11 @@ export class VideosConsumersServices {
         metatype: ProcessMediasInput,
         type: 'body',
       });
+      const useCase = await this.moduleRef.resolve(ProcessMediasUseCase);
+      await useCase.execute(input);
     } catch (error) {
       console.error(error);
     }
-    console.log('success', resource_id);
   }
 }
 
