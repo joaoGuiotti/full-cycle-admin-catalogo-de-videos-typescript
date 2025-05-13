@@ -5,7 +5,7 @@ import { Inject, Injectable, UseFilters, ValidationPipe } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
 import { RabbitmqConsumeErrorFilter } from "src/nest-modules/rabbitmq-module/filters/rabbitmq-consume-error.filter";
 
-@UseFilters(new RabbitmqConsumeErrorFilter())
+@UseFilters(RabbitmqConsumeErrorFilter)
 @Injectable()
 export class VideosConsumersServices {
 
@@ -13,7 +13,7 @@ export class VideosConsumersServices {
   private readonly moduleRef: ModuleRef;
 
   @RabbitSubscribe({
-    exchange: 'amq.direct',
+    exchange: 'direct.delayed',
     routingKey: 'videos.convert',
     queue: 'micro-videos/admin',
     allowNonJsonMessages: true,

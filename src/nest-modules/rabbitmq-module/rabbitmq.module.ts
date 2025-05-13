@@ -21,6 +21,15 @@ export class RabbitmqModule {
                 options: {
                   durable: true
                 }
+              },
+              {
+                name: 'direct.delayed',
+                type: 'x-delayed-message',
+                options: {
+                  arguments: {
+                    'x-delayed-type': 'direct'
+                  }
+                }
               }
             ],
             queues: [
@@ -39,7 +48,9 @@ export class RabbitmqModule {
           inject: [ConfigService],
         }),
       ],
-      providers: [RabbitmqConsumeErrorFilter],
+      providers: [
+        RabbitmqConsumeErrorFilter
+      ],
       global: true,
       exports: [RabbitMQModule],
     }
