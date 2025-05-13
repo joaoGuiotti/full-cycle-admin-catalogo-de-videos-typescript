@@ -3,11 +3,13 @@ import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { EntityValidationError } from '@core/shared/domain/validators/validation.error';
 import { AmqpConnection, Nack } from '@golevelup/nestjs-rabbitmq';
 import { ArgumentsHost, Catch, ExceptionFilter, UnprocessableEntityException } from '@nestjs/common';
+import { RabbitMQConstants } from '../rabbitmq.constants';
 
 @Catch()
 export class RabbitmqConsumeErrorFilter<T = Error> implements ExceptionFilter {
-  static readonly RETRY_COUNT_HEADER = 'x-retry-count';
-  static readonly MAX_RETRIES = 10;
+  static readonly RETRY_EXCHANGE = RabbitMQConstants.EXCHANGES.DELAYED;
+  static readonly RETRY_COUNT_HEADER = RabbitMQConstants.HEADERS.RETRY_COUNT;
+  static readonly MAX_RETRIES = RabbitMQConstants.CONFIG.MAX_RETRIES;
 
   static readonly NON_RETRIABLE_ERRORS = [
     NotFoundError,
@@ -32,11 +34,11 @@ export class RabbitmqConsumeErrorFilter<T = Error> implements ExceptionFilter {
     const ctx = host.switchToRpc();
     const message: ConsumeMessage = ctx.getContext();
 
-    console.error('RabbitMQConsumeErrorFilter - Exception ===>', exception);
-    console.error(
-      'RabbitMQConsumeErrorFilter - Retry Count ===>',
-      message.properties?.headers?.[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER]
-    );
+    // console.error('RabbitMQConsumeErrorFilter - Exception ===>', exception);
+    // console.error(
+    //   'RabbitMQConsumeErrorFilter - Retry Count ===>',
+    //   message.properties?.headers?.[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER]
+    // );
 
     if (!this.shouldRetry(message.properties.headers!))
       return new Nack(false);
@@ -54,9 +56,9 @@ export class RabbitmqConsumeErrorFilter<T = Error> implements ExceptionFilter {
     const headers: any = message.properties!.headers;
     const retryCount = headers[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER] || 0;
     headers[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER] = retryCount + 1;
-    headers['x-delay'] = 5000; // 5s
+    headers['x-delay'] = RabbitMQConstants.CONFIG.DELAY_MS;
     return this.amqpConn.publish(
-      'direct.delayed',
+      RabbitmqConsumeErrorFilter.RETRY_EXCHANGE,
       message.fields.routingKey,
       message.content,
       {

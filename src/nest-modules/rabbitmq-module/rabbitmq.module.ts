@@ -3,6 +3,7 @@ import { AmqpConnection, RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RabbitmqConsumeErrorFilter } from './filters/rabbitmq-consume-error.filter';
+import { RabbitMQConstants } from './rabbitmq.constants';
 
 @Module({})
 export class RabbitmqModule {
@@ -16,15 +17,15 @@ export class RabbitmqModule {
             uri: configService.get('RABBITMQ_URI') as string,
             exchanges: [
               {
-                name: 'dlx.exchange',
-                type: 'topic',
+                name: RabbitMQConstants.EXCHANGES.DLX,
+                type: RabbitMQConstants.CONFIG.EXCHANGE_TYPES.TOPIC,
                 options: {
                   durable: true
                 }
               },
               {
-                name: 'direct.delayed',
-                type: 'x-delayed-message',
+                name: RabbitMQConstants.EXCHANGES.DELAYED,
+                type: RabbitMQConstants.CONFIG.EXCHANGE_TYPES.DELAYED_MESSAGE,
                 options: {
                   arguments: {
                     'x-delayed-type': 'direct'
@@ -34,9 +35,9 @@ export class RabbitmqModule {
             ],
             queues: [
               {
-                name: 'dlx.queue',
-                exchange: 'dlx.exchange',
-                routingKey: '#',
+                name: RabbitMQConstants.QUEUES.DLX,
+                exchange: RabbitMQConstants.EXCHANGES.DLX,
+                routingKey: RabbitMQConstants.ROUTING_KEYS.ALL,
                 createQueueIfNotExists: true,
               }
             ],
@@ -48,9 +49,7 @@ export class RabbitmqModule {
           inject: [ConfigService],
         }),
       ],
-      providers: [
-        RabbitmqConsumeErrorFilter
-      ],
+      providers: [RabbitmqConsumeErrorFilter],
       global: true,
       exports: [RabbitMQModule],
     }
