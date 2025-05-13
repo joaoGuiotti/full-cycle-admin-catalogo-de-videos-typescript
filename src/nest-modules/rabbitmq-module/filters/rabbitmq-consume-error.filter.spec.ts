@@ -52,13 +52,9 @@ describe('RabbitmqConsumeErrorFilter Unit Tests', () => {
       getType: jest.fn().mockReturnValue('rmq'),
       switchToRpc: jest.fn().mockReturnValue({
         getContext: jest.fn().mockReturnValue({
-          properties: {
-            headers: {
-              [RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER]: 1
-            },
-            fields: { routingKey: 'test' },
-            content: Buffer.from('test message'),
-          },
+          properties:{ headers: { [RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER]: 1 } },
+          content: Buffer.from('test message'),
+          fields: { routingKey: 'test' },
         }),
       }),
     } as unknown as ArgumentsHost;
@@ -78,6 +74,5 @@ describe('RabbitmqConsumeErrorFilter Unit Tests', () => {
         },
       }
     );
-
   });
 }); 
