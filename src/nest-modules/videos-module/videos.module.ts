@@ -32,8 +32,8 @@ import { VideosConsumersServices } from './services/videos-consumers.service';
     ...Object.values(VIDEOS_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEOS_PROVIDERS.USE_CASES),
     ...Object.values(VIDEOS_PROVIDERS.HANDLERS),
-    VideoUploadService,
     VideosConsumersServices,
+    VideoUploadService,
   ],
 })
 export class VideosModule {}

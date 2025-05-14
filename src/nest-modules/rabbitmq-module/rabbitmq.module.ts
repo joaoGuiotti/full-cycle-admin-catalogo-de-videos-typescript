@@ -18,7 +18,7 @@ export class RabbitmqModule {
           useFactory: (configService: ConfigService) => ({
             uri: configService.get('RABBITMQ_URI') as string,
             registerHandlers: options.enableConsumers
-              || configService.get('RABBITMQ_REGISTER_HANDLERS') as boolean || false,
+              || configService.get('RABBITMQ_REGISTER_HANDLERS') as boolean,
             exchanges: [
               {
                 name: RabbitMQConstants.EXCHANGES.DLX,

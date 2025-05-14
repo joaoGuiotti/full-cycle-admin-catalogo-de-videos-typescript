@@ -4,6 +4,7 @@ import { RabbitSubscribe } from "@golevelup/nestjs-rabbitmq";
 import { Inject, Injectable, UseFilters, ValidationPipe } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
 import { RabbitmqConsumeErrorFilter } from "src/nest-modules/rabbitmq-module/filters/rabbitmq-consume-error.filter";
+import { RabbitMQConstants } from "src/nest-modules/rabbitmq-module/rabbitmq.constants";
 
 @UseFilters(RabbitmqConsumeErrorFilter)
 @Injectable()
@@ -13,13 +14,14 @@ export class VideosConsumersServices {
   private readonly moduleRef: ModuleRef;
 
   @RabbitSubscribe({
-    exchange: 'direct.delayed',
+    exchange: RabbitMQConstants.EXCHANGES.DELAYED,
     routingKey: 'videos.convert',
     queue: 'micro-videos/admin',
     allowNonJsonMessages: true,
     queueOptions: {
-      deadLetterExchange: 'dlx.exchange',
+      deadLetterExchange: RabbitMQConstants.EXCHANGES.DLX,
       deadLetterRoutingKey: 'videos.convert',
+      durable: true,
       // messageTtl: 5000 - tempo de vida da mensagem na fila para ser republicada
     },
   })
@@ -30,6 +32,7 @@ export class VideosConsumersServices {
       status: 'COMPLETED' | 'FAILED';
     }
   }) {
+    // console.log('onProcessVideo ====>', message);
     const resource_id = `${message.video?.resource_id ?? ''}`;
     const [video_id, field] = resource_id.split('.');
     const input = new ProcessMediasInput({
