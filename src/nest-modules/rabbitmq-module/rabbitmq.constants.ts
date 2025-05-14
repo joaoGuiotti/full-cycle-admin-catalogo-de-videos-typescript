@@ -20,7 +20,7 @@ export class RabbitMQConstants {
   } as const;
 
   static readonly CONFIG = {
-    MAX_RETRIES: 10,
+    MAX_RETRIES: 3,
     DELAY_MS: 5000, // 5 seconds
     EXCHANGE_TYPES: {
       TOPIC: 'topic',

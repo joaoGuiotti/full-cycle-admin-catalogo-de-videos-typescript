@@ -51,3 +51,9 @@ export class VideosConsumersServices {
 
 // Deadletter queue - log 
 
+// class FakeError extends Error {
+//   constructor() {
+//     super('FakeError');
+//   }
+// }
+

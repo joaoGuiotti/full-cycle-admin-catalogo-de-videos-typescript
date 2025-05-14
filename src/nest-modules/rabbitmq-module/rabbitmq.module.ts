@@ -5,16 +5,20 @@ import { ConfigService } from '@nestjs/config';
 import { RabbitmqConsumeErrorFilter } from './filters/rabbitmq-consume-error.filter';
 import { RabbitMQConstants } from './rabbitmq.constants';
 
+type RabbitMQModuleOptions = { enableConsumers?: boolean };
+
 @Module({})
 export class RabbitmqModule {
 
-  static forRoot(): DynamicModule {
+  static forRoot(options: RabbitMQModuleOptions = {}): DynamicModule {
     return {
       module: RabbitmqModule,
       imports: [
         RabbitMQModule.forRootAsync({
           useFactory: (configService: ConfigService) => ({
             uri: configService.get('RABBITMQ_URI') as string,
+            registerHandlers: options.enableConsumers
+              || configService.get('RABBITMQ_REGISTER_HANDLERS') as boolean || false,
             exchanges: [
               {
                 name: RabbitMQConstants.EXCHANGES.DLX,
