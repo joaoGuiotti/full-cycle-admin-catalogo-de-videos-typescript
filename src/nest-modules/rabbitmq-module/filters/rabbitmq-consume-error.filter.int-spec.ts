@@ -4,7 +4,7 @@ import { RabbitmqConsumeErrorFilter } from './rabbitmq-consume-error.filter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RabbitmqModule } from '../rabbitmq.module';
 import { EntityValidationError } from '../../../core/shared/domain/validators/validation.error';
-import { ConfigModule } from '../../config-modules/config.module';
+import { ConfigModule } from '../../config-module/config.module';
 
 const queue1 = 'test-retry-1';
 const queue2 = 'test-retry-2';

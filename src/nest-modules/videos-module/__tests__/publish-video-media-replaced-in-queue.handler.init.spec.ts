@@ -1,7 +1,7 @@
 import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-work-sequelize';
 import { ChannelWrapper } from 'amqp-connection-manager';
 import { Test, TestingModule } from "@nestjs/testing";
-import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
+import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 import { SharedModule } from 'src/nest-modules/shared-module/shared.module';
 import { EventModule } from 'src/nest-modules/event-module/event.module';
 import { UseCaseModule } from 'src/nest-modules/use-case-module/use-case.module';

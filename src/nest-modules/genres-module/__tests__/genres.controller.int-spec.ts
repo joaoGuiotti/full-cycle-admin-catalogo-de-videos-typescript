@@ -16,7 +16,7 @@ import { getConnectionToken } from '@nestjs/sequelize';
 import { Genre, GenreId } from '../../../core/genre/domain/genre.aggregate';
 import { Category } from '../../../core/category/domain/category.aggregate';
 import { GenreOutputMapper } from '../../../core/genre/application/use-cases/common/genre-output';
-import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
+import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.provider';
 import { GENRES_PROVIDERS } from '../genres.provider';

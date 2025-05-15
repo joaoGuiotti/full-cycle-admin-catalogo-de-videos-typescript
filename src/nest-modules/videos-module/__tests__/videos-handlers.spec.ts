@@ -1,7 +1,7 @@
 import { AmqpConnection } from "@golevelup/nestjs-rabbitmq";
 import { DynamicModule } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { ConfigModule } from "src/nest-modules/config-modules/config.module";
+import { ConfigModule } from "src/nest-modules/config-module/config.module";
 import { DatabaseModule } from "src/nest-modules/database-module/database.module";
 import { EventModule } from "src/nest-modules/event-module/event.module";
 import { SharedModule } from "src/nest-modules/shared-module/shared.module";

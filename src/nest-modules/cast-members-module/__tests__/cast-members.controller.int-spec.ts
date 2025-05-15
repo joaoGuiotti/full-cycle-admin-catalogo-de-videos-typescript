@@ -14,7 +14,7 @@ import { CAST_MEMBERS_PROVIDERS } from '../cast-members.provider';
 import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
 import { CreateCastMemberFixture, ListCastMembersFixture, UpdateCastMemberFixture } from '../testing/cast-member-fixture';
 import { CastMemberCollectionPresenter } from '../cast-member.presenter';
-import { ConfigModule } from 'src/nest-modules/config-modules/config.module';
+import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 
 describe('CastMembersController Integration Tests', () => {
   let controller: CastMembersController;

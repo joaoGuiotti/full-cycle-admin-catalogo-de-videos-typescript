@@ -3,7 +3,7 @@ import { CastMemberModel } from '../../core/cast-member/infra/db/sequelize/cast-
 import { Global, Module, Scope } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { getConnectionToken, SequelizeModule } from '@nestjs/sequelize';
-import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-modules/config.module';
+import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-module/config.module';
 import { UnitOfWorkSequelize } from '../../core/shared/infra/db/sequelize/unit-of-work-sequelize';
 import { Sequelize } from 'sequelize';
 import { GenreCategoryModel, GenreModel } from '../../core/genre/infra/db/sequelize/genre-model';

@@ -1,7 +1,7 @@
 import { ICategoryRepository } from "@core/category/domain/category.repository";
 import { CategoriesController } from "../categories.controller"
 import { Test, TestingModule } from "@nestjs/testing";
-import { ConfigModule } from "src/nest-modules/config-modules/config.module";
+import { ConfigModule } from "src/nest-modules/config-module/config.module";
 import { DatabaseModule } from "src/nest-modules/database-module/database.module";
 import { CategoriesModule } from "../categories.module";
 import { CATEGORY_PROVIDERS } from "../categories.provider";
