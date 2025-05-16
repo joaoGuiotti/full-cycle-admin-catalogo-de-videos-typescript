@@ -39,8 +39,6 @@ Content-Type: application/json
 @genreId = {{createGenre.response.body.data.id}}
 
 ###
- 
-
 # @name createCastMember
 POST http://localhost:3000/cast-members
 Content-Type: application/json
@@ -53,7 +51,6 @@ Content-Type: application/json
 ###
 
 @castMemberId = {{createCastMember.response.body.data.id}}
-
 
 ###
 
@@ -129,4 +126,42 @@ Content-Type: video/mp4
 GET http://localhost:3000/fake-event
 ###
 GET http://localhost:3000/rabbitmq-fake
+
+
+###
+
+# @name Keycloak
+POST http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username=admin@user.com
+&password=secret
+&grant_type=password
+&client_id=codeflix-admin-frontend
+
+# Up keycloack container manually
+# docker compose -f docker-compose-keycloak.yaml up
+
+##
+### configuração do openid connect server
+GET http://host.docker.internal:8080/realms/codeflix/.well-known/openid-configuration
+
+### Certificados
+GET http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/certs 
+
+
+###
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@user.com",
+  "password": "secret"
+}
+
+###
+GET http://localhost:3000/auth/protected
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3MzYxOTUwLCJleHAiOjE3NDc0NDgzNTB9.fK0a2o8xsn1sUIiFK_mkG3nn7_RCPHOYSkU_vf4fw2Bhe5fifdCja3xGy7AtyAFvBnn0uF1W8Z_cSilS1bBaHNfyxlV_jQf69fUg24MJdX8rMFN9cPYt6CAqXdBHjagFN--Ng79YAMoSJlfUveIgFD7KtmVnReHRbM-Q6o5tSwivG1zGMhVn_-zYQVxhrxiDhpP6xRsl3-Qd062fixY0d3q1Ecz1APgqrgvsGdSdWNlNpI7JvVi7wdFcT9ARPlb3Cw29jmOE2rxkPrwYxK_wHyuSEbE0tPSIrl45uxku77gzK-Y58dQaAUdHmv4RgWdSq0AwNFOEWWp98gSdb6Xjyw
 
