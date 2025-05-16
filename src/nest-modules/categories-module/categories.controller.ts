@@ -12,9 +12,10 @@ import { CategoryCollectionPresenter, CategoryPresenter } from './category.prese
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '../auth-module/auth.guard';
+import { AuthGuard } from '../auth-module/guards/auth.guard';
+import { AdminGuard } from '../auth-module/guards/admin.guard';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, AdminGuard)
 @ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {

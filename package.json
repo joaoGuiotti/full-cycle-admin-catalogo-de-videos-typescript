@@ -24,7 +24,9 @@
     "test:e2e:watch": "jest --config ./test/jest-e2e.config.ts --watch --runInBand",
     "tsc:check": "tsc --noEmit",
     "rabbitmq:consumer:dev": "npm run start:dev -- --entryFile cmd/rabbitmq",
-    "rabbitmq:consumer:prod": "node dist/cmd/rabbitmq"
+    "rabbitmq:consumer:prod": "node dist/cmd/rabbitmq",
+    "token:generate": "node ./generate-token.js",
+    "rsa:generate": "node ./create-rsa.js"
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^5.7.0",
