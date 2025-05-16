@@ -5,6 +5,7 @@
 # @name createCategory
 POST http://localhost:3000/categories
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 {
   "name": "Category 1",
@@ -17,15 +18,18 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/categories
+Authorization: Bearer {{jwtToken}}
 
 ###
 GET http://localhost:3000/categories/8f4b7b9c-3f7a-4b6c-8b0c-1c9c5b8b9b6a
+Authorization: Bearer {{jwtToken}}
 
 
 ### 
 # @name createGenre
 POST http://localhost:3000/genres
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 {
     "name": "Genre 1",
@@ -42,6 +46,7 @@ Content-Type: application/json
 # @name createCastMember
 POST http://localhost:3000/cast-members
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 {
   "name": "Cast Member 1",
@@ -68,6 +73,7 @@ GET http://localhost:3000/cast-members/{{castMemberId}}
 # @name createVideo
 POST http://localhost:3000/videos
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 {
   "title": "Vídeo Teste",
@@ -90,6 +96,7 @@ Content-Type: application/json
 # @name updateVideo
 PATCH http://localhost:3000/videos/{{videoId}}
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 {
   "title": "Video Teste Atualizado",
@@ -107,6 +114,7 @@ Content-Type: application/json
 # @name updateVideo
 
 PATCH http://localhost:3000/videos/{{videoId}}
+Authorization: Bearer {{jwtToken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
 
 ------WebKitFormBoundary1234
@@ -124,8 +132,10 @@ Content-Type: video/mp4
 
 ###
 GET http://localhost:3000/fake-event
+Authorization: Bearer {{jwtToken}}
 ###
 GET http://localhost:3000/rabbitmq-fake
+Authorization: Bearer {{jwtToken}}
 
 
 ###
@@ -159,9 +169,13 @@ Content-Type: application/json
   "email": "admin@user.com",
   "password": "secret"
 }
+###
+
+@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3Mzk5MDE1LCJleHAiOjE3NDc0ODU0MTV9.mrW9SdS8SUITqhFfLQ4B3pUsRw2heckJl7sCRohb3HS0FTflBPFvslEkjHnZckDBfwPD67g7EyXtw6RX2FCmeAGC63BaQDkOtsbjyk-ii2W2yZ25He-bqeSuCmw1YAaApxBFw4PimrKE7qhL7k3hzcdScVlb8z4Bji4T_eFSkJkHzk8GcT5hbG1urofChDz6iJZecg0gtO4xDCif4Xej4A12wAoxzNwAb1x5zwJdbQF8fyQ0bh45Y1wzzKqm_QgOdQyhawi4_4gLCkIhJs0mrH-UQfZKyx5dBgGsphBx_kgv5MmkGbhF1nUPGWvbY83KLlCo9FrITk9SryDWiKcS6Q
 
 ###
 GET http://localhost:3000/auth/protected
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3MzYxOTUwLCJleHAiOjE3NDc0NDgzNTB9.fK0a2o8xsn1sUIiFK_mkG3nn7_RCPHOYSkU_vf4fw2Bhe5fifdCja3xGy7AtyAFvBnn0uF1W8Z_cSilS1bBaHNfyxlV_jQf69fUg24MJdX8rMFN9cPYt6CAqXdBHjagFN--Ng79YAMoSJlfUveIgFD7KtmVnReHRbM-Q6o5tSwivG1zGMhVn_-zYQVxhrxiDhpP6xRsl3-Qd062fixY0d3q1Ecz1APgqrgvsGdSdWNlNpI7JvVi7wdFcT9ARPlb3Cw29jmOE2rxkPrwYxK_wHyuSEbE0tPSIrl45uxku77gzK-Y58dQaAUdHmv4RgWdSq0AwNFOEWWp98gSdb6Xjyw
+Authorization: Bearer {{jwtToken}}
+ 
 

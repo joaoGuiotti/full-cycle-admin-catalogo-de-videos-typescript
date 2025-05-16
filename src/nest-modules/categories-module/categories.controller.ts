@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseUUIDPipe, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseUUIDPipe, HttpCode, Query, UseGuards } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import {
@@ -12,7 +12,9 @@ import { CategoryCollectionPresenter, CategoryPresenter } from './category.prese
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth-module/auth.guard';
 
+@UseGuards(AuthGuard)
 @ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {

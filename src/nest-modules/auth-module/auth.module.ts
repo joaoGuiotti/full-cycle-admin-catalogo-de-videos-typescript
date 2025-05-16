@@ -9,16 +9,17 @@ import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     JwtModule.registerAsync({
+      global: true,
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         publicKey: configService.get('JWT_PUBLIC_KEY'),
         privateKey: configService.get('JWT_PRIVATE_KEY'),
         signOptions: { algorithm: 'RS256' },
       }),
-      global: true,
     }),
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthGuard],
+  exports: [AuthGuard],
 })
 export class AuthModule { }
