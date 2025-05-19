@@ -41,6 +41,7 @@ describe('CategoiesController (e2e)', () => {
       test.each(arrange)('when id is $id', async ({ id, send_data, expected }) => {
         return request(nestApp.app.getHttpServer())
           .patch(`/categories/${id}`)
+          .authenticate(nestApp.app)  
           .send(send_data)
           .expect(expected.statusCode)
           .expect(expected);
@@ -58,6 +59,7 @@ describe('CategoiesController (e2e)', () => {
       test.each(arrange)('when body is $label', async ({ value }) => {
         return request(nestApp.app.getHttpServer())
           .patch(`/categories/${uuid}`)
+          .authenticate(nestApp.app)  
           .send(value.send_data)
           .expect(422)
           .expect(value.expected)
@@ -86,6 +88,7 @@ describe('CategoiesController (e2e)', () => {
         await repo.insert(category);
         return request(nestApp.app.getHttpServer())
           .patch(`/categories/${category.category_id.id}`)
+          .authenticate(nestApp.app)  
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -109,6 +112,7 @@ describe('CategoiesController (e2e)', () => {
         await repo.insert(category);
         const res = await request(nestApp.app.getHttpServer())
           .patch(`/categories/${category.category_id.id}`)
+          .authenticate(nestApp.app)  
           .send(send_data)
           .expect(200);
 

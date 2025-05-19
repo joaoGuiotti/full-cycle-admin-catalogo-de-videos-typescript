@@ -10,6 +10,7 @@ import { VideosModule } from "../videos.module";
 import { UnitOfWorkFakeInMemory } from "src/core/shared/infra/db/in-memory/fake-unit-of-work-in-memory";
 import EventEmitter2 from "eventemitter2";
 import { VideoAudioMediaUploadedIntegrationEvent } from "src/core/video/domain/events/video-audio-media-replaced.event";
+import { AuthModule } from "src/nest-modules/auth-module/auth.module";
 
 class RabbitmqModuleFake {
   static forRoot(): DynamicModule {
@@ -40,6 +41,7 @@ describe('VideosModule Unit Tests', () => {
         UseCaseModule,
         DatabaseModule,
         RabbitmqModuleFake.forRoot(),
+        AuthModule,
         VideosModule,
       ],
     })

@@ -6,7 +6,7 @@ import { Uuid } from "../../src/core/shared/domain/value-objects/uuid.vo";
 import { CategoriesController } from "src/nest-modules/categories-module/categories.controller";
 import { CategoryOutputMapper } from "../../src/core/category/application/use-cases/common/category-output";
 import { instanceToPlain } from "class-transformer";
-import request from 'supertest';
+import request from 'supertest'; 
 
 describe('CategoriesController (e2e)', () => {
   const appHelper: StartHelper = startApp();
@@ -20,6 +20,25 @@ describe('CategoriesController (e2e)', () => {
 
   describe('/categories (POST)', () => {
 
+     describe('unauthenticated', () => {
+      const app = startApp();
+
+      test('should return 401 when not authenticated', () => {
+        return request(app.app.getHttpServer())
+          .post('/categories')
+          .send({})
+          .expect(401);
+      });
+
+      test('should return 403 when not authenticated as admin', () => {
+        return request(app.app.getHttpServer())
+          .post('/categories')
+          .authenticate(app.app, false)
+          .send({})
+          .expect(403);
+      });
+    });
+
     describe('should return a response error with 422 status code  when request body is invalid', () => {
       const invalidRequest = CreateCategoryFixture.arrangeInvalidRequest();
       const arrange = Object.keys(invalidRequest).map((key) => ({
@@ -30,6 +49,7 @@ describe('CategoriesController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(appHelper.app.getHttpServer())
           .post('/categories')
+          .authenticate(appHelper.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected)
@@ -46,6 +66,7 @@ describe('CategoriesController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(appHelper.app.getHttpServer())
           .post('/categories')
+          .authenticate(appHelper.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected)
@@ -58,6 +79,7 @@ describe('CategoriesController (e2e)', () => {
       test.each(arrange)('when body is $send_data', async ({ send_data, expected }) => {
         const res = await request(appHelper.app.getHttpServer())
           .post('/categories')
+          .authenticate(appHelper.app)
           .send(send_data)
           .expect(201);
 

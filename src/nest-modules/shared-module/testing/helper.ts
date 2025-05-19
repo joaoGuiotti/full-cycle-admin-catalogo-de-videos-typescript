@@ -5,6 +5,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { Sequelize } from "sequelize-typescript";
 import { AppModule } from "src/app.module";
 import { applyGlobalConfigApp } from "src/nest-modules/global.config";
+import 'src/nest-modules/shared-module/testing/supertest-extend';
 
 export interface StartHelper {
   app: INestApplication;

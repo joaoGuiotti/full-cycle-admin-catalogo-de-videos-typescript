@@ -27,6 +27,7 @@ import { IVideoRepository } from '@core/video/domain/video.repository';
 import { VIDEOS_PROVIDERS } from '../videos.providers';
 import { UploadAudioVideoMediasUseCase } from '@core/video/application/use-cases';
 import { ConsumeMessage } from 'amqplib';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 describe('PublishVideoMediaReplacedInQueueHandler Integration Tests', () => {
   let module: TestingModule;
@@ -41,6 +42,7 @@ describe('PublishVideoMediaReplacedInQueueHandler Integration Tests', () => {
         UseCaseModule,
         DatabaseModule,
         RabbitmqModule.forRoot(),
+        AuthModule,
         VideosModule,
       ],
     }).overrideProvider('UnitOfWork')

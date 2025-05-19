@@ -22,6 +22,7 @@ import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categorie
 import { GENRES_PROVIDERS } from '../genres.provider';
 import { ListGenresUseCase } from '@core/genre/application';
 import { CreateGenreFixture, ListGenresFixture, UpdateGenreFixture } from './fixture/genre-fixture';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 describe('GenresController Integration Tests', () => {
   let controller: GenresController;
@@ -33,6 +34,7 @@ describe('GenresController Integration Tests', () => {
       imports: [
         ConfigModule.forRoot(),
         DatabaseModule,
+        AuthModule,
         GenresModule,
       ],
     })

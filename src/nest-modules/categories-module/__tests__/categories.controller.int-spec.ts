@@ -10,6 +10,7 @@ import { CategoryCollectionPresenter, CategoryPresenter } from "../category.pres
 import { CreateCategoryFixture, ListCategoriesFixture, UpdateCategoryFixture } from "../testing/category-fixture";
 import { CategoryOutputMapper } from "@core/category/application/use-cases/common/category-output";
 import { Category, CategoryId } from "@core/category/domain/category.aggregate";
+import { AuthModule } from "src/nest-modules/auth-module/auth.module";
 
 describe('CategoriesController Integration Tests', () => {
   let controller: CategoriesController;
@@ -20,6 +21,7 @@ describe('CategoriesController Integration Tests', () => {
       imports: [
         ConfigModule.forRoot(),
         DatabaseModule,
+        AuthModule,
         CategoriesModule
       ]
     }).compile();

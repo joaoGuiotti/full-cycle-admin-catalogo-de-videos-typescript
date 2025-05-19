@@ -7,7 +7,7 @@ import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-module/cas
 import { CastMembersController } from 'src/nest-modules/cast-members-module/cast-members.controller';
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
- 
+
 describe('CastMembersController (e2e)', () => {
   describe('/cast-members (GET)', () => {
     describe('should return cast members sorted by created_at when request query is empty', () => {
@@ -62,6 +62,7 @@ describe('CastMembersController (e2e)', () => {
           const queryParams = qs.stringify(send_data as any);
           return request(nestApp.app.getHttpServer())
             .get(`/cast-members/?${queryParams}`)
+            .authenticate(nestApp.app)
             .expect(200)
             .expect({
               data: expected.entities.map((e) =>
