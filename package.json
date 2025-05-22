@@ -41,6 +41,7 @@
     "@nestjs/sequelize": "^11.0.0",
     "@nestjs/swagger": "^11.1.1",
     "class-transformer": "^0.5.1",
+    "chance": "^1.1.12",
     "dotenv": "^16.4.7",
     "eventemitter2": "^6.4.9",
     "joi": "^17.13.3",
