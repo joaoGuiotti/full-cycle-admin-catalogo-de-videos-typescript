@@ -1,6 +1,0 @@
-{"op":"set","id":1}
-{"k":"filebeat::logs::native::33828151-2080","v":{"id":"native::33828151-2080","timestamp":[201731254,1747883805],"FileStateOS":{"inode":33828151,"device":2080},"identifier_name":"native","prev_id":"","source":"/var/lib/docker/containers/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9-json.log","offset":0,"ttl":-1,"type":"container"}}
-{"op":"set","id":2}
-{"k":"filebeat::logs::native::33828151-2080","v":{"source":"/var/lib/docker/containers/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9-json.log","ttl":-1,"type":"container","FileStateOS":{"inode":33828151,"device":2080},"identifier_name":"native","id":"native::33828151-2080","prev_id":"","offset":4153,"timestamp":[746998073,1747883830]}}
-{"op":"set","id":3}
-{"k":"filebeat::logs::native::33828151-2080","v":{"timestamp":[746998073,1747883830],"ttl":-1,"type":"container","identifier_name":"native","id":"native::33828151-2080","prev_id":"","offset":4153,"source":"/var/lib/docker/containers/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9/8a0a7e2d51c1fca273137c49165334a9de6afeeb5674b61db459dffe38055af9-json.log","FileStateOS":{"inode":33828151,"device":2080}}}
