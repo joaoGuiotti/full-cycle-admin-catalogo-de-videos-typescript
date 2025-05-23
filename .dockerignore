@@ -17,3 +17,6 @@ node_modules/
 api.http
 create-rsa.js
 generate-token.js
+Dockerfile
+Dockerfile.prod
+
