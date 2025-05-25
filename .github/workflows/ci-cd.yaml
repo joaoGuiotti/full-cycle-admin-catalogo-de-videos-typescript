@@ -34,19 +34,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set lower-case owner
-      - name: Set lower case owner name
+      #tranform envs values IMAGE_NAME, FOLDER_NAME to lowercase
+      - name: Transform IMAGE_NAME and FOLDER_NAME to lowercase
         run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+          echo "IMAGE_NAME_LC=${IMAGE_NAME,,}" >> $GITHUB_ENV
+          echo "FOLDER_NAME_LC=${FOLDER_NAME,,}" >> $GITHUB_ENV
         env:
-          OWNER: ${{ github.repository_owner }}
-
-      # Set lower-case image name
-      - name: Set lower case image name
-        run: |
-          echo "IMAGE_NAME_LC=${IMAGE_NAME,,}" >>${GITHUB_ENV}
-        env:
-          IMAGE_NAME: ${{ github.repository }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          FOLDER_NAME: ${{ env.FOLDER_NAME }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -120,7 +115,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ steps.tagging.outputs.new_tag }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
