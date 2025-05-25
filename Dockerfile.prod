@@ -46,4 +46,6 @@ COPY --chown=node:node --from=builder /home/node/app/package.json ./
 
 EXPOSE 3000
 
+ENV NODE_ENV=production
+
 CMD ["wait-for-it.sh", "rabbitmq:5672", "--", "npm", "run", "start:prod"]
