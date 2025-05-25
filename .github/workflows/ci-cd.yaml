@@ -17,8 +17,8 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: joaoguiotti/full-cycle-admin-catalogo-de-videos-typescript
-  FOLDER_NAME: full-cycle-admin-catalogo-de-videos-typescript-app
+  IMAGE_NAME: ${{ github.repository }}
+  FOLDER_NAME: ${{ github.event.repository.name }}-app
 
 jobs:
   ci:
