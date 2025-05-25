@@ -106,7 +106,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME.toLowerCase() }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME.toLowerCase() }}:${{ steps.tagging.outputs.new_tag }}
+          tags: ${{ env.REGISTRY }}/${{ lowercase(env.IMAGE_NAME) }}:latest,${{ env.REGISTRY }}/${{ lowercase(env.IMAGE_NAME) }}:${{ steps.tagging.outputs.new_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
