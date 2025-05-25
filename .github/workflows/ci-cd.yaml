@@ -34,6 +34,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set IMAGE_NAME and FOLDER_NAME lowercase
+        run: |
+          echo "IMAGE_NAME_LC=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "FOLDER_NAME_LC=$(echo '${{ env.FOLDER_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -66,7 +71,7 @@ jobs:
         with:
           context: .
           push: false
-          tags: ${{ env.FOLDER_NAME }}
+          tags: ${{ env.FOLDER_NAME_LC }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           load: true
@@ -106,7 +111,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+          tags: ${{ env.REGISTRY }}/${{ env.FOLDER_NAME_LC }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
