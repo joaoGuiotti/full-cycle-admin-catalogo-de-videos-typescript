@@ -17,8 +17,8 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
-  FOLDER_NAME: ${{ github.event.repository.name }}-app
+  IMAGE_NAME: joaoguiotti/full-cycle-admin-catalogo-de-videos-typescript
+  FOLDER_NAME: full-cycle-admin-catalogo-de-videos-typescript-app
 
 jobs:
   ci:
@@ -33,15 +33,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      #tranform envs values IMAGE_NAME, FOLDER_NAME to lowercase
-      - name: Transform IMAGE_NAME and FOLDER_NAME to lowercase
-        run: |
-          echo "IMAGE_NAME_LC=${IMAGE_NAME,,}" >> $GITHUB_ENV
-          echo "FOLDER_NAME_LC=${FOLDER_NAME,,}" >> $GITHUB_ENV
-        env:
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}
-          FOLDER_NAME: ${{ env.FOLDER_NAME }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
