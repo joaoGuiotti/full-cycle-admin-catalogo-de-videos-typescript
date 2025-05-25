@@ -8,7 +8,7 @@ import { UpdateCastMemberFixture } from 'src/nest-modules/cast-members-module/te
 import { CAST_MEMBERS_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.provider';
 import { CastMembersController } from 'src/nest-modules/cast-members-module/cast-members.controller';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
- 
+
 describe('CastMembersController (e2e)', () => {
   const uuid = '9366b7dc-2d71-4799-b91c-c64adb205104';
 
@@ -43,6 +43,7 @@ describe('CastMembersController (e2e)', () => {
         async ({ id, send_data, expected }) => {
           return request(nestApp.app.getHttpServer())
             .patch(`/cast-members/${id}`)
+            .authenticate(nestApp.app, false)
             .send(send_data)
             .expect(expected.statusCode)
             .expect(expected);
@@ -60,6 +61,7 @@ describe('CastMembersController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(app.app.getHttpServer())
           .patch(`/cast-members/${uuid}`)
+          .authenticate(app.app, false)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -86,6 +88,7 @@ describe('CastMembersController (e2e)', () => {
         await castMemberRepo.insert(castMember);
         return request(app.app.getHttpServer())
           .patch(`/cast-members/${castMember.cast_member_id.id}`)
+          .authenticate(app.app, false)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -110,6 +113,7 @@ describe('CastMembersController (e2e)', () => {
 
           const res = await request(app.app.getHttpServer())
             .patch(`/cast-members/${castMemberCreated.cast_member_id.id}`)
+            .authenticate(app.app, false)
             .send(send_data)
             .expect(200);
           const keyInResponse = UpdateCastMemberFixture.keysInResponse;
