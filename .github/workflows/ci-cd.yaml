@@ -36,8 +36,10 @@ jobs:
 
       - name: Set IMAGE_NAME and FOLDER_NAME lowercase
         run: |
-          echo "IMAGE_NAME_LC=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          FOLDER_NAME_LC=$(echo '${{ env.FOLDER_NAME }}' | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME_LC=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')
           echo "FOLDER_NAME_LC=$(echo '${{ env.FOLDER_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "IMAGE_NAME_LC=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
