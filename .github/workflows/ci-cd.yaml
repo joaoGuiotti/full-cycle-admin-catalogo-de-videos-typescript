@@ -19,7 +19,8 @@ env:
   # github.repository as <account>/<repo>
    # github.repository as <account>/<repo>
   IMAGE_NAME: joaoguiotti/full-cycle-admin-catalogo-de-videos-typescrip
-  FOLDER_NAME: ${{ github.event.repository.name }}-app
+  FOLDER_NAME: ${{ github.repository }}
+  # FOLDER_NAME: ${{ github.event.repository.name }}-app
   # IMAGE_NAME: joaoguiotti/full-cycle-admin-catalogo-de-videos-typescrip
   # FOLDER_NAME: full-cycle-admin-catalogo-de-videos-typescrip-app
 
