@@ -17,8 +17,11 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: joaoguiotti/full-clycle-admin-teste
-  FOLDER_NAME: full-cycle-admin-teste-app
+   # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+  FOLDER_NAME: ${{ github.event.repository.name }}-app
+  # IMAGE_NAME: joaoguiotti/full-clycle-admin-teste
+  # FOLDER_NAME: full-cycle-admin-teste-app
 
 jobs:
   ci:
@@ -87,11 +90,11 @@ jobs:
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.test.example ./envs/.env.test
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
 
-      # - name: run unit and integration tests
-      #   run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
+      - name: run unit and integration tests
+        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
 
-      # - name: run e2e tests
-      #   run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
+      - name: run e2e tests
+        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
 
       - name: Bump version and push tag
         id: tagging
