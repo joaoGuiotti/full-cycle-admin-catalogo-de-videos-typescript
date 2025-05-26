@@ -39,3 +39,5 @@ lerna-debug.log*
 docker-compose.override.yaml
 
 .docker/filebeatdata
+
+api.http
