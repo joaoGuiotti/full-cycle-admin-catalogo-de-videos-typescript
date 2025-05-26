@@ -17,8 +17,11 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
+   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   FOLDER_NAME: ${{ github.event.repository.name }}-app
+  # IMAGE_NAME: joaoguiotti/full-clycle-admin-teste
+  # FOLDER_NAME: full-cycle-admin-teste-app
 
 jobs:
   ci:
@@ -87,8 +90,8 @@ jobs:
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.test.example ./envs/.env.test
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
 
-      # - name: run unit and integration tests
-      #   run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
+      - name: run unit and integration tests
+        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
 
       # - name: run e2e tests
       #   run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
@@ -101,12 +104,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build prod version and push
+        if: github.event_name != 'pull_request'
         id: build-final
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME.toLowerCase() }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME.toLowerCase() }}:${{ steps.tagging.outputs.new_tag }}
+          tags: ${{ env.REGISTRY }}/${{ env.FOLDER_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile.prod
