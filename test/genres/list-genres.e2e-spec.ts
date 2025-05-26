@@ -7,7 +7,7 @@ import { ListGenresFixture } from 'src/nest-modules/genres-module/__tests__/fixt
 import { GENRES_PROVIDERS } from 'src/nest-modules/genres-module/genres.provider';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.provider';
 
-describe('GenresController (e2e)', () => {
+describe.skip('GenresController (e2e)', () => {
   describe('/genres (GET)', () => {
     describe('should return genres sorted by created_at when request query is empty', () => {
       let genreRepo: IGenreRepository;

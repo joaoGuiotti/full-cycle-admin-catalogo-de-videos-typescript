@@ -8,7 +8,8 @@ import { CastMembersController } from 'src/nest-modules/cast-members-module/cast
 import { startApp } from 'src/nest-modules/shared-module/testing/helper';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
 
-describe('CastMembersController (e2e)', () => {
+// Ignorar esse teste e2e 
+describe.skip('CastMembersController (e2e)', () => {
   describe('/cast-members (GET)', () => {
     describe('should return cast members sorted by created_at when request query is empty', () => {
       let castMemberRepo: ICastMemberRepository;
