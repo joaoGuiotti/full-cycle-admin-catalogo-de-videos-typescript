@@ -95,7 +95,7 @@ jobs:
 
       - name: Bump version and push tag
         id: tagging
-        if: github.event_name != 'pull_request'
+        # if: github.event_name != 'pull_request'
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
