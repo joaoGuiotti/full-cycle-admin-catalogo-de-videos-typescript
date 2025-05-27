@@ -9,8 +9,9 @@ import {
   Patch,
   Post,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
-  ValidationPipe
+  ValidationPipe,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { VideoUploadService } from './services/upload.service';
@@ -19,14 +20,15 @@ import {
   CreateVideoUseCase,
   GetVideoUseCase,
   UpdateVideoInput,
-  UpdateVideoUseCase
+  UpdateVideoUseCase,
 } from '@core/video/application/use-cases';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
+import { AuthGuard, AdminGuard } from '../auth-module/guards';
 
 @Controller('videos')
+@UseGuards(AuthGuard, AdminGuard)
 export class VideosController {
-
   @Inject(CreateVideoUseCase)
   private readonly createUseCase: CreateVideoUseCase;
 
@@ -47,7 +49,9 @@ export class VideosController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string) {
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     //VideoPresenter
     return await this.getUseCase.execute({ id });
   }
@@ -60,7 +64,7 @@ export class VideosController {
       { name: 'thumbnail_half', maxCount: 1 },
       { name: 'trailer', maxCount: 1 },
       { name: 'video', maxCount: 1 },
-    ])
+    ]),
   )
   async update(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
@@ -74,11 +78,12 @@ export class VideosController {
       throw new BadRequestException('Files and data cannot be sent together');
 
     if (hasData) {
-      const data = await new ValidationPipe({ errorHttpStatusCode: 422 })
-        .transform(updateVideoDto, {
-          metatype: UpdateVideoDto,
-          type: 'body',
-        });
+      const data = await new ValidationPipe({
+        errorHttpStatusCode: 422,
+      }).transform(updateVideoDto, {
+        metatype: UpdateVideoDto,
+        type: 'body',
+      });
       const input = new UpdateVideoInput({ id, ...data });
       await this.updateUseCase.execute(input);
     }
@@ -100,7 +105,7 @@ export class VideosController {
       { name: 'thumbnail_half', maxCount: 1 },
       { name: 'trailer', maxCount: 1 },
       { name: 'video', maxCount: 1 },
-    ])
+    ]),
   )
   async uploadFile(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
@@ -112,5 +117,4 @@ export class VideosController {
     await this.videoUploadService.uploadFile(id, files);
     return await this.getUseCase.execute({ id });
   }
-
 }

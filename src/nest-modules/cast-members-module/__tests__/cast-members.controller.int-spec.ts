@@ -12,9 +12,14 @@ import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
 import { CastMemberOutputMapper } from '../../../core/cast-member/application/use-cases/common/cast-member-output';
 import { CAST_MEMBERS_PROVIDERS } from '../cast-members.provider';
 import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
-import { CreateCastMemberFixture, ListCastMembersFixture, UpdateCastMemberFixture } from '../testing/cast-member-fixture';
+import {
+  CreateCastMemberFixture,
+  ListCastMembersFixture,
+  UpdateCastMemberFixture,
+} from '../testing/cast-member-fixture';
 import { CastMemberCollectionPresenter } from '../cast-member.presenter';
 import { ConfigModule } from 'src/nest-modules/config-module/config.module';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 describe('CastMembersController Integration Tests', () => {
   let controller: CastMembersController;
@@ -22,7 +27,12 @@ describe('CastMembersController Integration Tests', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), DatabaseModule, CastMembersModule],
+      imports: [
+        ConfigModule.forRoot(),
+        AuthModule,
+        DatabaseModule,
+        CastMembersModule,
+      ],
     }).compile();
 
     controller = module.get(CastMembersController);

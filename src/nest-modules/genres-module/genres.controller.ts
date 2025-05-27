@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   HttpCode,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { GenreCollectionPresenter, GenrePresenter } from './genres.presenter';
@@ -25,8 +26,10 @@ import {
 } from '../../core/genre/application';
 import { SearchGenreDto } from './dto/search-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
+import { AuthGuard, AdminGuard } from '../auth-module/guards';
 
 @Controller('genres')
+@UseGuards(AuthGuard, AdminGuard)
 export class GenresController {
   @Inject(CreateGenreUseCase)
   private createUseCase: CreateGenreUseCase;
