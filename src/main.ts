@@ -5,16 +5,11 @@ import { applySwaggerConfig } from './nest-modules/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: process?.env?.NODE_ENV === 'production' ? 
-      console : undefined,
-    cors: {
-      // Configure cors to allow all origins
-      origin: '*'
-    }
+    logger: process.env.NODE_ENV === 'production' ? console : undefined,
   });
-  
+
   applyGlobalConfigApp(app);
-  
+
   applySwaggerConfig(app);
 
   await app.listen(process.env.PORT ?? 3000)

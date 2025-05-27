@@ -19,7 +19,10 @@ import { DeleteGenreUseCase } from '../../core/genre/application/use-cases/delet
 import { GetGenreUseCase } from '../../core/genre/application/use-cases/get-genre/get-genre.use-case';
 import { UpdateGenreInput } from '../../core/genre/application/use-cases/update-genre/update-genre.input';
 import { GenreOutput } from '../../core/genre/application/use-cases/common/genre-output';
-import { ListGenresOutput, ListGenresUseCase } from '../../core/genre/application';
+import {
+  ListGenresOutput,
+  ListGenresUseCase,
+} from '../../core/genre/application';
 import { SearchGenreDto } from './dto/search-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
 
