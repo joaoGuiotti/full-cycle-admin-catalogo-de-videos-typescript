@@ -1,4 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, ParseUUIDPipe, HttpCode, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Inject,
+  ParseUUIDPipe,
+  HttpCode,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import {
@@ -8,18 +21,19 @@ import {
   DeleteCategoryUseCase,
   ListCategoriesUseCase,
 } from '../../core/category/application/use-cases';
-import { CategoryCollectionPresenter, CategoryPresenter } from './category.presenter';
+import {
+  CategoryCollectionPresenter,
+  CategoryPresenter,
+} from './category.presenter';
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '../auth-module/guards/auth.guard';
-import { AdminGuard } from '../auth-module/guards/admin.guard';
+import { AuthGuard, AdminGuard } from '../auth-module/guards';
 
 @UseGuards(AuthGuard, AdminGuard)
 @ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {
-
   @Inject(CreateCategoryUseCase)
   private createUseCase: CreateCategoryUseCase;
 
@@ -49,7 +63,9 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string) {
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     const output = await this.getUseCase.execute({ id });
     return CategoriesController.serialize(output);
   }
@@ -69,7 +85,7 @@ export class CategoriesController {
   @HttpCode(204)
   @Delete(':id')
   remove(
-    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
     return this.deleteUseCase.execute({ id });
   }

@@ -20,7 +20,7 @@ describe('CastMembersController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(app.app.getHttpServer())
           .post('/cast-members')
-          .authenticate(app.app, false)
+          .authenticate(app.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -38,7 +38,7 @@ describe('CastMembersController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(app.app.getHttpServer())
           .post('/cast-members')
-          .authenticate(app.app, false)
+          .authenticate(app.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -59,7 +59,7 @@ describe('CastMembersController (e2e)', () => {
         async ({ send_data, expected }) => {
           const res = await request(app.app.getHttpServer())
             .post('/cast-members')
-            .authenticate(app.app, false)
+            .authenticate(app.app)
             .send(send_data)
             .expect(201);
 

@@ -1,8 +1,24 @@
-import { Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Inject,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateCastMemberUseCase } from '@core/cast-member/application/use-cases/create-cast-member/create-cast-member.use-case';
 import { CreateCastMemberDto } from './dto/create-cast-member.dto';
 import { CastMemberOutput } from '@core/cast-member/application/use-cases/common/cast-member-output';
-import { CastMemberCollectionPresenter, CastMemberPresenter } from './cast-member.presenter';
+import {
+  CastMemberCollectionPresenter,
+  CastMemberPresenter,
+} from './cast-member.presenter';
 import { SearchCastMembersDto } from './dto/search-cast-members.dto';
 import { ListCastMembersUseCase } from '@core/cast-member/application/use-cases/list-cast-members/list-cast-members.use-case';
 import { UpdateCastMemberDto } from './dto/update-cast-memeber.dto';
@@ -10,10 +26,11 @@ import { UpdateCastMemberUseCase } from '@core/cast-member/application/use-cases
 import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
 import { GetCastMemberUseCase } from '@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
 import { UpdateCastMemberInput } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.input';
+import { AuthGuard, AdminGuard } from '../auth-module/guards';
 
 @Controller('cast-members')
+@UseGuards(AuthGuard, AdminGuard)
 export class CastMembersController {
-
   @Inject(CreateCastMemberUseCase)
   private createUseCase: CreateCastMemberUseCase;
 
@@ -42,7 +59,9 @@ export class CastMembersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string) {
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     const output = await this.getUseCase.execute({ id });
     return CastMembersController.serialize(output);
   }
@@ -59,7 +78,9 @@ export class CastMembersController {
 
   @HttpCode(204)
   @Delete(':id')
-  remove(@Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string) {
+  remove(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     return this.deleteUseCase.execute({ id });
   }
 

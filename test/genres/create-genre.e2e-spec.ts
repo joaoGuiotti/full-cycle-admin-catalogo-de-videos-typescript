@@ -22,6 +22,7 @@ describe('GenresController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(app.app.getHttpServer())
           .post('/genres')
+          .authenticate(app.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -39,6 +40,7 @@ describe('GenresController (e2e)', () => {
       test.each(arrange)('when body is $label', ({ value }) => {
         return request(app.app.getHttpServer())
           .post('/genres')
+          .authenticate(app.app)
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);
@@ -64,6 +66,7 @@ describe('GenresController (e2e)', () => {
           await categoryRepo.bulkInsert(relations.categories);
           const res = await request(app.app.getHttpServer())
             .post('/genres')
+            .authenticate(app.app)
             .send(send_data)
             .expect(201);
           const keyInResponse = CreateGenreFixture.keysInResponse;
